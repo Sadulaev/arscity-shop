@@ -1,16 +1,17 @@
 import type { Metadata } from "next";
-import { Geist, Geist_Mono } from "next/font/google";
+import { Roboto, Inter } from "next/font/google";
 import "./globals.css";
 import Header from "@/components/shared/Header";
 import Footer from "@/components/shared/footer";
 
-const geistSans = Geist({
-  variable: "--font-geist-sans",
+
+const interSans = Inter({
+  variable: "--font-inter",
   subsets: ["latin"],
 });
 
-const geistMono = Geist_Mono({
-  variable: "--font-geist-mono",
+const robotoSans = Roboto({
+  variable: "--font-roboto",
   subsets: ["latin"],
 });
 
@@ -24,10 +25,11 @@ export default function RootLayout({
 }: Readonly<{
   children: React.ReactNode;
 }>) {
+
   return (
     <html lang="en">
       <body
-        className={`${geistSans.variable} ${geistMono.variable} antialiased`}
+        className={`${interSans.variable} ${robotoSans.variable} antialiased min-h-screen flex flex-col`}
       >
         <Header/>
         {children}

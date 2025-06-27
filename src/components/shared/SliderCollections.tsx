@@ -42,12 +42,14 @@ const SliderCollections = (props: Props) => {
 
   const scrollRight = () => {
     if (scrollRef.current) {
+      console.log(scrollRef);
+      
       scrollRef.current.scrollBy({ left: 320, behavior: 'smooth' })
     }
   }
 
   return (
-    <div className='flex flex-col w-[1370px] mx-auto px-10 py-12 mt-5 overflow-hidden'>
+    <div className='flex flex-col w-[400px] md:w-[1370px] mx-auto px-10 py-12 mt-5 overflow-hidden'>
       <h2>КАТАЛОГ БРЕНДОВ</h2>
 
       <div className='flex items-center gap-4'>
@@ -59,7 +61,7 @@ const SliderCollections = (props: Props) => {
           ref={scrollRef}
         >
           {brandsMock.map((brand, index) => (
-            <div key={index} className='bg-[#EEEEEE] min-w-[300px] h-[200px] flex items-center justify-center rounded-[5px]'>
+            <div key={index} className='bg-[#EEEEEE] min-w-[200px] md:min-w-[300px] h-[200px] flex items-center justify-center rounded-[5px]'>
               {brand.imageURL ? (
                 <Image
                   src={brand.imageURL}

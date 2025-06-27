@@ -1,0 +1,54 @@
+'use client';
+import axios from 'axios'
+import { useEffect, useState } from 'react'
+import { TileTypes } from '@/types/typeTiles'
+import Product from '@/components/shared/product-card';
+import { SceletonCard } from '@/components/shared/skeletons/sceleton';
+import { useCartStore } from '../../../../store/CartStore';
+
+const LargeFormatTiles = () => {
+
+    const fetchCart = useCartStore((state) => state.fetchCart)
+    
+      useEffect(() => {
+        fetchCart()
+      }, [fetchCart])
+
+    const [largeFormat, setLargeFormat] = useState<TileTypes[]>([])
+
+    useEffect(() => {
+        const fetchData = async() => {
+            try {
+                const {data} = await axios.get('http://127.0.0.1:8000/api/tile/tiles/?is_large_format=true')
+                setLargeFormat(data.results)
+            } catch(error){
+                console.log(error);
+            }
+        }
+        fetchData()
+    }, [])
+    console.log(largeFormat);
+    
+  return (
+    <div className='flex flex-col gap-10 md:w-[1370px] mx-auto mt-10 px-12 pt-5 mb-20'>
+      
+        <h2 className='mx-auto text-3xl text-center lg:text-5xl'>Плиты крупного формата</h2>
+        <div className='flex flex-wrap gap-5'>
+            {largeFormat?.length > 0 ? (
+                largeFormat.map((tile) => (
+                <div key={tile.id}>
+                    <Product content_type='tile' id={tile.id} city={tile.country} imageURL={tile.image1 || ''} title={tile.name} price={tile.price}/>
+                </div>
+            ))
+            ) : (
+            new Array(6).fill(0).map((_, index) => (
+                <SceletonCard/>
+            ))
+            )}
+        </div>
+      
+    </div>
+  )
+}
+
+export default LargeFormatTiles

@@ -1,8 +1,12 @@
 'use client';
 import { ArrowLeft, ArrowRight } from 'lucide-react'
-import React, { useRef, useState } from 'react'
+import React, { useEffect, useRef, useState } from 'react'
 import CollectionCard from './collection-card'
 import Product from './product-card';
+import Link from 'next/link';
+import axios from 'axios';
+import { CatalogType } from './catalog-updates';
+import { TileTypes } from '@/types/typeTiles';
 
 type Props = {}
 
@@ -10,107 +14,33 @@ const PopularProducts = (props: Props) => {
 
     const scrollRef = useRef<HTMLDivElement>(null)
     const [viewMode, setViewMode] = useState<'collections' | 'products'>('collections')
-    const collectionMock = [
-        {
-            desc: "Новая эксклюзивная коллекция от Laparet",
-            title: "МоноТиберио",
-            city: "ИТАЛИЯ",
-            imageURL: "https://mosplitka.ru/upload/iblock/1c1/1c1ec3957c2098e916dadb3b5890d395.jpg"
-        },
-        {
-            desc: "Новая коллекция от Casabella",
-            title: "MONO",
-            city: "ИТАЛИЯ",
-            imageURL: "https://akijceramics.net/wp-content/uploads/2023/12/D-1097-LBR-1-1.jpg"
-        },
-        {
-            desc: "Новая эксклюзивная коллекция от Laparet",
-            title: "SIMPLE",
-            city: "Россия",
-            imageURL: "https://mosplitka.ru/upload/iblock/1c1/1c1ec3957c2098e916dadb3b5890d395.jpg"
-        },
-        {
-            desc: "Новая эксклюзивная коллекция от Laparet",
-            title: "МоноТиберио",
-            city: "ИТАЛИЯ",
-            imageURL: "https://mosplitka.ru/upload/iblock/1c1/1c1ec3957c2098e916dadb3b5890d395.jpg"
-        },
-        {
-            desc: "Новая коллекция от Casabella",
-            title: "MONO",
-            city: "ИТАЛИЯ",
-            imageURL: "https://akijceramics.net/wp-content/uploads/2023/12/D-1097-LBR-1-1.jpg"
-        },
-        {
-            desc: "Новая эксклюзивная коллекция от Laparet",
-            title: "SIMPLE",
-            city: "Россия",
-            imageURL: "https://mosplitka.ru/upload/iblock/1c1/1c1ec3957c2098e916dadb3b5890d395.jpg"
-        }
-    ] 
-    const popularProductMode = [
-        {
-            city: 'Italon, Россия ',
-            imageURL: 'https://santehkeram.ru/image/catalog/products/ceramic_tile/brands/AlmaCeramica/colllections/arina/photo_in_the_interior/plitka_alma_ceramica_arina_41_8x41_8_napolnaya_chernaya_tfu03ara200_793.jpg',
-            title: 'Керамогранит Creto Forza Calacatta white PG 01 45х45',
-            price: 3564,
-        },
-        {
-            city: 'Italon, Россия ',
-            imageURL: 'https://santehkeram.ru/image/catalog/products/ceramic_tile/brands/AlmaCeramica/colllections/arina/photo_in_the_interior/plitka_alma_ceramica_arina_41_8x41_8_napolnaya_chernaya_tfu03ara200_793.jpg',
-            title: 'Керамогранит Creto Forza Calacatta white PG 01 45х45',
-            price: 3564,
-        },
-        {
-            city: 'Italon, Россия ',
-            imageURL: 'https://santehkeram.ru/image/catalog/products/ceramic_tile/brands/AlmaCeramica/colllections/arina/photo_in_the_interior/plitka_alma_ceramica_arina_41_8x41_8_napolnaya_chernaya_tfu03ara200_793.jpg',
-            title: 'Керамогранит Creto Forza Calacatta white PG 01 45х45',
-            price: 3564,
-        },
-        {
-            city: 'Italon, Россия ',
-            imageURL: 'https://santehkeram.ru/image/catalog/products/ceramic_tile/brands/AlmaCeramica/colllections/arina/photo_in_the_interior/plitka_alma_ceramica_arina_41_8x41_8_napolnaya_chernaya_tfu03ara200_793.jpg',
-            title: 'Керамогранит Creto Forza Calacatta white PG 01 45х45',
-            price: 3564,
-        },
-        {
-            city: 'Italon, Россия ',
-            imageURL: 'https://santehkeram.ru/image/catalog/products/ceramic_tile/brands/AlmaCeramica/colllections/arina/photo_in_the_interior/plitka_alma_ceramica_arina_41_8x41_8_napolnaya_chernaya_tfu03ara200_793.jpg',
-            title: 'Керамогранит Creto Forza Calacatta white PG 01 45х45',
-            price: 3564,
-        },
-        {
-            city: 'Italon, Россия ',
-            imageURL: 'https://santehkeram.ru/image/catalog/products/ceramic_tile/brands/AlmaCeramica/colllections/arina/photo_in_the_interior/plitka_alma_ceramica_arina_41_8x41_8_napolnaya_chernaya_tfu03ara200_793.jpg',
-            title: 'Керамогранит Creto Forza Calacatta white PG 01 45х45',
-            price: 3564,
-        },
-        {
-            city: 'Italon, Россия ',
-            imageURL: 'https://santehkeram.ru/image/catalog/products/ceramic_tile/brands/AlmaCeramica/colllections/arina/photo_in_the_interior/plitka_alma_ceramica_arina_41_8x41_8_napolnaya_chernaya_tfu03ara200_793.jpg',
-            title: 'Керамогранит Creto Forza Calacatta white PG 01 45х45',
-            price: 3564,
-        },
-        {
-            city: 'Italon, Россия ',
-            imageURL: 'https://santehkeram.ru/image/catalog/products/ceramic_tile/brands/AlmaCeramica/colllections/arina/photo_in_the_interior/plitka_alma_ceramica_arina_41_8x41_8_napolnaya_chernaya_tfu03ara200_793.jpg',
-            title: 'Керамогранит Creto Forza Calacatta white PG 01 45х45',
-            price: 3564,
-        },
-        {
-            city: 'Italon, Россия ',
-            imageURL: 'https://santehkeram.ru/image/catalog/products/ceramic_tile/brands/AlmaCeramica/colllections/arina/photo_in_the_interior/plitka_alma_ceramica_arina_41_8x41_8_napolnaya_chernaya_tfu03ara200_793.jpg',
-            title: 'Керамогранит Creto Forza Calacatta white PG 01 45х45',
-            price: 3564,
-        },
-        {
-            city: 'Italon, Россия ',
-            imageURL: 'https://santehkeram.ru/image/catalog/products/ceramic_tile/brands/AlmaCeramica/colllections/arina/photo_in_the_interior/plitka_alma_ceramica_arina_41_8x41_8_napolnaya_chernaya_tfu03ara200_793.jpg',
-            title: 'Керамогранит Creto Forza Calacatta white PG 01 45х45',
-            price: 3564,
-        },
+    const [collections, setCollections] = useState<CatalogType[]>([])
+    const [tiles, setTiles] = useState<TileTypes[]>([])
 
-    ]
+    useEffect(() => {
+        try{
+            const fetchCollectionData = async () => {
+                const response = await axios.get("http://127.0.0.1:8000/api/tile/collections/?popularity_score=8")
+                setCollections(response.data)
+            }
+            fetchCollectionData()
+        } catch(error){
+            console.log(error);
+        }
+    }, [])
+
+    useEffect(() => {
+        try{
+            const fetchTileData = async () => {
+                const response = await axios.get(`http://127.0.0.1:8000/api/tile/tiles/?popularity_score=8`)
+                setTiles(response.data.results)
+            }
+            fetchTileData()
+        } catch(error){
+            console.log(error);
+        }
+    }, [])
+    
 
     const scrollLeft = () => {
         if (scrollRef.current) {
@@ -129,43 +59,51 @@ const PopularProducts = (props: Props) => {
         }
     }
 
+    if (tiles.length === 0 && collections.length === 0) return null
+
     return (
-        <div className='flex flex-col gap-5 w-[1370px] mx-auto px-10'>
+        <div className='relative flex flex-col gap-5 w-screen md:w-[1370px] mx-auto px-10'>
             <div className='flex items-center justify-between text-2xl uppercase'>
-                <div className='flex items-center gap-10'>
-                    <h2 style={{color: viewMode === 'collections' ? "red" : 'black'}} className='cursor-pointer font-bold hover:scale[1.1] transition-all delay-150' onClick={() => setViewMode('collections')}>Популярные коллеции</h2>
-                    <h2 style={{color: viewMode === 'products' ? "red" : 'black'}} className='cursor-pointer font-bold hover:text-red-500 transition-all delay-150' onClick={() => setViewMode('products')}>Популярные ТОВАРЫ</h2>
+                <div className='flex text-[1rem] md:text-2xl gap-10 md:justify-between items-center md:gap-10'>
+                    <h2 style={{color: viewMode === 'collections' ? "red" : 'black'}} className='w-[30%] md:w-[50%] cursor-pointer font-bold relative inline-block after:content-[""] after:absolute after:w-full after:h-[2px] after:bg-red-500 after:scale-x-0 after:left-0 after:bottom-0 after:transition-transform after:origin-left after:duration-300 hover:after:scale-x-100 pb-1' onClick={() => setViewMode('collections')}>Популярные коллеции</h2>
+                    <h2 style={{color: viewMode === 'products' ? "red" : 'black'}} className='w-[30%] md:w-[50%] cursor-pointer font-bold relative inline-block after:content-[""] after:absolute after:w-full after:h-[2px] after:bg-red-500 after:scale-x-0 after:left-0 after:bottom-0 after:transition-transform after:origin-left after:duration-300 hover:after:scale-x-100 pb-1' onClick={() => setViewMode('products')}>Популярные ТОВАРЫ</h2>
                 </div>
-                <div className='flex items-center gap-3'>
-                    <span>все коллекции</span>
-                    <div className='flex items-center justify-center w-[30px] h-[30px] rounded-[50%] bg-red-600 text-white'>
+                <Link href={viewMode === "collections" ? "/products/collections" : "/products/tile"} className='absolute -bottom-12 left-8 md:relative group flex items-center gap-3'>
+                    <span className='relative inline-block after:content-[""] after:absolute after:w-full after:h-[2px] after:bg-red-500 after:scale-x-0 after:left-0 after:bottom-0 after:transition-transform after:origin-left after:duration-300 hover:after:scale-x-100 pb-1'>{viewMode === 'collections' ? 'Все коллекции' : 'Все товары'}</span>
+                    <div className='flex items-center justify-center w-[30px] h-[30px] rounded-[50%] bg-red-600 text-white group-hover:scale-125 transition-all duration-200'>
                         <ArrowRight size={20}/>
                     </div>
-                </div>
+                </Link>
             </div>
             
-            <div className='flex items-center gap-5'>
+            <div className='flex relative items-center gap-5 border-x-2 px-2'>
                 {viewMode === "collections" ? (
                     <>
-                        <button onClick={scrollLeft} className='cursor-pointer hover:scale-[1.1] transition-all delay-100 p-3 bg-red-600 rounded-[50%]'>
+                        <button onClick={scrollLeft} className='absolute bottom-20 left-[30%] md:left-0 md:bottom-0 md:relative md:block cursor-pointer hover:scale-[1.1] transition-all delay-100 p-3 bg-red-600 rounded-[50%]'>
                             <ArrowLeft size={20} color='#fff'/>
                         </button>
                         <div ref={scrollRef} className='flex gap-8 overflow-x-hidden overflow-y-hidden mb-5'>
                             
-                            {collectionMock.map((collection, index) => (
-                                <CollectionCard  key={index} city={collection.city} title={collection.title} imageURL={collection.imageURL} />
+                            {collections.map((collection) => (
+                                <Link href={`/product/collection/${collection.id}`}>
+                                    <CollectionCard  key={collection.id} country={collection.country} name={collection.name} image1={collection.image1} number_of_elements={collection.number_of_elements} collection={collection}/>
+                                </Link>
+                                
                             ))}  
                             
                         </div>
-                        <button onClick={scrollRight} className='cursor-pointer hover:scale-[1.1] transition-all delay-100 p-3 bg-red-600 rounded-[50%]'>
+                        <button onClick={scrollRight} className='absolute bottom-20 md:bottom-0 right-[30%] md:relative md:right-0 md:block cursor-pointer hover:scale-[1.1] transition-all delay-100 p-3 bg-red-600 rounded-[50%]'>
                             <ArrowRight size={20} color='#fff'/>
                         </button>
                     </>
                     
                 ) : (
                     <div className='flex gap-10 flex-wrap '>
-                        {popularProductMode.map((product, index) => (
-                            <Product city={product.city} title={product.title} imageURL={product.imageURL} price={product.price}/>
+                        {tiles.map((product, index) => (
+                            <Link href={`/product/tile/${product.id}`}>
+                                <Product city={product.country} title={product.name} imageURL={product.image1} price={product.price}/>
+                            </Link>
+                            
                         ))}
                     </div> 
                 )}

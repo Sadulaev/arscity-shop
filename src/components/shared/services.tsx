@@ -9,12 +9,12 @@ type Props = {}
 
 const Services = (props: Props) => {
   return (
-    <div className='flex items-center justify-between w-[1370px] gap-[65px] mx-auto mt-14 px-12'>
+    <div className='flex flex-col px-10 gap-10 md:flex md:flex-row md:items-center md:justify-between md:w-[1370px] md:gap-[65px] md:mx-auto mt-14 md:px-12'>
         <div className='flex gap-[35px] items-center'>
             <Image src={trucksvg} alt='icon' width={52} height={43}/>
             <div>
                 <h3>удобная доставка
-                по Иркутску</h3>
+                по Чеченской республике</h3>
                 <span className='text-gray-400'>в день покупки</span>
             </div>
         </div>

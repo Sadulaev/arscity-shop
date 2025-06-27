@@ -22,8 +22,8 @@ const Dropdown: React.FC<Props> = ({options, title}) => {
 
   return (
     <div className='relative'>
-        <div onClick={handleOpen} className='flex gap-2.5 cursor-pointer'>
-            <span>{title}</span>
+        <div onClick={handleOpen} className="flex gap-2.5 cursor-pointer relative after:content-[''] after:absolute after:w-full after:h-[2px] after:bg-red-500 after:scale-x-0 after:left-0 after:bottom-0 after:transition-transform after:origin-left after:duration-300 hover:after:scale-x-100 pb-1">
+            <span  className="">{title}</span>
             <ChevronDown/>
         </div>
         
