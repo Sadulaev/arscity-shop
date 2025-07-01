@@ -2,34 +2,33 @@
 import Image from "next/image"
 import React, { useEffect, useState } from "react"
 import { X } from "lucide-react"
-import { cartItemType, useCartStore } from "../../../../store/CartStore"
+import { ProductType, useCartStore } from "../../../../store/CartStore"
 
 
 type CartItemType = {
     id?: number,
     object_id: number,
-    product: cartItemType,
+    product: ProductType,
     quantity: number,
-    content_type: string
+    content_type: string,
+    content_type_display: string,
 }
 
-const CartItem: React.FC<CartItemType> = ({id, quantity: initialQuantity, object_id, product, content_type }) => {
+const CartItem: React.FC<CartItemType> = ({id, quantity: initialQuantity, object_id, product, content_type, content_type_display }) => {
     const img = `http://127.0.0.1:8000${product?.image1}`
     const { addToCart, removeFromCart } = useCartStore()
 
-    // Локальное состояние для управления количеством
+
     const [quantity, setQuantity] = useState(initialQuantity)
 
-    // Обновление корзины при изменении quantity
+
     useEffect(() => {
-        addToCart(content_type, object_id, quantity)
+        addToCart(content_type_display, object_id, quantity)
     }, [quantity])
 
-    // Изменение через кнопки
     const increment = () => setQuantity(prev => prev + 1)
     const decrement = () => setQuantity(prev => Math.max(1, prev - 1))
 
-    // Изменение через input
     const handleInputChange = (e: React.ChangeEvent<HTMLInputElement>) => {
         const val = parseInt(e.target.value)
         if (!isNaN(val) && val > 0) {
@@ -86,7 +85,7 @@ const CartItem: React.FC<CartItemType> = ({id, quantity: initialQuantity, object
                 </div>
             </div>
             <div className="h-[1px] w-[100%] bg-red-300 mt-10"></div>
-            <button onClick={() => removeFromCart(id)} className="absolute top-2 right-2 cursor-pointer"><X /></button>
+            <button onClick={() => id !== undefined && removeFromCart(id)} className="absolute top-2 right-2 cursor-pointer"><X /></button>
         </div>
     )
 }

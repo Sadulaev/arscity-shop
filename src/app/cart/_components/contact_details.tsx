@@ -7,7 +7,7 @@ type Props = {
     setPatronymic: (e:string) => void
     setPhone: (e:string) => void
     setEmail: (e:string) => void
-    setComment?: (e:string) => void
+    setComment: (e:string) => void
 }
 
 const ContactDetails:React.FC<Props> = ({setSurname, setFirstName, setPatronymic, setPhone, setEmail, setComment,}) => {

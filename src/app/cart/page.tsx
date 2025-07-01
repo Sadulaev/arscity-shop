@@ -26,11 +26,7 @@ const Cart = () => {
   const [comment, setComment] = useState("")
   const [privacyPolicy, setPrivacyPolicy] = useState(false)
 
-
-  
-
-  console.log(cartList);
-  
+ 
 
   const submitOrder = async () => {
     try {
@@ -69,7 +65,7 @@ const Cart = () => {
   useEffect(() => {
     fetchCart()
     fetchTotalPrice()
-  }, [totalPrice])
+  }, [])
 
 
   if (cartList.length === 0) return <EmptyCart/>
@@ -101,7 +97,16 @@ const Cart = () => {
 
       <div className='flex flex-col gap-20'>
         {cartList.map(cart => (
-          <CartItem key={cart.object_id} {...cart} />
+          <CartItem 
+            key={cart.product.name}
+            id={cart.id}
+            object_id={cart.object_id}
+            product={cart.product}
+            quantity={cart.quantity}
+            content_type={cart.content_type}
+            content_type_display={cart.content_type_display}
+            
+          />
         ))}
       </div>
 

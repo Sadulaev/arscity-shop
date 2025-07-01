@@ -17,7 +17,10 @@ const TilePage = (props: Props) => {
 
     const [tile, setTile] = useState<TileTypes>()
     const [tilesForCollection, setTilesForCollection] = useState<TileTypes[]>([])
-    const {addToCart, cartList} = useCartStore()
+    const {addToCart, cartList, removeFromCart} = useCartStore()
+    const [quantity, setQuantity] = useState(1)
+
+    
 
     useEffect(() => {
         const id = window.location.pathname.split("/").pop()
@@ -26,6 +29,8 @@ const TilePage = (props: Props) => {
                 const response = await axios.get(`http://127.0.0.1:8000/api/tile/tiles/${id}`)
                 setTile(response.data)
                 console.log(response);
+                
+                
                 
             }
             fetchData()
@@ -51,13 +56,28 @@ const TilePage = (props: Props) => {
             console.log(error);
         }
     }, [tile])
+    
+    
+    const getRemoveID = () => {
+        if (cartList && tile) {
+            return (
+                cartList.find(item => item.content_type_display === 'tile' && tile.id === item.object_id)?.id
+            )
+        }
+    }
+    const rem = getRemoveID();
+    
+  
+    
+        
+    
 
+    
     
     console.log("cartList = ",cartList);
     
 
     if (!tile) return null 
-    console.log(tile);
     
     return (
         <div className='flex flex-col gap-4'>
@@ -112,9 +132,9 @@ const TilePage = (props: Props) => {
                         
                         <div className='flex items-center mb-4 md:mb-0 gap-5 mt-10'>
                             <div className='flex justify-between px-3 py-1 md:h-15 md:text-2xl bg-[#E9E9E9] w-[50%]'>
-                                <button className='w-15 cursor-pointer bg-white'>-</button>
-                                <input type="text" placeholder='0' className='focus:outline-none w-20 text-center'/>
-                                <button className='w-15 cursor-pointer bg-white'>+</button>
+                                <button onClick={() => setQuantity(prev => prev === 1 ? 1 : prev - 1)} className='w-15 cursor-pointer bg-white'>-</button>
+                                <input onChange={(e) => setQuantity(+e.target.value)} type="text" value={quantity} className='focus:outline-none w-20 text-center'/>
+                                <button onClick={() => setQuantity(prev => prev + 1)} className='w-15 cursor-pointer bg-white'>+</button>
                             </div>
                             <div className='md:text-2xl flex justify-between px-3 py-1 md:h-15 bg-[#E9E9E9] w-[25%]'>
                                 <button className='w-[55px] bg-white'>м²</button>
@@ -123,14 +143,19 @@ const TilePage = (props: Props) => {
                         </div>
                         <div className='flex gap-4 mb-4 md:mb-0 md:text-2xl'>
                             <span>Итоговая цена: </span>
-                            <span>{tile.price} руб.</span>
+                            <span>{tile.price * quantity} руб.</span>
                         </div>
                         <div className='flex flex-col md:flex-row mb-4 md:mb-0 gap-3 items-center justify-between w-[100%] text-red-500'>
-                            <button onClick={() => addToCart('tile', tile.id, 1)} className='border-2 py-2 px-10 w-[100%] md:w-[50%]'>+  добавить в корзину</button>
-                            <button className='border-2 flex items-center justify-center gap-2 py-2 px-10 w-[100%] md:w-[50%]'>
-                                <span>быстрый заказ</span>
+                            <button onClick={() => addToCart('tile', tile.id, quantity)} className='border-2 py-2 px-10 w-[100%] md:w-[50%]'>+  добавить в корзину</button>
+                            {cartList.find(item => item.content_type_display === "tile") ? (
+                                <button onClick={() => removeFromCart(rem)} className='border-2 flex items-center justify-center gap-2 py-2 px-10 w-[100%] md:w-[50%]'>
+                                    <span>Удалить из корзины</span>
                                 <ArrowRight/>
                             </button>
+                            ) : (
+                                ""
+                            )}
+                            
                         </div>
                         <div className='md:flex items-center gap-2 justify-between'>
                             <div>Оплата: </div>

@@ -13,15 +13,18 @@ type Props = {}
 const PopularProducts = (props: Props) => {
 
     const scrollRef = useRef<HTMLDivElement>(null)
+    const refProducts = useRef<HTMLDivElement>(null)
     const [viewMode, setViewMode] = useState<'collections' | 'products'>('collections')
     const [collections, setCollections] = useState<CatalogType[]>([])
     const [tiles, setTiles] = useState<TileTypes[]>([])
+    const [totalQuantityProduct, setTotalQuantityProduct] = useState(0)
+    const [countData, setCountData] = useState(4)
 
     useEffect(() => {
         try{
             const fetchCollectionData = async () => {
                 const response = await axios.get("http://127.0.0.1:8000/api/tile/collections/?popularity_score=8")
-                setCollections(response.data)
+                setCollections(response.data) 
             }
             fetchCollectionData()
         } catch(error){
@@ -33,14 +36,24 @@ const PopularProducts = (props: Props) => {
         try{
             const fetchTileData = async () => {
                 const response = await axios.get(`http://127.0.0.1:8000/api/tile/tiles/?popularity_score=8`)
-                setTiles(response.data.results)
+                setTiles(response.data.results.slice(0, countData))
+                setTotalQuantityProduct(response.data.results.length)
             }
             fetchTileData()
         } catch(error){
             console.log(error);
         }
-    }, [])
+    }, [countData])
     
+    const showMore = () => {
+        if (countData < totalQuantityProduct) {
+            setCountData(prev => prev + 4)
+        } else {
+            setCountData(4)
+            refProducts.current?.scrollIntoView({behavior: "smooth"})
+        }
+        
+    }
 
     const scrollLeft = () => {
         if (scrollRef.current) {
@@ -62,7 +75,7 @@ const PopularProducts = (props: Props) => {
     if (tiles.length === 0 && collections.length === 0) return null
 
     return (
-        <div className='relative flex flex-col gap-5 w-screen md:w-[1370px] mx-auto px-10'>
+        <div ref={refProducts} className='relative flex flex-col gap-5 w-screen md:w-[1370px] mx-auto px-10'>
             <div className='flex items-center justify-between text-2xl uppercase'>
                 <div className='flex text-[1rem] md:text-2xl gap-10 md:justify-between items-center md:gap-10'>
                     <h2 style={{color: viewMode === 'collections' ? "red" : 'black'}} className='w-[30%] md:w-[50%] cursor-pointer font-bold relative inline-block after:content-[""] after:absolute after:w-full after:h-[2px] after:bg-red-500 after:scale-x-0 after:left-0 after:bottom-0 after:transition-transform after:origin-left after:duration-300 hover:after:scale-x-100 pb-1' onClick={() => setViewMode('collections')}>Популярные коллеции</h2>
@@ -98,18 +111,19 @@ const PopularProducts = (props: Props) => {
                     </>
                     
                 ) : (
-                    <div className='flex gap-10 flex-wrap '>
-                        {tiles.map((product, index) => (
-                            <Link href={`/product/tile/${product.id}`}>
-                                <Product city={product.country} title={product.name} imageURL={product.image1} price={product.price}/>
-                            </Link>
-                            
-                        ))}
-                    </div> 
+                    <div className='flex flex-col gap-5'>
+                        <div className='flex gap-5 flex-wrap'>
+                            {tiles.map((product, index) => (    
+                                <Product key={product.name} id={product.id} index={index} city={product.country} title={product.name} imageURL={product.image1} price={product.price}/>
+                            ))}
+                        </div> 
+                        {totalQuantityProduct > 6 ? (
+                            <button onClick={() => showMore()} className='px-4 py-2 bg-red-500 text-white w-1/2 mx-auto hover:scale-105 transition-all duration-150 cursor-pointer'>{countData >= totalQuantityProduct ? "скрыть" : "Показать еще"}</button>
+                        ) : ""}
+                        
+                    </div>
                 )}
-            </div>
-            
-            
+            </div> 
         </div>
     )
 }

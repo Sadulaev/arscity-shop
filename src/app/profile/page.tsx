@@ -39,7 +39,7 @@ export type OrdersType = {
 
 
 
-const Profile = (props: Props) => {
+const Profile = () => {
 
     const [auth, setAuth] = useState(false)
     const router = useRouter()

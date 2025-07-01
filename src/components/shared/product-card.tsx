@@ -12,9 +12,10 @@ export type TileCardFields = {
     title: string,
     price: number,
     content_type: string
+    index?: number
 }
 
-const Product: React.FC<TileCardFields> = ({ id, city, imageURL, title, price, content_type }) => {
+const Product: React.FC<TileCardFields> = ({ id, city, imageURL, title, price, content_type, index }) => {
     const { addToCart, cartList } = useCartStore()
     const { addFavorite, removeFavorite, favorites } = useFavorites()
     const isInFavorites = favorites.some(fav => fav.object_id === id && fav.content_type_display === content_type)
@@ -51,7 +52,7 @@ const Product: React.FC<TileCardFields> = ({ id, city, imageURL, title, price, c
                 <Image src={imageURL} objectFit='cover' alt='image' width={150} height={0} style={{ width: '100%', height: '100%' }} />
             </div>
             <Link target='blank' href={`/product/tile/${id}`}>
-                <span className='text-[1.3rem] cursor-pointer'>{title}</span>
+                <span className='text-[1.3rem] cursor-pointer hover:text-red-600 transition-all duration-150'>{title}</span>
             </Link>
             <div className='mt-4'>
                 <span className='text-[1.3rem] text-[#474A51]'>{price} P за м²</span>

@@ -1,26 +1,35 @@
 import { create } from 'zustand'
 import axios from 'axios'
 
-export interface cartItemType {
-  id?: number,
-  name: string,
-  image1: string,
-  price: number,
-  country: string,
-  collection?: string,
-  quantity?: number,
-  object_id?: number,
-  content_type_display?: string
+
+export interface ProductType {
+  id: number;
+  name: string;
+  image1?: string;
+  price: number;
+  country: string;
+  collection?: string;
+}
+
+
+export interface CartResponseItem {
+  id: number;
+  object_id: number;
+  quantity: number;
+  content_type_display: string;
+  content_type: string;
+  product: ProductType;
 }
 
 interface cartListStore {
-  cartList: cartItemType[]
-  totalPrice: number
-  fetchCart: () => Promise<void>
-  fetchTotalPrice: () => Promise<void>
-  addToCart: (content_type: string, object_id: number, quantity: number) => Promise<void>
-  removeFromCart: (cartItemId: number) => Promise<void>,
+  cartList: CartResponseItem[];
+  totalPrice: number;
+  fetchCart: () => Promise<void>;
+  fetchTotalPrice: () => Promise<void>;
+  addToCart: (content_type: string, object_id: number, quantity: number) => Promise<void>;
+  removeFromCart: (cartItemId: number) => Promise<void>;
 }
+
 
 export const useCartStore = create<cartListStore>((set) => ({
   cartList: [],

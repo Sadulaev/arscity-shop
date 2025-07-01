@@ -11,26 +11,6 @@ type Props = {}
 const Favorites = (props: Props) => {
 
     const { favorites, addFavorite, removeFavorite } = useFavorites()
-    // const [fav, setFav] = useState([])
-
-    // useEffect(() => {
-    //     const fetchFavorites = async () => {
-    //         try{
-    //             const response = await axios.get("http://127.0.0.1:8000/api/order/favorites/", {
-    //                 headers: {
-    //                     Authorization: `Bearer ${localStorage.getItem('access_token')}`
-    //                 }
-    //             })
-    //             console.log(response.data);
-    //             setFav(response.data)
-    //             localStorage.setItem("fav", JSON.stringify(response.data))
-    //         } catch(error) {
-    //             console.log(error);
-                
-    //         }
-    //     }
-    //     fetchFavorites()
-    // }, [])
 
     if (favorites.length === 0) return <EmptyFavorites/>
 
