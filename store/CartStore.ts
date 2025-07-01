@@ -21,7 +21,7 @@ export interface CartResponseItem {
   product: ProductType;
 }
 
-interface cartListStore {
+interface CartListStore {
   cartList: CartResponseItem[];
   totalPrice: number;
   fetchCart: () => Promise<void>;
@@ -31,7 +31,7 @@ interface cartListStore {
 }
 
 
-export const useCartStore = create<cartListStore>((set) => ({
+export const useCartStore = create<CartListStore>((set) => ({
   cartList: [],
   totalPrice: 0,
 

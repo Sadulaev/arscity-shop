@@ -8,9 +8,7 @@ import axios from 'axios';
 import { CatalogType } from './catalog-updates';
 import { TileTypes } from '@/types/typeTiles';
 
-type Props = {}
-
-const PopularProducts = (props: Props) => {
+const PopularProducts = () => {
 
     const scrollRef = useRef<HTMLDivElement>(null)
     const refProducts = useRef<HTMLDivElement>(null)
@@ -98,8 +96,8 @@ const PopularProducts = (props: Props) => {
                         <div ref={scrollRef} className='flex gap-8 overflow-x-hidden overflow-y-hidden mb-5'>
                             
                             {collections.map((collection) => (
-                                <Link href={`/product/collection/${collection.id}`}>
-                                    <CollectionCard  key={collection.id} country={collection.country} name={collection.name} image1={collection.image1} number_of_elements={collection.number_of_elements} collection={collection}/>
+                                <Link key={collection.id} href={`/product/collection/${collection.id}`}>
+                                    <CollectionCard key={collection.id} country={collection.country} name={collection.name} image1={collection.image1} number_of_elements={collection.number_of_elements} collection={collection} />
                                 </Link>
                                 
                             ))}  
@@ -113,8 +111,8 @@ const PopularProducts = (props: Props) => {
                 ) : (
                     <div className='flex flex-col gap-5'>
                         <div className='flex gap-5 flex-wrap'>
-                            {tiles.map((product, index) => (    
-                                <Product key={product.name} id={product.id} index={index} city={product.country} title={product.name} imageURL={product.image1} price={product.price}/>
+                            {tiles.map((tile, index) => (    
+                                <Product key={tile.name} id={tile.id} index={index} city={tile.country} title={tile.name} imageURL={tile.image1} price={tile.price} content_type={tile.content_type} />
                             ))}
                         </div> 
                         {totalQuantityProduct > 6 ? (

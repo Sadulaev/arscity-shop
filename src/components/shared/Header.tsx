@@ -1,9 +1,8 @@
 'use client';
-import { ArrowRight, Heart, Instagram, Menu, MenuIcon, PhoneCall, SearchIcon, ShoppingCart, User, X } from 'lucide-react'
+import { ArrowRight, Heart, Instagram, Menu, MenuIcon, PhoneCall, ShoppingCart, User, X } from 'lucide-react'
 import Link from 'next/link'
 import React, { useEffect, useRef, useState } from 'react'
 import Button from '@/components/ui/Button'
-import Dropdown from './Dropdown'
 import CatalogModal from './catalog-modal'
 import useClickOutside from '@/hooks/use-click-outside';
 import logo from '../../../public/log.svg'
@@ -30,12 +29,21 @@ const Header = () => {
     const debounce = useDebounce(searchInput, 1000)
     const router = useRouter()
 
+    const [isLogged, setIsLogged] = useState(false);
+    useEffect(() => {
+        const token = localStorage.getItem('access_token');
+        if (token) {
+            setIsLogged(true);
+        } else {
+            setIsLogged(false);
+        }
+    }, []);
+
     useEffect(() => {
         setWidthScreen(window.innerWidth)
         handleSearch(debounce)
-    }, [searchInput, debounce, widthScreen])
+    }, [searchInput, debounce, widthScreen,])
     
-   const access_token = localStorage.getItem("access_token")
    useEffect(() => {
        fetchCart()
      }, [fetchCart])
@@ -54,7 +62,7 @@ const Header = () => {
                 <Link href="/" className='group text-4xl font-bold flex items-center rounded-2xl p-2'>Ars<Image className='group-hover:translate-y-[-12px] group-hover:scale-110 transition-all duration-300' src={logo} width={80} height={80} alt='logo'/>City</Link>
                 <span className="relative  inline-block md:w-[300px] after:content-[''] after:absolute after:w-full after:h-[2px] after:bg-red-500 after:scale-x-0 after:left-0 after:bottom-0 after:transition-transform after:origin-left after:duration-300 hover:after:scale-x-100 pb-1">керамическая плитка и керамогранит в Чеченсокй Республике</span>
                 <div className='flex mt-12 md:mt-0 gap-10 w-[100%] pr-10 md:pr-0 justify-end md:justify-center md:w-0'>
-                    <Link href={`${access_token ? '/profile' : '/auth/login'}`}><User className='hover:scale-125 duration-150 cursor-pointer'/></Link>
+                    <Link href={`${isLogged ? '/profile' : '/auth/login'}`}><User className='hover:scale-125 duration-150 cursor-pointer'/></Link>
                     <Link href="/favorites" className='relative'><Heart className='hover:scale-125 duration-150 cursor-pointer'/><span className='absolute text-red-500 -top-4 -right-2'>{favorites.length}</span></Link>
                     <Link href="/cart" className='relative'><ShoppingCart className='hover:scale-125 duration-150 cursor-pointer'/><span className='absolute text-red-500 -top-4 -right-2'>{cartList.length}</span></Link>
                     

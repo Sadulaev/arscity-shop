@@ -12,7 +12,7 @@ type Props = {
     onClickCapture?: (e: React.MouseEvent<HTMLDivElement>) => void;
 }
 
-const Button: React.FC<Props> = ({text, backgroundColor, colorText, className, icon, widthScreen, onClick, onClickCapture}) => {
+const Button: React.FC<Props> = ({text, backgroundColor, colorText, className, icon, onClick, onClickCapture}) => {
 
   return (
     <>

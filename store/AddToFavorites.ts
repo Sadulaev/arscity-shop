@@ -140,8 +140,7 @@ export const useFavorites = create<StoreFavorites>()(
             }
         }),
         {
-            name: 'favorite-storage',
-            getStorage: () => localStorage
+            name: 'favorite-storage'
         }
     )
 )

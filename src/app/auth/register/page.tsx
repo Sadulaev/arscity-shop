@@ -4,9 +4,7 @@ import { MoveRight } from 'lucide-react'
 import Link from 'next/link'
 import React, { useState } from 'react'
 
-type Props = {}
-
-const Register = (props: Props) => {
+const Register = () => {
 
     const [username, setUserName] = useState("")
     const [email, setEmail] = useState("")
@@ -16,7 +14,7 @@ const Register = (props: Props) => {
     const registrationFunction = async(e:React.FormEvent) => {
         e.preventDefault()
         try{
-            const response = await axios.post("http://127.0.0.1:8000/api/auth/users/", {
+            await axios.post("http://127.0.0.1:8000/api/auth/users/", {
                 username: username,
                 email: email,
                 password: password,

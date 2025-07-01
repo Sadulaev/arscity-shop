@@ -1,6 +1,5 @@
 'use client';
-import React, { useState } from 'react'
-import { SkirtingBoardTYpe } from '../page'
+import React from 'react'
 import { X } from 'lucide-react';
 
 type Props = {

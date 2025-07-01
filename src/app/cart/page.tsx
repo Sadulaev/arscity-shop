@@ -7,7 +7,7 @@ import Payment from './_components/payment'
 import ContactDetails from './_components/contact_details'
 import { Heart, MoveRight } from 'lucide-react'
 
-import React, { useEffect, useState } from 'react'
+import React, { useCallback, useEffect, useState } from 'react'
 import Link from 'next/link';
 import axios from 'axios';
 import EmptyCart from './_components/empty-cart';
@@ -28,7 +28,7 @@ const Cart = () => {
 
  
 
-  const submitOrder = async () => {
+  const submitOrder = useCallback( async () => {
     try {
       const token = localStorage.getItem('access_token');
 
@@ -59,7 +59,7 @@ const Cart = () => {
       console.error('Ошибка оформления заказа:', error);
       alert('Произошла ошибка при оформлении заказа');
     }
-  };
+  }, []);
 
 
   useEffect(() => {
@@ -103,7 +103,6 @@ const Cart = () => {
             object_id={cart.object_id}
             product={cart.product}
             quantity={cart.quantity}
-            content_type={cart.content_type}
             content_type_display={cart.content_type_display}
             
           />
@@ -116,7 +115,7 @@ const Cart = () => {
         <Payment setPaymentMethod={setPaymentMethod}/>
         <ContactDetails setSurname={setSurname} setFirstName={setFirstName} setPatronymic={setPatronymic} setPhone={setPhone} setEmail={setEmail} setComment={setComment}/>
         <div className='flex gap-3 items-center'>
-            <input onChange={(e) => setPrivacyPolicy(!privacyPolicy)} type="checkbox" />
+            <input onChange={() => setPrivacyPolicy(!privacyPolicy)} type="checkbox" />
             <span>согласен с <Link href="" className='text-blue-600'>политикой конфиденциальности</Link></span>
         </div>
         <div className='flex items-end justify-between'>

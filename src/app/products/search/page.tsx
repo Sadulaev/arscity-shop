@@ -48,7 +48,7 @@ const SearchPage = () => {
                 ))
                 ) : (
                 new Array(6).fill(0).map((_, index) => (
-                    <SceletonCard/>
+                    <SceletonCard key={index} />
                 ))
                 )}
             </div>

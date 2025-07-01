@@ -6,8 +6,6 @@ import CatalogUpdates from "@/components/shared/catalog-updates";
 import CompanyServices from "@/components/shared/company-services";
 import PopularProducts from "@/components/shared/popular-products";
 import Services from "@/components/shared/services";
-import { useSearchStore } from "../../store/SearchStore";
-import SearchPage from "./products/search/page";
 
 export default function Home() {
   // const {search} = useSearchStore()

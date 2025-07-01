@@ -11,7 +11,7 @@ const Order = ({order}: OrderProps) => {
         <div className='flex flex-col gap-2'>
             <span>Заказ № {order.id}</span>
             {order.items.map((item) => (
-                <p>{item.product.name}, {item.quantity} кв.м. - {item.product.price * item.quantity}</p>
+                <p key={item.id}>{item.product.name}, {item.quantity} кв.м. - {item.product.price * item.quantity}</p>
             ))}
         </div>
         <div className='flex flex-col gap-3 text-[1rem]'>

@@ -1,8 +1,6 @@
-import { TileFields } from '@/types/typeTiles'
 import { Heart } from 'lucide-react'
 import Image from 'next/image'
 import React from 'react'
-import iconWhatsApp from '../../../public/icons-whatsapp.gif'
 import Link from 'next/link'
 import { useCartStore } from '../../../store/CartStore'
 import { useFavorites } from '../../../store/AddToFavorites'
@@ -25,7 +23,7 @@ type Props = {
   content_type: string
 }
 
-const ProductSkirtingBoard: React.FC<Props> = ({id, name, type, price, thickness, height, moisture_resistance, tone, image1, content_type}) => {
+const ProductSkirtingBoard: React.FC<Props> = ({id, name, price, image1, content_type}) => {
 
   const { addToCart, cartList } = useCartStore()
     

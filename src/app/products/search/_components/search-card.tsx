@@ -15,7 +15,7 @@ type Props = {
     country: string
 }
 
-const SearchCard:React.FC<Props> = ({content_type, id, name, price, image1, tile_type, country}) => {
+const SearchCard:React.FC<Props> = ({content_type, id, name, price, image1}) => {
     const { addToCart, cartList } = useCartStore()
     const img = `http://127.0.0.1:8000${image1}`  
     const { addFavorite, removeFavorite, favorites } = useFavorites()

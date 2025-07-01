@@ -23,7 +23,9 @@ export type CatalogType  = {
     image5: string,
     country: string,
     number_of_elements: number,
-    logo?: string
+    logo?: string,
+    compound?: string,
+    style?: string
 }
 
 const CatalogUpdates = () => {
@@ -76,7 +78,7 @@ const CatalogUpdates = () => {
         <div className='flex flex-col md:flex-row items-center md:justify-between md:h-[520px] gap-4'>
             <div className='flex items-center justify-between gap-4 flex-col md:flex-[40%] h-[100%]'>
                 {collectionNew.slice(0,2).map((collection) => (
-                    <div className='h-[50%] w-[100%] relative cursor-pointer hover:scale-[1.02] transition-all duration-200'>
+                    <div key={collection.id} className='h-[50%] w-[100%] relative cursor-pointer hover:scale-[1.02] transition-all duration-200'>
                         <Image 
                         style={{minWidth: "100%", height: "100%"}} 
                         width={300} 

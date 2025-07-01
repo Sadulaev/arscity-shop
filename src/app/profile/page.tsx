@@ -73,7 +73,7 @@ const Profile = () => {
         };
 
         isAuth();
-    }, []);
+    }, [router]);
 
     useEffect(() => {
         const fetchOrder = async() => {
