@@ -1,7 +1,6 @@
 'use client';
 import React, { useEffect, useState } from 'react'
 import axios from 'axios'
-import { ArrowRight } from 'lucide-react'
 import BigSliderSceleton from './big-slider-sceleton';
 import Image from 'next/image';
 

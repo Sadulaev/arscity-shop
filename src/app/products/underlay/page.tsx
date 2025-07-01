@@ -41,8 +41,7 @@ const Underlay = () => {
 
     useEffect(() => {
         fetchCart()
-      }, [fetchCart])
-    console.log(underlays);
+      }, [])
 
     return (
         <div className='flex flex-col gap-10 md:w-[1370px] mx-auto mt-10 px-12 pt-5 mb-20'>
@@ -57,7 +56,7 @@ const Underlay = () => {
                 ))
                 ) : (
                 new Array(6).fill(0).map((_, index) => (
-                    <SceletonCard/>
+                    <SceletonCard key={index} />
                 ))
                 )}
             </div>

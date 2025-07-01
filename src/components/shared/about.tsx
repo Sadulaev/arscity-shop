@@ -2,9 +2,7 @@
 import Image from 'next/image'
 import React, { useEffect, useRef } from 'react'
 
-type Props = {}
-
-const About = (props: Props) => {
+const About = () => {
     const aboutref = useRef<HTMLDivElement | null>(null)
     useEffect(() => {
         if (typeof window === 'undefined') return;

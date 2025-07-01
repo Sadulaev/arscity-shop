@@ -1,9 +1,7 @@
 'use client';
-import { TileFields } from '@/types/typeTiles'
 import { Heart } from 'lucide-react'
 import Image from 'next/image'
-import React, { useState } from 'react'
-import iconWhatsApp from '../../../public/icons-whatsapp.gif'
+import React from 'react'
 import Link from 'next/link'
 import { useCartStore } from '../../../store/CartStore'
 import { useFavorites } from '../../../store/AddToFavorites';

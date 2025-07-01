@@ -3,9 +3,7 @@ import { ArrowLeft, ArrowRight } from 'lucide-react'
 import Image from 'next/image'
 import React, { useRef } from 'react'
 
-type Props = {}
-
-const SliderCollections = (props: Props) => {
+const SliderCollections = () => {
   const scrollRef = useRef<HTMLDivElement>(null)
 
   const brandsMock = [

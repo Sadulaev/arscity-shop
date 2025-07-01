@@ -8,14 +8,14 @@ import { useFavorites } from '../../../store/AddToFavorites'
 export type TileCardFields = {
     id: number,
     city: TileFields,
-    imageURL: string,
+    imageURL?: string,
     title: string,
     price: number,
     content_type: string
     index?: number
 }
 
-const Product: React.FC<TileCardFields> = ({ id, city, imageURL, title, price, content_type, index }) => {
+const Product: React.FC<TileCardFields> = ({ id, city, imageURL, title, price, content_type }) => {
     const { addToCart, cartList } = useCartStore()
     const { addFavorite, removeFavorite, favorites } = useFavorites()
     const isInFavorites = favorites.some(fav => fav.object_id === id && fav.content_type_display === content_type)
@@ -49,7 +49,7 @@ const Product: React.FC<TileCardFields> = ({ id, city, imageURL, title, price, c
                 />
             </div>
             <div className='overflow-hidden min-h-[180px] flex items-center'>
-                <Image src={imageURL} objectFit='cover' alt='image' width={150} height={0} style={{ width: '100%', height: '100%' }} />
+                <Image src={imageURL || ""} objectFit='cover' alt='image' width={150} height={0} style={{ width: '100%', height: '100%' }} />
             </div>
             <Link target='blank' href={`/product/tile/${id}`}>
                 <span className='text-[1.3rem] cursor-pointer hover:text-red-600 transition-all duration-150'>{title}</span>

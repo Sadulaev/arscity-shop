@@ -2,31 +2,20 @@
 import {
     ArrowLeft,
     ArrowRight,
-    CreditCard,
     Heart,
-    Landmark,
     MoveRight,
-    UserLockIcon,
-    Wallet,
 } from "lucide-react"
 import Image from "next/image"
-import React, { useEffect, useRef, useState } from "react"
-import textCollection from "../../../../../public/testColletcion.png"
-import laparet from "../../../../../public/laparet.png"
-import collectionSlideTestImage from "../../../../../public/collectionSlideTEstImage.png"
+import React, { useEffect, useMemo, useRef, useState } from "react"
 import axios from "axios"
 import { CatalogType } from "@/components/shared/catalog-updates"
 import Services from "@/components/shared/services"
-import Product, { TileCardFields } from "@/components/shared/product-card"
+import Product from "@/components/shared/product-card"
 import { TileTypes } from "@/types/typeTiles"
 
-type Props = {}
-
-const CollectionPage = (props: Props) => {
+const CollectionPage = () => {
     const scrollRef = useRef<HTMLDivElement>(null)
-
     const [typeTiles, setTypeTiles] = useState("all")
-    
     const [collection, setCollection] = useState<CatalogType | null>(null)
     const [tilesForCollection, setTilesForCollection] = useState<TileTypes[]>([])
     const [indexCollection, setIndexCollection] = useState(1)
@@ -54,8 +43,6 @@ const CollectionPage = (props: Props) => {
                 `http://127.0.0.1:8000/api/tile/tiles/?collection=${collection.id}`
             )
             setTilesForCollection(response.data.results)
-            console.log("Проверка",response.data.results.filter(item => item.tile_type === 'base').length);
-               
         }
         fetchTilesForCollection()
     }, [collection])
@@ -70,6 +57,14 @@ const CollectionPage = (props: Props) => {
             scrollRef.current.scrollBy({ left: 150, behavior: "smooth" })
         }
     }
+
+    const imagesArr = useMemo(() => {
+        if(!collection) {
+            return Array(5).fill('');
+        }
+        return [ collection.image1, collection.image2, collection.image3, collection.image4, collection.image5 ];
+
+    }, [collection?.id, !!collection])
 
     if (!collection) return null
 
@@ -96,7 +91,7 @@ const CollectionPage = (props: Props) => {
                             <span>Коллекция</span>
                         </div>
                         <h1 className="text-3xl">
-                            Коллекция "{collection.name}"
+                            Коллекция `&quot;`{collection.name}`&quot;`
                         </h1>
                     </div>
 
@@ -114,7 +109,7 @@ const CollectionPage = (props: Props) => {
                             className={`md:h-[481px] overflow-hidden transition-opacity duration-300`}
                         >
                             <Image
-                                src={collection[`image${indexCollection}`]}
+                                src={imagesArr[indexCollection]}
                                 width={666}
                                 height={480}
                                 alt="ImageTile"
@@ -135,8 +130,10 @@ const CollectionPage = (props: Props) => {
                                 <div className="inline-flex gap-4">
                                     {Array(5)
                                         .fill("")
-                                        .map((_, index) => (
-                                            <div
+                                        .map((_, index) => {
+                                            if(!imagesArr[indexCollection]) return;
+                                            return <div
+                                                key={index}
                                                 onClick={() =>
                                                     setIndexCollection(
                                                         index + 1
@@ -152,12 +149,13 @@ const CollectionPage = (props: Props) => {
                                                 <Image
                                                     fill
                                                     src={
-                                                        collection[`image${index + 1}`]
+                                                        imagesArr[indexCollection]
                                                     }
                                                     alt="imageSlide"
                                                 />
                                             </div>
-                                        ))}
+                                        })
+                                    }
                                 </div>
                             </div>
                             <button
@@ -173,7 +171,7 @@ const CollectionPage = (props: Props) => {
                         <div className="flex gap-10 items-end mt-8">
                             <div className="flex items-center justify-center w-screen md:w-[330px] h-[147px] border overflow-hidden border-gray-400 cursor-pointer hover:scale-105 hover:bg-red-300 transition-all duration-150">
                                 <Image
-                                    src={collection.logo}
+                                    src={collection.logo || ""}
                                     width={203}
                                     height={30}
                                     alt="LogoCollection"
@@ -254,11 +252,11 @@ const CollectionPage = (props: Props) => {
                 <div className="flex flex-wrap gap-3 mt-10 mb-10">
                     {typeTiles === "all" ? (
                         tilesForCollection.map((tile) => (
-                            <Product city={tile.country} imageURL={tile.image1} title={tile.name} price={tile.price} />
+                            <Product key={tile.id} city={tile.country} imageURL={tile.image1 || ""} title={tile.name} price={tile.price} content_type={tile.content_type} id={tile.id} />
                         ))
                     ) : (
                         tilesForCollection.filter(item => item.tile_type === typeTiles).map((tile) => (
-                        <Product city={tile.country} imageURL={tile.image1} title={tile.name} price={tile.price} />
+                            <Product key={tile.id} city={tile.country} imageURL={tile.image1 || ""} title={tile.name} price={tile.price} content_type={tile.content_type} id={tile.id} />
                         ))
                     )}
                 </div>

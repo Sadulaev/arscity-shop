@@ -24,7 +24,7 @@ const CheckBoxListLaminate:React.FC<FilterLaminateProps> = ({thicknessFilter, ti
         {thicknessFilter.length > 5 ? (
           <>
             <div className={`${show ? "" : "h-[110px] overflow-hidden"}`}>
-              {thicknessFilter?.map((thickness, index) => (
+              {thicknessFilter?.map((thickness) => (
                 <CheckboxLaminate key={thickness.id} text={thickness.name} id={thickness.id} category={value}/>
               ))}
             </div>
@@ -32,7 +32,7 @@ const CheckBoxListLaminate:React.FC<FilterLaminateProps> = ({thicknessFilter, ti
           </>
         ) : (
           <>
-            {thicknessFilter.map((thickness, index) => (
+            {thicknessFilter.map((thickness) => (
               <CheckboxLaminate key={thickness.id} text={thickness.name} id={thickness.id} category={value}/>
             ))}
           </>

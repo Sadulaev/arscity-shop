@@ -3,9 +3,7 @@ import React from 'react'
 import emptySerach from '../../../../../public/emptySerach.svg'
 import Link from 'next/link'
 
-type Props = {}
-
-const EmptySerach = (props: Props) => {
+const EmptySerach = () => {
   return (
     <div className='md:w-[1370px] md:px-12 md:mt-20 flex flex-col mx-auto h-[80vh] '>
         <h2 className='text-5xl mb-5'>По вашему запросу ничего не найдено</h2>

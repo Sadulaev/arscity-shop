@@ -3,17 +3,15 @@ import axios from 'axios';
 import { MoveRight } from 'lucide-react'
 import Link from 'next/link';
 import { useRouter } from 'next/navigation';
-import React, { useState } from 'react'
+import React, { useCallback, useState } from 'react'
 
-type Props = {}
-
-const Login = (props: Props) => {
+const Login = () => {
 
     const router = useRouter()
     const [email, setEmail] = useState("")
     const [password, setPassword] = useState("")
     
-    const loginFunction = async(e:React.FormEvent) => {
+    const loginFunction = useCallback(async(e:React.FormEvent) => {
       e.preventDefault()
       try{
         const response = await axios.post("http://127.0.0.1:8000/api/auth/jwt/create", {
@@ -27,7 +25,7 @@ const Login = (props: Props) => {
         alert('Ошибка авторизации!')
         console.log(error);
       }
-    }
+    }, [])
 
     return (
       <div className='flex flex-col gap-10 w-[1380px] min-h-screen mx-auto mt-20 px-12'>

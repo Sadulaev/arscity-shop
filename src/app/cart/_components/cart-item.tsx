@@ -10,11 +10,10 @@ type CartItemType = {
     object_id: number,
     product: ProductType,
     quantity: number,
-    content_type: string,
     content_type_display: string,
 }
 
-const CartItem: React.FC<CartItemType> = ({id, quantity: initialQuantity, object_id, product, content_type, content_type_display }) => {
+const CartItem: React.FC<CartItemType> = ({id, quantity: initialQuantity, object_id, product, content_type_display }) => {
     const img = `http://127.0.0.1:8000${product?.image1}`
     const { addToCart, removeFromCart } = useCartStore()
 

@@ -6,7 +6,6 @@ import axios from 'axios'
 import Product from '@/components/shared/product-card'
 import { TileTypes } from '@/types/typeTiles'
 import { SceletonCard } from '@/components/shared/skeletons/sceleton'
-import Link from 'next/link'
 import { X } from 'lucide-react'
 import { useCartStore } from '../../../../store/CartStore'
 
@@ -21,7 +20,7 @@ const Products = () => {
 
   useEffect(() => {
     fetchCart()
-  }, [fetchCart])
+  }, [])
 
 
   useEffect(() => {
@@ -47,9 +46,9 @@ const Products = () => {
   
   return (
     <div className='flex gap-5 w-screen md:w-[1370px] mx-auto mt-10 px-12 pt-5'>
-      {window.innerWidth > 650 ? "" : (
+      {/* {window.innerWidth > 650 ? "" : ( */}
         <button onClick={() => setFilterShow(!filterShow)} className='absolute top-98 left-12 border px-5 py-2 bg-red-500 text-white'>показать фильтры</button>
-      )}
+      {/* )} */}
       <div className='pr-2 min-w-[20%] hidden md:block md:max-h-[80vh] md:overflow-y-auto'>
         <FiltersTile />
       </div>
@@ -77,7 +76,7 @@ const Products = () => {
             ))
           ) : (
             new Array(6).fill(0).map((_, index) => (
-              <SceletonCard/>
+              <SceletonCard key={index} />
             ))
           )}
         </div>

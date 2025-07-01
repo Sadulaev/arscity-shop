@@ -3,9 +3,7 @@ import React from 'react'
 import emptyCart from '../../../../public/emptyCart.jpg'
 import Link from 'next/link'
 
-type Props = {}
-
-const EmptyCart = (props: Props) => {
+const EmptyCart = () => {
   return (
     <div className='md:w-[1370px] md:px-12 md:mt-20 flex flex-col mx-auto h-[80vh] '>
         <h2 className='text-5xl'>В корзине пока ничего нет</h2>

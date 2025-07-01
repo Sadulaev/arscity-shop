@@ -1,6 +1,7 @@
 export type TileFields = {
     id: number,
     name: string,
+    logo?: string,
 }
 
 export type TileTypes = {
@@ -31,7 +32,7 @@ export type TileTypes = {
     surface?: TileFields,
     form?: TileFields,
     tile_type?: string,
-    content_type?: string
+    content_type: string,
 }
 export type Filters = { 
     material: TileFields[] 

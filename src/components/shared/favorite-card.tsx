@@ -1,4 +1,4 @@
-import { Heart, Layers } from 'lucide-react'
+import { Heart } from 'lucide-react'
 import Image from 'next/image'
 import React from 'react'
 import { FavoritesType, useFavorites } from '../../../store/AddToFavorites'
@@ -7,9 +7,9 @@ import Link from 'next/link'
 import { useCartStore } from '../../../store/CartStore'
 
 
-const FavoriteCard:React.FC<FavoritesType> = ({id, name, image1, price, country, content_type_display, object_id, description, number_of_elements}) => {
+const FavoriteCard:React.FC<FavoritesType> = ({id, name, image1, price, country, content_type_display, object_id}) => {
 
-    const { favorites, addFavorite, removeFavorite } = useFavorites()
+    const { favorites, removeFavorite } = useFavorites()
     const { addToCart, cartList } = useCartStore()
     console.log(content_type_display, "content_type");
     const imgURL = `http://127.0.0.1:8000${image1}`
