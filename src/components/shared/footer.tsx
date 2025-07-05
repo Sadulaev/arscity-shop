@@ -21,9 +21,8 @@ const Footer = () => {
           onClick={() => setOpen(!open)}
           backgroundColor='bg-red-600'
           colorText='text-white'
-          className='hover:scale-110 duration-150 z-[1000] -mt-20 cursor-pointer'
+          className='hover:scale-110 hidden md:flex duration-150 z-[1000] -mt-20 cursor-pointer'
           text='КАТАЛОГ ПРОДУКЦИИ'
-          // widthScreen={widthScreen}
           icon={<Menu />}
         />
         <CatalogModal open={open} setOpen={setOpen} />

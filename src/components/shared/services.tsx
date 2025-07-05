@@ -27,7 +27,7 @@ const Services = () => {
         <div className='flex gap-[35px] items-center'>
             <Image src={layers} alt='icon' width={52} height={43}/>
             <div>
-                <h3>монтаж плитки
+                <h3>монтаж плитки и укладка ламината
                 на вашем объекте</h3>
                 <span className='text-gray-400'>под ключ</span>
             </div>

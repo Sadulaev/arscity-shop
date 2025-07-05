@@ -25,7 +25,8 @@ export type CatalogType  = {
     number_of_elements: number,
     logo?: string,
     compound?: string,
-    style?: string
+    style?: string,
+    content_type: string
 }
 
 const CatalogUpdates = () => {

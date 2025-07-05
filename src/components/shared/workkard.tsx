@@ -5,14 +5,14 @@ import Image from "next/image";
 import { useMemo, useState } from "react";
 
 const WorkCard: React.FC<{ example: CompletedWorkType }> = ({ example }) => {
-  const [mainImageIndex, setMainImageIndex] = useState<number>(1);
+  const [mainImageIndex, setMainImageIndex] = useState<number>(0);
   const [showText, setShowText] = useState<boolean>(false)
   const handleNext = () => {
-    setMainImageIndex(prev => (prev < 4 ? prev + 1 : 1));
+    setMainImageIndex(prev => (prev < 3 ? prev + 1 : 0));
   };
 
   const handlePrev = () => {
-    setMainImageIndex(prev => (prev > 1 ? prev - 1 : 4));
+    setMainImageIndex(prev => (prev >= 1 ? prev - 1 : 3));
   };
 
   const workImagesArr = useMemo(() => {
@@ -20,7 +20,7 @@ const WorkCard: React.FC<{ example: CompletedWorkType }> = ({ example }) => {
   }, [!!example])
 
   return (
-    <div className="flex flex-col gap-4 w-[500px]">
+    <div className="flex flex-col gap-4 md:w-[500px]">
       <div className="relative flex justify-center w-full h-[400px] overflow-hidden">
         <Image
           src={workImagesArr[mainImageIndex]}
@@ -49,12 +49,12 @@ const WorkCard: React.FC<{ example: CompletedWorkType }> = ({ example }) => {
           .map((_, index) => (
             <div key={index} className="relative flex object-contain w-[100px] h-[80px]">
               <div
-                onClick={() => setMainImageIndex(index + 1)}
-                className={`absolute top-0 left-0 ${index + 1 === mainImageIndex ? "" : "bg-gray-200"} opacity-70 h-full w-full cursor-pointer`}
+                onClick={() => setMainImageIndex(index)}
+                className={`absolute top-0 left-0 ${index === mainImageIndex ? "" : "bg-gray-200"} opacity-70 h-full w-full cursor-pointer`}
               ></div>
               <Image
                 style={{ objectFit: 'contain' }}
-                src={workImagesArr[index + 1]}
+                src={workImagesArr[index]}
                 alt=""
                 width={100}
                 height={80}
@@ -72,6 +72,7 @@ const WorkCard: React.FC<{ example: CompletedWorkType }> = ({ example }) => {
       ) : (
         <p>{example.description.slice(0, -1)}... <span onClick={() => setShowText(!showText)} className="text-blue-600 cursor-pointer">Скрыть</span></p>
       )}
+      <div className="md:hidden h-2 w-[100%] bg-red-500"></div>
 
     </div>
   );

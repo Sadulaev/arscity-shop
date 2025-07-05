@@ -3,16 +3,17 @@ import React from "react"
 
 const Logistics = () => {
     return (
-        <div className="min-h-screen h-[170vh]">
-            <div className="w-screen bg-linear-to-b pt-30 from-[#D2D2D2] to-white h-[200px] -mt-20 items-center  -z-1">
-                <div className="flex flex-col mt-20 w-[1370px] px-12 mx-auto">
+        <div className="h-[100%] md:min-h-screen md:h-[170vh]">
+            <div className="w-screen bg-linear-to-b pt-30 from-[#D2D2D2] to-white md:h-[200px] -mt-20 items-center  -z-1">
+            </div>
+                <div className="flex flex-col mt-20 md:w-[1370px] px-12 mx-auto">
                     <div className="flex items-center gap-3 text-gray-400">
                         <span>Главная</span>
                         <MoveRight
                             color="#ee1b1b"
                             strokeWidth={1}
                         />
-                        <span>Профиль</span>
+                        <span>Оплата и доставка</span>
                     </div>
                     <h2 className="text-3xl my-10">
                         Информация об оплате и доставке
@@ -128,7 +129,7 @@ const Logistics = () => {
                         </p>
                     </div>
                 </div>
-            </div>
+            
         </div>
     )
 }

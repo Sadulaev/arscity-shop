@@ -27,7 +27,7 @@ const CompletedWork: React.FC = () => {
   }, []);
 
   return (
-    <div className="flex flex-col gap-10 md:w-[1370px] lg:w-[1370px] bg-gray-100 min-h-[1000px] mx-auto pt-5 px-12 mb-20">
+    <div className="flex flex-col gap-10 w-screen md:w-[1370px] lg:w-[1370px] bg-gray-100 min-h-[1000px] mx-auto pt-5 md:px-12 md:mb-20">
         <h2 className='text-3xl text-center'>Примеры наших работ</h2>
         <div className='flex flex-wrap justify-center gap-10'>
             {workExamples.map(example => (

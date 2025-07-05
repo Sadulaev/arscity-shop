@@ -38,7 +38,7 @@ const Product: React.FC<TileCardFields> = ({ id, city, imageURL, title, price, c
     }
 
     return (
-        <div className='max-w-[300px] min-w-[300px] max-h-[514px] min-h-[514px] flex flex-col justify-between pb-4 pt-2 gap-[10px] px-3 shadow-md'>
+        <div className='max-w-[300px] min-w-[300px] max-h-[514px] min-h-[514px] flex flex-col justify-between pb-4 pt-2 gap-[10px] px-3 shadow-md hover:-translate-y-1 transition-all duration-200'>
             <div className='flex items-center justify-between'>
                 <span>{city.name}</span>
                 <Heart
@@ -51,7 +51,7 @@ const Product: React.FC<TileCardFields> = ({ id, city, imageURL, title, price, c
             <div className='overflow-hidden min-h-[180px] flex items-center'>
                 <Image src={imageURL || ""} objectFit='cover' alt='image' width={150} height={0} style={{ width: '100%', height: '100%' }} />
             </div>
-            <Link target='blank' href={`/product/tile/${id}`}>
+            <Link target='blank' href={`/product/${content_type}/${id}`}>
                 <span className='text-[1.3rem] cursor-pointer hover:text-red-600 transition-all duration-150'>{title}</span>
             </Link>
             <div className='mt-4'>

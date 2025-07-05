@@ -1,9 +1,7 @@
 "use client"
 import {
     ArrowLeft,
-    ArrowRight,
-    Heart,
-    MoveRight,
+    ArrowRight
 } from "lucide-react"
 import Image from "next/image"
 import React, { useEffect, useMemo, useRef, useState } from "react"
@@ -12,6 +10,8 @@ import { CatalogType } from "@/components/shared/catalog-updates"
 import Services from "@/components/shared/services"
 import Product from "@/components/shared/product-card"
 import { TileTypes } from "@/types/typeTiles"
+import { useFavorites } from "../../../../../store/AddToFavorites"
+import Breadcrumbs from "@/components/shared/breadcrumbs"
 
 const CollectionPage = () => {
     const scrollRef = useRef<HTMLDivElement>(null)
@@ -19,6 +19,9 @@ const CollectionPage = () => {
     const [collection, setCollection] = useState<CatalogType | null>(null)
     const [tilesForCollection, setTilesForCollection] = useState<TileTypes[]>([])
     const [indexCollection, setIndexCollection] = useState(1)
+
+
+    
 
     useEffect(() => {
         const id = window.location.pathname.split("/").pop()
@@ -36,7 +39,6 @@ const CollectionPage = () => {
     }, [])
 
     useEffect(() => {
-        //const id = window.location.pathname.split("/").pop()
         if (!collection?.id) return
         const fetchTilesForCollection = async () => {
             const response = await axios.get(
@@ -46,6 +48,26 @@ const CollectionPage = () => {
         }
         fetchTilesForCollection()
     }, [collection])
+
+
+
+
+    const { addFavorite, removeFavorite, favorites } = useFavorites()
+    const isInFavorites = favorites.some(fav => fav.object_id === collection?.id && fav.content_type_display === "collection")
+    
+
+    const handleFavoriteToggle = () => {
+        const ct = favorites.filter(item => item.object_id === collection?.id && item.content_type_display === "collection")
+        if (isInFavorites) {
+            removeFavorite(ct[0].id)
+        } else {
+            if (collection?.id) {
+                addFavorite("collection", collection?.id)
+            }
+        }
+    }
+
+
 
     const scrollLeft = () => {
         if (scrollRef.current) {
@@ -68,39 +90,15 @@ const CollectionPage = () => {
 
     if (!collection) return null
 
-    // const {search} = useSearchStore()
-    // if (search.length > 0 ) return <SearchPage/>
-
 
     return (
         <div className="flex flex-col gap-4 md:gap-0">
-            <div className="w-screen bg-linear-to-b from-[#D2D2D2] to-white md:h-[317px] -mt-20 flex items-center pt-20 -z-1">
-                <div className="flex flex-col gap-4 md:gap-0 md:flex-row justify-between w-[1370px] mx-auto px-10 md:px-12">
-                    <div className="flex flex-col gap-3">
-                        <div className="flex items-center gap-3 text-gray-400">
-                            <span>Главная</span>
-                            <MoveRight
-                                color="#ee1b1b"
-                                strokeWidth={1}
-                            />
-                            <span>Каталог</span>
-                            <MoveRight
-                                color="#ee1b1b"
-                                strokeWidth={1}
-                            />
-                            <span>Коллекция</span>
-                        </div>
-                        <h1 className="text-3xl">
-                            Коллекция `&quot;`{collection.name}`&quot;`
-                        </h1>
-                    </div>
-
-                    <button className="flex gap-3 items-center border border-gray-400 md:py-4 px-15 uppercase hover:bg-red-500 hover:text-white hover:border-none transition-all duration-200 z-50">
-                        <Heart />
-                        <span>ДОБАВИТЬ в избранное</span>
-                    </button>
-                </div>
-            </div>
+            <Breadcrumbs 
+                name={"Коллекция"}
+                title={`Коллекция ${collection.name}`}
+                handleFavoriteToggle={handleFavoriteToggle}
+                isInFavorites={isInFavorites}
+            />
 
             <div className="flex flex-col justify-between w-screen md:w-[1370px] gap-10 mx-auto px-10 md:px-12">
                 <div className="flex flex-col md:flex-row justify-between md:items-start">

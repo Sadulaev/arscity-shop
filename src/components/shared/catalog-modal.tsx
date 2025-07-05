@@ -21,7 +21,7 @@ const CatalogModal:React.FC<Props> = ({open, setOpen}) => {
             <div className='flex flex-col w-[50%] p-3 gap-3 uppercase md:border-r-2'>
                 <Link href='/products/large-format-tiles' onClick={() => setOpen(false)} className='cursor-pointer hover:text-red-400 font-bold transition-all delay-100 border-b-2'>КРУПНЫЕ ФОРМАТЫ ПЛИТКИ</Link>
                 <Link href='/products/tile' onClick={() => setOpen(false)} className='cursor-pointer hover:text-red-400 font-bold transition-all delay-100 border-b-2'>Керамогранит и керамическая плитка</Link>
-                <span onClick={() => setOpen(false)} className='cursor-pointer hover:text-red-400 font-bold transition-all delay-100 border-b-2'>ЗАМАЗКИ</span>
+                <Link href='/products/grouts/' onClick={() => setOpen(false)} className='cursor-pointer hover:text-red-400 font-bold transition-all delay-100 border-b-2'>ЗАМАЗКИ</Link>
             </div>
             <div className='flex flex-col w-[50%] p-3 gap-3 uppercase'>
                 <Link href='/products/laminate' onClick={() => setOpen(false)} className='cursor-pointer hover:text-red-400 font-bold transition-all delay-100 border-b-2'>ЛАМИНАТ</Link>

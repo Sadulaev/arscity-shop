@@ -35,7 +35,7 @@ const CollectionCard: React.FC<PropsCardCollection> = ({ id, country, name, imag
     }
 
     return (
-        <div className='min-w-[350px] min-h-[514px] flex flex-col mt-10 gap-[42px]'>
+        <div className='min-w-[350px] px-6 min-h-[514px] flex flex-col mt-10 gap-[42px] hover:-translate-y-1 transition-all duration-200'>
             <div className='flex items-center justify-between gap-4'>
                 <span className='flex-auto uppercase'>{country}</span>
                 <div className='w-[100%] border'></div>

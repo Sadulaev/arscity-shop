@@ -49,7 +49,7 @@ const ProductSkirtingBoard: React.FC<Props> = ({id, name, price, image1, content
 
 
   return (
-    <div className='max-w-[300px] min-w-[300px] max-h-[514px] min-h-[514px] flex flex-col justify-between pb-4 gap-[20px] px-3 cursor-pointer custom-shadow'>
+    <div className='max-w-[300px] min-w-[300px] max-h-[514px] min-h-[514px] flex flex-col justify-between pb-4 gap-[20px] px-3 cursor-pointer custom-shadow hover:-translate-y-1 transition-all duration-200'>
         <div className='flex items-center justify-end pt-2'>
             <Heart
               onClick={handleFavoriteToggle}
@@ -61,15 +61,17 @@ const ProductSkirtingBoard: React.FC<Props> = ({id, name, price, image1, content
         <div className='overflow-hidden min-h-[200px] flex items-center'>
           <Image src={image1} alt='image' width={300} height={300}/>
         </div>
-        
-        <span className='text-[1.3rem]'>{name}</span>
-        <Link target='blank' href={`https://wa.me/79990019494?text=Здравствуйте, я бы хотел купить у вас подложку ${name}, мы сможем обсудить детали?`}>
-          <div className='flex items-center justify-between  rounded-[2px] text-black hover:bg-white hover:text-black transition-all delay-150'>
-            <div>
-              <span className='text-[1.3rem] text-[#474A51]'>{price} P за м²</span>
-            </div>
-          </div>
+        <Link href={`/product/skirting-board/${id}`}>
+          <span className='text-[1.3rem]'>{name}</span>
         </Link>
+        
+        
+        <div className='flex items-center justify-between  rounded-[2px] text-black hover:bg-white hover:text-black transition-all delay-150'>
+          <div>
+            <span className='text-[1.3rem] text-[#474A51]'>{price} P за м²</span>
+          </div>
+        </div>
+       
         <button 
           onClick={handleAddToCart}
           className={`w-full text-[1.2rem] p-4 border transition-all duration-200 ${

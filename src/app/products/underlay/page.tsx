@@ -6,7 +6,7 @@ import ProductUnderlay from '@/components/shared/product-card-underlays';
 import { useCartStore } from '../../../../store/CartStore';
 
 
-type UnderlayType = {
+export type UnderlayType = {
     id: number,
     name: string,
     thickness: string,

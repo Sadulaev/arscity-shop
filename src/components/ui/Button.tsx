@@ -7,7 +7,6 @@ type Props = {
     backgroundColor: string;
     colorText: string;
     className: string;
-    widthScreen?: number,
     onClick?: (e: React.MouseEvent<HTMLDivElement>) => void;
     onClickCapture?: (e: React.MouseEvent<HTMLDivElement>) => void;
 }

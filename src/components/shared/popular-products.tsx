@@ -73,24 +73,25 @@ const PopularProducts = () => {
     if (tiles.length === 0 && collections.length === 0) return null
 
     return (
-        <div ref={refProducts} className='relative flex flex-col gap-5 w-screen md:w-[1370px] mx-auto px-10'>
+        <div ref={refProducts} className='relative flex flex-col gap-5 w-screen md:w-[1370px] mx-auto px-10 hover:-translate-y-1 transition-all duration-200'>
             <div className='flex items-center justify-between text-2xl uppercase'>
-                <div className='flex text-[1rem] md:text-2xl gap-10 md:justify-between items-center md:gap-10'>
-                    <h2 style={{color: viewMode === 'collections' ? "red" : 'black'}} className='w-[30%] md:w-[50%] cursor-pointer font-bold relative inline-block after:content-[""] after:absolute after:w-full after:h-[2px] after:bg-red-500 after:scale-x-0 after:left-0 after:bottom-0 after:transition-transform after:origin-left after:duration-300 hover:after:scale-x-100 pb-1' onClick={() => setViewMode('collections')}>Популярные коллеции</h2>
-                    <h2 style={{color: viewMode === 'products' ? "red" : 'black'}} className='w-[30%] md:w-[50%] cursor-pointer font-bold relative inline-block after:content-[""] after:absolute after:w-full after:h-[2px] after:bg-red-500 after:scale-x-0 after:left-0 after:bottom-0 after:transition-transform after:origin-left after:duration-300 hover:after:scale-x-100 pb-1' onClick={() => setViewMode('products')}>Популярные ТОВАРЫ</h2>
+                <div className='flex text-[0.85rem] md:text-2xl gap-10 md:justify-between items-center md:gap-10'>
+                    <h2 style={{color: viewMode === 'collections' ? "red" : 'black'}} className=' cursor-pointer font-bold relative inline-block after:content-[""] after:absolute after:w-full after:h-[2px] after:bg-red-500 after:scale-x-0 after:left-0 after:bottom-0 after:transition-transform after:origin-left after:duration-300 hover:after:scale-x-100 pb-1' onClick={() => setViewMode('collections')}>Популярные коллеции</h2>
+                    <h2 style={{color: viewMode === 'products' ? "red" : 'black'}} className=' cursor-pointer font-bold relative inline-block after:content-[""] after:absolute after:w-full after:h-[2px] after:bg-red-500 after:scale-x-0 after:left-0 after:bottom-0 after:transition-transform after:origin-left after:duration-300 hover:after:scale-x-100 pb-1' onClick={() => setViewMode('products')}>Популярные ТОВАРЫ</h2>
+                    <Link href={viewMode === "collections" ? "/products/collections" : "/products/tile"} className='-bottom-12 left-8 group flex items-center gap-3'>
+                        <span className='inline-block after:content-[""] after:absolute after:w-full after:h-[2px] after:bg-red-500 after:scale-x-0 after:left-0 after:bottom-0 after:transition-transform after:origin-left after:duration-300 hover:after:scale-x-100 pb-1'>{viewMode === 'collections' ? 'Все коллекции' : 'Все товары'}</span>
+                        <div className='hidden md:flex items-center justify-center w-[30px] h-[30px] rounded-[50%] bg-red-600 text-white group-hover:scale-125 transition-all duration-200'>
+                            <ArrowRight size={20}/>
+                        </div>
+                    </Link>
                 </div>
-                <Link href={viewMode === "collections" ? "/products/collections" : "/products/tile"} className='absolute -bottom-12 left-8 md:relative group flex items-center gap-3'>
-                    <span className='relative inline-block after:content-[""] after:absolute after:w-full after:h-[2px] after:bg-red-500 after:scale-x-0 after:left-0 after:bottom-0 after:transition-transform after:origin-left after:duration-300 hover:after:scale-x-100 pb-1'>{viewMode === 'collections' ? 'Все коллекции' : 'Все товары'}</span>
-                    <div className='flex items-center justify-center w-[30px] h-[30px] rounded-[50%] bg-red-600 text-white group-hover:scale-125 transition-all duration-200'>
-                        <ArrowRight size={20}/>
-                    </div>
-                </Link>
+                
             </div>
             
             <div className='flex relative items-center gap-5 border-x-2 px-2'>
                 {viewMode === "collections" ? (
                     <>
-                        <button onClick={scrollLeft} className='absolute bottom-20 left-[30%] md:left-0 md:bottom-0 md:relative md:block cursor-pointer hover:scale-[1.1] transition-all delay-100 p-3 bg-red-600 rounded-[50%]'>
+                        <button onClick={scrollLeft} className='absolute bottom-0 left-[30%] md:left-0 md:bottom-0 md:relative md:block cursor-pointer hover:scale-[1.1] transition-all delay-100 p-3 bg-red-600 rounded-[50%]'>
                             <ArrowLeft size={20} color='#fff'/>
                         </button>
                         <div ref={scrollRef} className='flex gap-8 overflow-x-hidden overflow-y-hidden mb-5'>
@@ -103,7 +104,7 @@ const PopularProducts = () => {
                             ))}  
                             
                         </div>
-                        <button onClick={scrollRight} className='absolute bottom-20 md:bottom-0 right-[30%] md:relative md:right-0 md:block cursor-pointer hover:scale-[1.1] transition-all delay-100 p-3 bg-red-600 rounded-[50%]'>
+                        <button onClick={scrollRight} className='absolute bottom-0 md:bottom-0 right-[30%] md:relative md:right-0 md:block cursor-pointer hover:scale-[1.1] transition-all delay-100 p-3 bg-red-600 rounded-[50%]'>
                             <ArrowRight size={20} color='#fff'/>
                         </button>
                     </>

@@ -5,7 +5,7 @@ import TotalCost from './_components/total-cost'
 import Delivery from './_components/delivery'
 import Payment from './_components/payment'
 import ContactDetails from './_components/contact_details'
-import { Heart, MoveRight } from 'lucide-react'
+import { MoveRight } from 'lucide-react'
 
 import React, { useCallback, useEffect, useState } from 'react'
 import Link from 'next/link';
@@ -15,9 +15,9 @@ import EmptyCart from './_components/empty-cart';
 
 const Cart = () => {
   const { cartList, totalPrice, fetchCart, fetchTotalPrice } = useCartStore()
-  const [delivery, setDelivery] = useState("")
+  const [delivery, setDelivery] = useState("delivery")
   const [addressDelivery, setAddressDelivery] = useState("")
-  const [paymentMethod, setPaymentMethod] = useState("")
+  const [paymentMethod, setPaymentMethod] = useState("office")
   const [surname, setSurname] = useState("")
   const [firstName, setFirstName] = useState("")
   const [patronymic, setPatronymic] = useState("")
@@ -66,7 +66,7 @@ const Cart = () => {
     fetchCart()
     fetchTotalPrice()
   }, [])
-
+  //console.log(paymentMethod);
 
   if (cartList.length === 0) return <EmptyCart/>
 
@@ -82,16 +82,12 @@ const Cart = () => {
               <span>Карзина</span>   
             </div>
           </div>
-          <button className='flex gap-3 items-center border border-gray-400 py-4 px-15 uppercase hover:bg-red-500 hover:text-white hover:border-none transition-all duration-200 z-50'>
-            <Heart/>
-            <span>ДОБАВИТЬ в избранное</span>
-          </button>
         </div>
       </div>
 
 
     
-      <div className='w-[1370px] mx-auto px-12 mb-5'>
+      <div className='md:w-[1370px] mx-auto px-12 mb-5'>
         <h2 className='text-2xl'>Карзина заказа</h2>
       </div>
 
@@ -109,20 +105,20 @@ const Cart = () => {
         ))}
       </div>
 
-      <div className='flex flex-col w-[1370px] mx-auto px-12'>
+      <div className='flex flex-col gap-10 md:gap-0 w-screen md:w-[1370px] mx-auto px-12'>
         <TotalCost totalPrice={totalPrice} />
         <Delivery setDelivery={setDelivery} setAddressDelivery={setAddressDelivery} delivery={delivery} />
-        <Payment setPaymentMethod={setPaymentMethod}/>
+        <Payment paymentMethod={paymentMethod} setPaymentMethod={setPaymentMethod}/>
         <ContactDetails setSurname={setSurname} setFirstName={setFirstName} setPatronymic={setPatronymic} setPhone={setPhone} setEmail={setEmail} setComment={setComment}/>
-        <div className='flex gap-3 items-center'>
-            <input onChange={() => setPrivacyPolicy(!privacyPolicy)} type="checkbox" />
-            <span>согласен с <Link href="" className='text-blue-600'>политикой конфиденциальности</Link></span>
+        <div className='flex gap-3 items-center mt-2'>
+            <input onChange={() => setPrivacyPolicy(!privacyPolicy)} id='privacyPolicy' name='privacyPolicy' type="checkbox" />
+            <label htmlFor='privacyPolicy'>согласен с <Link href="" className='text-blue-600'>политикой конфиденциальности</Link></label>
         </div>
-        <div className='flex items-end justify-between'>
+        <div className='flex flex-col gap-4 md:gap-0 md:flex-row md:items-end justify-between'>
           <TotalCost totalPrice={totalPrice} />
           <button 
           onClick={() => submitOrder()} 
-          className={`${!privacyPolicy ? 'pointer-events-none' : 'cursor-pointer'} px-20 py-3 bg-red-500 text-white uppercase font-bold`}>
+          className={`${!privacyPolicy || !surname || !firstName || !patronymic || !phone || !email ? 'pointer-events-none bg-red-300' : 'cursor-pointer bg-red-500'} px-20 py-3  text-white uppercase font-bold`}>
             оформить заказ
           </button>
         </div>

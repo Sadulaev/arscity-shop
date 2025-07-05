@@ -55,9 +55,9 @@ const SkirtingBoard = () => {
   }
   return (
     <div className='flex gap-5 md:w-[1370px] mx-auto mt-10 px-12 pt-5'>
-      {/* {window.innerWidth > 650 ? "" : ( */}
-        <button onClick={() => setFilterShow(!filterShow)} className='absolute top-98 left-12 border px-5 py-2 bg-red-500 text-white'>показать фильтры</button>
-      {/* )} */}
+    
+      <button onClick={() => setFilterShow(!filterShow)} className='absolute md:hidden top-98 left-12 border px-5 py-2 bg-red-500 text-white'>показать фильтры</button>
+    
       <div className='pr-2 w-[25%] hidden md:block md:max-h-[80vh] md:overflow-y-auto'>
         <FiltersSkirtingBoard handleChange={handleChange} resetFilters={resetFilters} selectedSkirtingBoards={selectedSkirtingBoards}/>
       </div>
