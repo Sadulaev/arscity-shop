@@ -29,31 +29,31 @@ const Register = () => {
     }
 
     return (
-        <div className='flex flex-col gap-10 w-[1380px] min-h-screen mx-auto mt-20 px-12'>
+        <div className='flex flex-col gap-10 w-screen md:w-[1380px] md:min-h-screen mx-auto mt-20 px-12'>
             <div className='flex gap-5'>
                 <span>Главная</span>
                 <MoveRight/>
                 <span>Регистрация</span>
             </div>
             <h2 className='text-3xl'>Регистрация</h2>
-            <div className='flex flex-col gap-5 w-1/2 mx-auto p-4 shadow-md bg-cyan-50-100'>
+            <div className='flex flex-col w-[100%] gap-5 md:w-1/2 mx-auto p-4 shadow-md bg-cyan-50-100'>
                 <span>Поля, отмеченные *, обязательны для заполнения.Пароль должен быть не менее 6 символов длиной.</span>
-                <form onSubmit={registrationFunction} action="" className='flex flex-col gap-10'>
-                    <div className='flex items center gap-6'>
-                        <label className='w-[80px]'htmlFor="username">Ф.И.О*</label>
+                <form onSubmit={registrationFunction} action="" className='flex flex-col gap-5 md:gap-10'>
+                    <div className='flex flex-col md:flex-row items center gap-2 md:gap-6'>
+                        <label className='md:w-[80px]'htmlFor="username">Ф.И.О*</label>
                         <input onChange={(e) => setUserName(e.target.value)} id='username' className='bg-gray-300 focus:outline-none p-2' type="text" placeholder='' />
                     </div>
-                    <div className='flex items center gap-6'>
-                        <label className='w-[80px]' htmlFor="email">E-mail*</label>
+                    <div className='flex flex-col md:flex-row items center gap-2 md:gap-6'>
+                        <label className='md:w-[80px]' htmlFor="email">E-mail*</label>
                         <input onChange={(e) => setEmail(e.target.value)} id='email' className='bg-gray-300 p-2 focus:outline-none'  type="email" placeholder=''/>
                     </div>
                     
-                    <div className='flex items center gap-6'>
-                        <label className='w-[80px]' htmlFor="password">Пароль*</label>
+                    <div className='flex flex-col md:flex-row items center gap-2 md:gap-6'>
+                        <label className='md:w-[80px]' htmlFor="password">Пароль*</label>
                         <input onChange={(e) => setPassword(e.target.value)} id='password' className='bg-gray-300 focus:outline-none p-2' type="password" placeholder=''/>
                     </div>
-                    <div className='flex items center gap-6'>
-                        <label className='w-[80px]' htmlFor="password">Пароль*</label>
+                    <div className='flex flex-col md:flex-row items center gap-2 md:gap-6'>
+                        <label className='md:w-[80px]' htmlFor="password">Пароль (еще раз)*</label>
                         <input onChange={(e) => setRePassword(e.target.value)} id='password' className='bg-gray-300 focus:outline-none p-2' type="password" placeholder=''/>
                     </div>
                     <div className='flex gap-5'>

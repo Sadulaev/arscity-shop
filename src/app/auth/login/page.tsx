@@ -28,21 +28,21 @@ const Login = () => {
     }, [])
 
     return (
-      <div className='flex flex-col gap-10 w-[1380px] min-h-screen mx-auto mt-20 px-12'>
+      <div className='flex flex-col gap-10 w-screen md:w-[1380px] md:min-h-screen mx-auto mt-20 px-12'>
         <div className='flex gap-5'>
             <span>Главная</span>
             <MoveRight/>
             <span>Авторизация</span>
         </div>
         <h2 className='text-3xl'>Авторизация</h2>
-        <div className='flex flex-col gap-5 w-1/2 mx-auto p-4 custom-shadow bg-cyan-50-100'>
-          <h2>Пожалуйста введите ваш логин(email) и пароль</h2>
+        <div className='flex flex-col w-[100%] gap-5 md:w-1/2 mx-auto p-2 md:p-4 custom-shadow bg-cyan-50-100'>
+          <h2>Пожалуйста введите логин(email) и пароль</h2>
           <form onSubmit={loginFunction} action="" className='flex flex-col gap-10'>
-              <div className='flex items center gap-6'>
+              <div className='flex items-center md:gap-6'>
                   <label className='w-[80px]' htmlFor="email">E-mail*</label>
                   <input onChange={(e) => setEmail(e.target.value)} id='email' className='bg-gray-300 p-2 focus:outline-none'  type="email" placeholder=''/>
               </div>
-              <div className='flex items center gap-6'>
+              <div className='flex items-center md:gap-6'>
                   <label className='w-[80px]' htmlFor="password">Пароль*</label>
                   <input onChange={(e) => setPassword(e.target.value)} id='password' className='bg-gray-300 focus:outline-none p-2' type="password" placeholder=''/>
               </div>
