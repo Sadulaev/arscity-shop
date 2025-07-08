@@ -30,7 +30,7 @@ const Grouts = () => {
         const fetchData = async () => {
             try {
                 const { data } = await axios.get(
-                    `${config.BASE_URL}/api/tile/grouts/",
+                    `${config.BASE_URL}/api/tile/grouts/`,
                     {
                         params: {
                             type: selectedGrouts.join(","),

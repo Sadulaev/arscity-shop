@@ -20,7 +20,7 @@ const LargeFormatTiles = () => {
     useEffect(() => {
         const fetchData = async() => {
             try {
-                const {data} = await axios.get(`${config.BASE_URL}/api/tile/tiles/?is_large_format=true')
+                const {data} = await axios.get(`${config.BASE_URL}/api/tile/tiles/?is_large_format=true`)
                 setLargeFormat(data.results)
             } catch(error){
                 console.log(error);

@@ -17,7 +17,7 @@ const BigSlider = () => {
 
   useEffect(() => {
     const fetchSlides = async () => {
-      const { data } = await axios.get(`${config.BASE_URL}/api/tile/slider/",)
+      const { data } = await axios.get(`${config.BASE_URL}/api/tile/slider/`,)
       setSlides(data)
     }
     fetchSlides()
