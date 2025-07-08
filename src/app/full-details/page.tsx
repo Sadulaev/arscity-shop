@@ -1,9 +1,7 @@
 import { MoveRight } from 'lucide-react'
 import React from 'react'
 
-type Props = {}
-
-const FullDetails = (props: Props) => {
+const FullDetails = () => {
   return (
     <div className="h-[100%] md:min-h-screen md:h-[170vh]">
             <div className="w-screen bg-linear-to-b pt-30 from-[#D2D2D2] to-white md:h-[200px] -mt-20 items-center  -z-1">
