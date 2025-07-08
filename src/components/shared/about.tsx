@@ -1,5 +1,6 @@
 'use client';
 import Image from 'next/image'
+import Link from 'next/link';
 import React, { useEffect, useRef } from 'react'
 
 const About = () => {
@@ -35,6 +36,7 @@ const About = () => {
                     Возможна доставка плитки в день заказа.
                     </span>
                 </p>
+                <Link href="/full-details" className='text-blue-500 text-[1rem] '>Помотреть полные сведения</Link>
             </div>
             <div className='flex flex-col md:flex-row gap-10'>
                 <Image
