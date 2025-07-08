@@ -6,6 +6,7 @@ import { SceletonCard } from '@/components/shared/skeletons/sceleton'
 import ProductSkirtingBoard from '@/components/shared/product-card-skirtingboard'
 import FiltersSkirtingBoard from './_components/filtersSkirtingBoard'
 import { X } from 'lucide-react'
+import config from '@/utils/config'
 
 
 export type SkirtingBoardTYpe = {
@@ -33,7 +34,7 @@ const SkirtingBoard = () => {
   
   useEffect(() => {
     const fethProduct = async() => {
-      const {data} = await axios.get(`http://127.0.0.1:8000/api/laminate/skirting-boards/`, {
+      const {data} = await axios.get(`${config.BASE_URL}/api/laminate/skirting-boards/`, {
         params: {
           type: selectedSkirtingBoards.join(',')
         }

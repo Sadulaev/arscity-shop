@@ -4,6 +4,7 @@ import { useFavorites } from '../../../../../store/AddToFavorites'
 import Image from 'next/image'
 import { Heart } from 'lucide-react'
 import Link from 'next/link'
+import config from '@/utils/config'
 
 type Props = {
     content_type: string
@@ -17,7 +18,7 @@ type Props = {
 
 const SearchCard:React.FC<Props> = ({content_type, id, name, price, image1}) => {
     const { addToCart, cartList } = useCartStore()
-    const img = `http://127.0.0.1:8000${image1}`  
+    const img = `${config.BASE_URL}${image1}`  
     const { addFavorite, removeFavorite, favorites } = useFavorites()
     const isInFavorites = favorites.some(fav => fav.object_id === id && fav.content_type_display === content_type)
     const isInCart = cartList.some(item => item.object_id === id && content_type === item.content_type_display)

@@ -15,6 +15,7 @@ import FilterCountry from './filters/filter-country'
 import FilterCollection from './filters/filter-collection'
 import FilterColorTile from './filters/filter-color-tile'
 import axios from 'axios'
+import config from '@/utils/config'
 
 export type DataFilters = {
   id: number,
@@ -44,7 +45,7 @@ const FiltersTile = () => {
   useEffect(() => {
     const fetchData = async() => {
       try {
-        const resp = await axios.get('http://127.0.0.1:8000/api/tile/tiles/filters/')
+        const resp = await axios.get(`${config.BASE_URL}/api/tile/tiles/filters/`)
         setDataFilters(resp.data)
       }
       catch (error) {

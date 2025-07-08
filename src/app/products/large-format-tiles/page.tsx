@@ -5,6 +5,7 @@ import { TileTypes } from '@/types/typeTiles'
 import Product from '@/components/shared/product-card';
 import { SceletonCard } from '@/components/shared/skeletons/sceleton';
 import { useCartStore } from '../../../../store/CartStore';
+import config from '@/utils/config';
 
 const LargeFormatTiles = () => {
 
@@ -19,7 +20,7 @@ const LargeFormatTiles = () => {
     useEffect(() => {
         const fetchData = async() => {
             try {
-                const {data} = await axios.get('http://127.0.0.1:8000/api/tile/tiles/?is_large_format=true')
+                const {data} = await axios.get(`${config.BASE_URL}/api/tile/tiles/?is_large_format=true')
                 setLargeFormat(data.results)
             } catch(error){
                 console.log(error);

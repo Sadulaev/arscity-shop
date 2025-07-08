@@ -8,6 +8,7 @@ import axios from 'axios'
 import { useCartStore } from '../../../../../store/CartStore';
 import { useFavorites } from '../../../../../store/AddToFavorites';
 import Breadcrumbs from '@/components/shared/breadcrumbs';
+import config from '@/utils/config';
 
 const LaminatePage = () => {
 
@@ -25,7 +26,7 @@ const LaminatePage = () => {
         const id = window.location.pathname.split("/").pop()
         try {
             const fetchData = async () => {
-                const response = await axios.get(`http://127.0.0.1:8000/api/laminate/laminates/${id}`)
+                const response = await axios.get(`${config.BASE_URL}/api/laminate/laminates/${id}`)
                 setLaminate(response.data)
             }
             fetchData()

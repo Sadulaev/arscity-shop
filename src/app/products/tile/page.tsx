@@ -8,6 +8,7 @@ import { TileTypes } from '@/types/typeTiles'
 import { SceletonCard } from '@/components/shared/skeletons/sceleton'
 import { X } from 'lucide-react'
 import { useCartStore } from '../../../../store/CartStore'
+import config from '@/utils/config'
 
 
 
@@ -37,7 +38,7 @@ const Products = () => {
     )
     const queryString = query.toString()
     const fethProduct = async() => {
-      const {data} = await axios.get(`http://127.0.0.1:8000/api/tile/tiles/?${queryString}`)
+      const {data} = await axios.get(`${config.BASE_URL}/api/tile/tiles/?${queryString}`)
       setTiles(data.results)
       
     }

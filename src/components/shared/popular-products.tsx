@@ -7,6 +7,7 @@ import Link from 'next/link';
 import axios from 'axios';
 import { CatalogType } from './catalog-updates';
 import { TileTypes } from '@/types/typeTiles';
+import config from '@/utils/config';
 
 const PopularProducts = () => {
 
@@ -21,7 +22,7 @@ const PopularProducts = () => {
     useEffect(() => {
         try{
             const fetchCollectionData = async () => {
-                const response = await axios.get("http://127.0.0.1:8000/api/tile/collections/?popularity_score=8")
+                const response = await axios.get(`${config.BASE_URL}/api/tile/collections/?popularity_score=8`)
                 setCollections(response.data) 
             }
             fetchCollectionData()
@@ -33,7 +34,7 @@ const PopularProducts = () => {
     useEffect(() => {
         try{
             const fetchTileData = async () => {
-                const response = await axios.get(`http://127.0.0.1:8000/api/tile/tiles/?popularity_score=8`)
+                const response = await axios.get(`${config.BASE_URL}/api/tile/tiles/?popularity_score=8`)
                 setTiles(response.data.results.slice(0, countData))
                 setTotalQuantityProduct(response.data.results.length)
             }

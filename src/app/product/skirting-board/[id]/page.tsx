@@ -8,6 +8,7 @@ import { useCartStore } from '../../../../../store/CartStore';
 import { useFavorites } from '../../../../../store/AddToFavorites';
 import { SkirtingBoardTYpe } from '@/app/products/skirting-board/page';
 import Breadcrumbs from '@/components/shared/breadcrumbs';
+import config from '@/utils/config';
 
 const Skirtingboard = () => {
 
@@ -23,7 +24,7 @@ const Skirtingboard = () => {
         const id = window.location.pathname.split("/").pop()
         try {
             const fetchData = async () => {
-                const response = await axios.get(`http://127.0.0.1:8000/api/laminate/skirting-boards/${id}`)
+                const response = await axios.get(`${config.BASE_URL}/api/laminate/skirting-boards/${id}`)
                 setScirtingboard(response.data)
             }
             fetchData()

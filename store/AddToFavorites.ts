@@ -1,3 +1,4 @@
+import config from "@/utils/config"
 import axios from "axios"
 import { create } from "zustand"
 import { persist } from "zustand/middleware"
@@ -28,7 +29,7 @@ export const useFavorites = create<StoreFavorites>()(
 
             fetchFavorites: async () => {
                 try {
-                    const response = await axios.get("http://127.0.0.1:8000/api/order/favorites/", {
+                    const response = await axios.get(`${config.BASE_URL}/api/order/favorites/`, {
                         headers: {
                             Authorization: `Bearer ${localStorage.getItem('access_token')}`
                         }
@@ -41,7 +42,7 @@ export const useFavorites = create<StoreFavorites>()(
 
             addFavorite: async (content_type, object_id) => {
                 try {
-                    const response = await axios.post("http://127.0.0.1:8000/api/order/favorites/", {
+                    const response = await axios.post(`${config.BASE_URL}/api/order/favorites/`, {
                         content_type,
                         object_id
                     }, {
@@ -57,7 +58,7 @@ export const useFavorites = create<StoreFavorites>()(
 
             removeFavorite: async (favoriteId) => {
                 try {
-                    await axios.delete(`http://127.0.0.1:8000/api/order/favorites/${favoriteId}/`, {
+                    await axios.delete(`${config.BASE_URL}/api/order/favorites/${favoriteId}/`, {
                         headers: {
                             Authorization: `Bearer ${localStorage.getItem('access_token')}`
                         }

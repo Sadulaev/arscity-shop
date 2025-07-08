@@ -1,5 +1,6 @@
 'use client';
 import WorkCard from '@/components/shared/workkard';
+import config from '@/utils/config';
 import axios from 'axios';
 import React, { useEffect, useState } from 'react';
 
@@ -20,7 +21,7 @@ const CompletedWork: React.FC = () => {
 
   useEffect(() => {
     const fetchData = async () => {
-      const resp = await axios.get('http://127.0.0.1:8000/api/workexample/work-examples/');
+      const resp = await axios.get(`${config.BASE_URL}/api/workexample/work-examples/`);
       setWorkExamples(resp.data);
     };
     fetchData();

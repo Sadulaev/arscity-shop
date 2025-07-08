@@ -9,6 +9,7 @@ import { SceletonCard } from '@/components/shared/skeletons/sceleton'
 import FiltersLaminatBlock from '@/components/shared/filters-laminate-block'
 import { X } from 'lucide-react'
 import { useCartStore } from '../../../../store/CartStore'
+import config from '@/utils/config'
 
 
 
@@ -35,7 +36,7 @@ const ProductsLaminate = () => {
 
     const queryString = query.toString()
     const fethProduct = async() => {
-      const {data} = await axios.get(`http://127.0.0.1:8000/api/laminate/laminates/?${queryString}`)
+      const {data} = await axios.get(`${config.BASE_URL}/api/laminate/laminates/?${queryString}`)
       setLaminates(data.results)
        console.log(queryString);
     }

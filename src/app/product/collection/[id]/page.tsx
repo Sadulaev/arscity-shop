@@ -12,6 +12,7 @@ import Product from "@/components/shared/product-card"
 import { TileTypes } from "@/types/typeTiles"
 import { useFavorites } from "../../../../../store/AddToFavorites"
 import Breadcrumbs from "@/components/shared/breadcrumbs"
+import config from "@/utils/config"
 
 const CollectionPage = () => {
     const scrollRef = useRef<HTMLDivElement>(null)
@@ -28,7 +29,7 @@ const CollectionPage = () => {
         try {
             const fetchData = async () => {
                 const response = await axios.get(
-                    `http://127.0.0.1:8000/api/tile/collections/${id}/`
+                    `${config.BASE_URL}/api/tile/collections/${id}/`
                 )
                 setCollection(response.data)
             }
@@ -42,7 +43,7 @@ const CollectionPage = () => {
         if (!collection?.id) return
         const fetchTilesForCollection = async () => {
             const response = await axios.get(
-                `http://127.0.0.1:8000/api/tile/tiles/?collection=${collection.id}`
+                `${config.BASE_URL}/api/tile/tiles/?collection=${collection.id}`
             )
             setTilesForCollection(response.data.results)
         }

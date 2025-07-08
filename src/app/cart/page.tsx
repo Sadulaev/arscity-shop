@@ -11,6 +11,7 @@ import React, { useCallback, useEffect, useState } from 'react'
 import Link from 'next/link';
 import axios from 'axios';
 import EmptyCart from './_components/empty-cart';
+import config from '@/utils/config';
 
 
 const Cart = () => {
@@ -33,7 +34,7 @@ const Cart = () => {
       const token = localStorage.getItem('access_token');
 
       const response = await axios.post(
-        'http://127.0.0.1:8000/api/order/orders/create/',
+        `${config.BASE_URL}/api/order/orders/create/`,
         {
             first_name: firstName,
             last_name: surname,

@@ -101,6 +101,7 @@ import Image from "next/image"
 import React, { useEffect, useState } from "react"
 import { X } from "lucide-react"
 import { ProductType, useCartStore } from "../../../../store/CartStore"
+import config from "@/utils/config";
 
 type CartItemType = {
     id?: number,
@@ -111,7 +112,7 @@ type CartItemType = {
 }
 
 const CartItem: React.FC<CartItemType> = ({id, quantity: initialQuantity, object_id, product, content_type_display }) => {
-    const img = `http://127.0.0.1:8000${product?.image1}`
+    const img = `${config.BASE_URL}${product?.image1}`
     const { addToCart, removeFromCart } = useCartStore()
 
     const [quantity, setQuantity] = useState(initialQuantity)

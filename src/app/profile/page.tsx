@@ -6,6 +6,7 @@ import axios from 'axios'
 import { useRouter } from 'next/navigation';
 import Link from 'next/link';
 import { useFavorites } from '../../../store/AddToFavorites';
+import config from '@/utils/config';
 
 
 export type OrdersTypeItemProduct = {
@@ -56,7 +57,7 @@ const Profile = () => {
                     return;
                 }
 
-                const response = await axios.get("http://127.0.0.1:8000/api/user/me/", {
+                const response = await axios.get(`${config.BASE_URL}/api/user/me/`, {
                     headers: {
                         Authorization: `Bearer ${token}`
                     }
@@ -81,7 +82,7 @@ const Profile = () => {
     useEffect(() => {
         const fetchOrder = async() => {
             try{
-                const response = await axios.get("http://127.0.0.1:8000/api/order/orders/", {
+                const response = await axios.get(`${config.BASE_URL}/api/order/orders/`, {
                     headers: {
                         Authorization: `Bearer ${localStorage.getItem('access_token')}`,
                         'Content-Type': 'application/json',

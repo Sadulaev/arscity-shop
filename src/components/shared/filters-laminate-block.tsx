@@ -7,6 +7,7 @@ import axios from 'axios'
 import CheckBoxListLaminate from './filters-laminate/filters-lamonate'
 import { TileFields } from '@/types/typeLaminate'
 import { FilterCategory } from '../../../store/FiltersLaminate'
+import config from '@/utils/config'
 
 type DataFiltersResponse = {
   [key: string]: {
@@ -21,7 +22,7 @@ const FiltersLaminatBlock = () => {
   useEffect(() => {
     const fetchData = async() => {
       try {
-        const resp = await axios.get('http://127.0.0.1:8000/api/laminate/laminates/filters/')
+        const resp = await axios.get(`${config.BASE_URL}/api/laminate/laminates/filters/`)
         setDataFilters(resp.data)
       }
       catch (error) {

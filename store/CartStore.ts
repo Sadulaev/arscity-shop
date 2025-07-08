@@ -1,5 +1,6 @@
 import { create } from 'zustand'
 import axios from 'axios'
+import config from '@/utils/config';
 
 
 export interface ProductType {
@@ -37,7 +38,7 @@ export const useCartStore = create<CartListStore>((set) => ({
 
   fetchCart: async () => {
     try {
-      const response = await axios.get('http://127.0.0.1:8000/api/order/cart/', {
+      const response = await axios.get(`${config.BASE_URL}/api/order/cart/`, {
         headers: {
           Authorization: `Bearer ${localStorage.getItem('access_token')}`
         }
@@ -50,7 +51,7 @@ export const useCartStore = create<CartListStore>((set) => ({
 
   fetchTotalPrice: async () => {
     try {
-      const response = await axios.get("http://127.0.0.1:8000/api/order/cart/total/", {
+      const response = await axios.get(`${config.BASE_URL}/api/order/cart/total/`, {
         headers: {
           Authorization: `Bearer ${localStorage.getItem('access_token')}`
         }
@@ -63,7 +64,7 @@ export const useCartStore = create<CartListStore>((set) => ({
 
   addToCart: async (content_type, object_id, quantity = 1) => {
     try {
-      await axios.post('http://127.0.0.1:8000/api/order/cart/', {
+      await axios.post(`${config.BASE_URL}/api/order/cart/`, {
         content_type,
         object_id,
         quantity
@@ -74,12 +75,12 @@ export const useCartStore = create<CartListStore>((set) => ({
       });
 
       const [cartRes, totalRes] = await Promise.all([
-        axios.get('http://127.0.0.1:8000/api/order/cart/', {
+        axios.get(`${config.BASE_URL}/api/order/cart/`, {
           headers: {
             Authorization: `Bearer ${localStorage.getItem('access_token')}`
           }
         }),
-        axios.get("http://127.0.0.1:8000/api/order/cart/total/", {
+        axios.get(`${config.BASE_URL}/api/order/cart/total/`, {
           headers: {
             Authorization: `Bearer ${localStorage.getItem('access_token')}`
           }
@@ -98,7 +99,7 @@ export const useCartStore = create<CartListStore>((set) => ({
 
   removeFromCart: async (cartItemId) => {
     try {
-      await axios.delete(`http://127.0.0.1:8000/api/order/cart/${cartItemId}/`, {
+      await axios.delete(`${config.BASE_URL}/api/order/cart/${cartItemId}/`, {
         headers: {
           Authorization: `Bearer ${localStorage.getItem('access_token')}`
         },
@@ -108,7 +109,7 @@ export const useCartStore = create<CartListStore>((set) => ({
         cartList: state.cartList.filter(item => item.id !== cartItemId)
       }))
 
-      const totalRes = await axios.get("http://127.0.0.1:8000/api/order/cart/total/", {
+      const totalRes = await axios.get(`${config.BASE_URL}/api/order/cart/total/`, {
         headers: {
           Authorization: `Bearer ${localStorage.getItem('access_token')}`
         }

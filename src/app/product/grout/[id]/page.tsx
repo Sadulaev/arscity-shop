@@ -8,6 +8,7 @@ import { useCartStore } from '../../../../../store/CartStore';
 import { useFavorites } from '../../../../../store/AddToFavorites'; 
 import Breadcrumbs from '@/components/shared/breadcrumbs';
 import { GroutsType } from '@/app/products/grouts/page';
+import config from '@/utils/config';
 
 const Grout = () => {
 
@@ -23,7 +24,7 @@ const Grout = () => {
         const id = window.location.pathname.split("/").pop()
         try {
             const fetchData = async () => {
-                const response = await axios.get(`http://127.0.0.1:8000/api/tile/grouts/${id}`)
+                const response = await axios.get(`${config.BASE_URL}/api/tile/grouts/${id}`)
                 setGrout(response.data)
             }
             fetchData()

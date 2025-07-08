@@ -1,4 +1,5 @@
 'use client';
+import config from '@/utils/config';
 import axios from 'axios'
 import { ArrowRight } from 'lucide-react'
 import Image from 'next/image'
@@ -38,7 +39,7 @@ const CatalogUpdates = () => {
     useEffect(() => {
         try{
             const fetchCollectionData = async () => {
-                const response = await axios.get("http://127.0.0.1:8000/api/tile/collections/")
+                const response = await axios.get(`${config.BASE_URL}/api/tile/collections/`)
                 setCollectionNew(response.data.slice(-3))
             }
             fetchCollectionData()

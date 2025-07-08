@@ -4,6 +4,7 @@ import { useEffect, useState } from 'react'
 import { SceletonCard } from '@/components/shared/skeletons/sceleton';
 import ProductUnderlay from '@/components/shared/product-card-underlays';
 import { useCartStore } from '../../../../store/CartStore';
+import config from '@/utils/config';
 
 
 export type UnderlayType = {
@@ -30,7 +31,7 @@ const Underlay = () => {
     useEffect(() => {
         const fetchData = async() => {
             try {
-                const {data} = await axios.get('http://127.0.0.1:8000/api/laminate/underlays/')
+                const {data} = await axios.get(`${config.BASE_URL}/api/laminate/underlays/`)
                 setUnderlays(data)
             } catch(error){
                 console.log(error);

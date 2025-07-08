@@ -5,6 +5,7 @@ import { FavoritesType, useFavorites } from '../../../store/AddToFavorites'
 import notImage from '../../../public/notimage.png'
 import Link from 'next/link'
 import { useCartStore } from '../../../store/CartStore'
+import config from '@/utils/config'
 
 
 const FavoriteCard:React.FC<FavoritesType> = ({id, name, image1, price, country, content_type_display, object_id}) => {
@@ -12,7 +13,7 @@ const FavoriteCard:React.FC<FavoritesType> = ({id, name, image1, price, country,
     const { favorites, removeFavorite } = useFavorites()
     const { addToCart, cartList } = useCartStore()
     console.log(content_type_display, "content_type");
-    const imgURL = `http://127.0.0.1:8000${image1}`
+    const imgURL = `${config.BASE_URL}${image1}`
     console.log(favorites);
     
     const isInCart = cartList.some(item => item.object_id === object_id && item.content_type_display === content_type_display)

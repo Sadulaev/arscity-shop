@@ -6,6 +6,7 @@ import { useCartStore } from "../../../../store/CartStore"
 import FiltersGrouts from "./_components/filterGrouts"
 import GroutsCard from "@/components/shared/grouts-card"
 import { X } from "lucide-react"
+import config from "@/utils/config"
 
 export type GroutsType = {
     id: number
@@ -29,7 +30,7 @@ const Grouts = () => {
         const fetchData = async () => {
             try {
                 const { data } = await axios.get(
-                    "http://127.0.0.1:8000/api/tile/grouts/",
+                    `${config.BASE_URL}/api/tile/grouts/",
                     {
                         params: {
                             type: selectedGrouts.join(","),

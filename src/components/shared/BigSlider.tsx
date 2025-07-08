@@ -3,6 +3,7 @@ import React, { useEffect, useState } from 'react'
 import axios from 'axios'
 import BigSliderSceleton from './big-slider-sceleton';
 import Image from 'next/image';
+import config from '@/utils/config';
 
 type Slide = {
   image: string;
@@ -16,7 +17,7 @@ const BigSlider = () => {
 
   useEffect(() => {
     const fetchSlides = async () => {
-      const { data } = await axios.get("http://127.0.0.1:8000/api/tile/slider/",)
+      const { data } = await axios.get(`${config.BASE_URL}/api/tile/slider/",)
       setSlides(data)
     }
     fetchSlides()

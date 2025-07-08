@@ -1,4 +1,5 @@
 'use client';
+import config from '@/utils/config';
 import axios from 'axios'
 import { MoveRight } from 'lucide-react'
 import Link from 'next/link'
@@ -14,7 +15,7 @@ const Register = () => {
     const registrationFunction = async(e:React.FormEvent) => {
         e.preventDefault()
         try{
-            await axios.post("http://127.0.0.1:8000/api/auth/users/", {
+            await axios.post(`${config.BASE_URL}/api/auth/users/`, {
                 username: username,
                 email: email,
                 password: password,

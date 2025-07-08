@@ -8,6 +8,7 @@ import { useCartStore } from '../../../../../store/CartStore';
 import { useFavorites } from '../../../../../store/AddToFavorites';
 import { UnderlayType } from '@/app/products/underlay/page';
 import Breadcrumbs from '@/components/shared/breadcrumbs';
+import config from '@/utils/config';
 
 const Underlay = () => {
 
@@ -23,7 +24,7 @@ const Underlay = () => {
         const id = window.location.pathname.split("/").pop()
         try {
             const fetchData = async () => {
-                const response = await axios.get(`http://127.0.0.1:8000/api/laminate/underlays/${id}`)
+                const response = await axios.get(`${config.BASE_URL}/api/laminate/underlays/${id}`)
                 setUnderlay(response.data)
             }
             fetchData()

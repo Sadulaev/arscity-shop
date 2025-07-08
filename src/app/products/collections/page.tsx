@@ -2,6 +2,7 @@
 import { CatalogType } from '@/components/shared/catalog-updates'
 import CollectionCard from '@/components/shared/collection-card'
 import { SceletonCard } from '@/components/shared/skeletons/sceleton'
+import config from '@/utils/config';
 import axios from 'axios'
 import React, { useEffect, useState } from 'react'
 
@@ -11,7 +12,7 @@ const CollectionsPage = () => {
 
     const fetchCollectionData = async () => {
       try {
-        const { data } = await axios.get("http://127.0.0.1:8000/api/tile/collections/")
+        const { data } = await axios.get(`${config.BASE_URL}/api/tile/collections/`)
         setCollections(data.reverse())
       } catch (error) {
         console.log(error);

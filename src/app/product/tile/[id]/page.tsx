@@ -10,6 +10,7 @@ import Product from '@/components/shared/product-card';
 import { useCartStore } from '../../../../../store/CartStore';
 import { useFavorites } from '../../../../../store/AddToFavorites';
 import Breadcrumbs from '@/components/shared/breadcrumbs';
+import config from '@/utils/config';
 
 const TilePage = () => {
 
@@ -26,7 +27,7 @@ const TilePage = () => {
         const id = window.location.pathname.split("/").pop()
         try {
             const fetchData = async () => {
-                const response = await axios.get(`http://127.0.0.1:8000/api/tile/tiles/${id}`)
+                const response = await axios.get(`${config.BASE_URL}/api/tile/tiles/${id}`)
                 setTile(response.data)
                 console.log(response);
             }
@@ -42,7 +43,7 @@ const TilePage = () => {
         try {
             const fetchTilesForCollection = async () => {
                 const response = await axios.get(
-                    `http://127.0.0.1:8000/api/tile/tiles/?collection=${tile?.collection?.id}`
+                    `${config.BASE_URL}/api/tile/tiles/?collection=${tile?.collection?.id}`
                 )
                 setTilesForCollection(response.data.results)
                 console.log("Проверка", response.data.results);

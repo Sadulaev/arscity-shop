@@ -5,6 +5,7 @@ import SearchCard from './_components/search-card';
 import { SceletonCard } from '@/components/shared/skeletons/sceleton';
 import { useSearchStore } from '../../../../store/SearchStore';
 import EmptySerach from './_components/empty-search';
+import config from '@/utils/config';
 
 type SearchDataType = {
     type: string
@@ -23,7 +24,7 @@ const SearchPage = () => {
     useEffect(() => {
         const fetchchData = async() => {
             try{
-                const response = await axios.get(`http://127.0.0.1:8000/api/search/?q=${search}`)
+                const response = await axios.get(`${config.BASE_URL}/api/search/?q=${search}`)
                 console.log(response.data);
                 setSearchData(response.data)
             } catch(error){
