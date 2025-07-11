@@ -7,28 +7,23 @@ import { useRouter } from 'next/navigation';
 import React, { useState } from 'react'
 
 const Login = () => {
-
     const router = useRouter()
     const [email, setEmail] = useState("")
     const [password, setPassword] = useState("")
-    console.log(email, password);
-    const loginFunction = async(e:React.FormEvent) => {
+        
+    const loginFunction = async(e:React.FormEvent, email: string, password: string) => {
       e.preventDefault()
       try{
         const response = await axios.post(`${config.BASE_URL}/api/auth/jwt/create`, {
-          email: email,
-          password: password
+          email,
+          password
         })
-        console.log(email, password, response.data);
         localStorage.setItem('access_token', response.data.access)
-        console.log(email, password, response.data);
         
         router?.push('/profile')
         alert('Вы успешно авторизовались!')
       } catch (error){
-        console.log(email, password);
         alert('Ошибка авторизации!')
-        console.log(error);
       }
     }
 
@@ -42,7 +37,7 @@ const Login = () => {
         <h2 className='text-3xl'>Авторизация</h2>
         <div className='flex flex-col w-[100%] gap-5 md:w-1/2 mx-auto p-2 md:p-4 custom-shadow bg-cyan-50-100'>
           <h2>Пожалуйста введите логин(email) и пароль</h2>
-          <form onSubmit={loginFunction} action="" className='flex flex-col gap-5 md:gap-10'>
+          <form onSubmit={(e) => loginFunction(e, email, password)} action="" className='flex flex-col gap-5 md:gap-10'>
               <div className='flex flex-col gap-2 md:flex-row md:items-center md:gap-6'>
                   <label className='w-[80px]' htmlFor="email">E-mail*</label>
                   <input onChange={(e) => setEmail(e.target.value)} id='email' className='bg-gray-300 p-2 focus:outline-none'  type="email" placeholder=''/>
