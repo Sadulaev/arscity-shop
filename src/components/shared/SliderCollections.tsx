@@ -40,18 +40,18 @@ const SliderCollections = () => {
 
   const scrollRight = () => {
     if (scrollRef.current) {
-      console.log(scrollRef);
+      console.log('ontouchend вызван');
       
       scrollRef.current.scrollBy({ left: 320, behavior: 'smooth' })
     }
   }
 
   return (
-    <div className='flex flex-col w-[400px] md:w-[1370px] mx-auto px-10 py-12 mt-5 overflow-hidden'>
-      <h2>КАТАЛОГ БРЕНДОВ</h2>
+    <div className='flex flex-col w-screen lg:w-[1370px] mx-auto px-4 lg:px-10 py-12 mt-5 overflow-hidden'>
+      <h2 className='mx-auto lg:mx-0'>КАТАЛОГ БРЕНДОВ</h2>
 
       <div className='flex items-center gap-4'>
-        <button onClick={scrollLeft} className='cursor-pointer hover:scale-[1.1] transition-all delay-100 p-3 bg-red-600 rounded-[50%]'>
+        <button onTouchEnd={scrollLeft} onClick={scrollLeft} className='cursor-pointer hover:scale-[1.1] transition-all delay-100 p-3 bg-red-600 rounded-[50%]'>
           <ArrowLeft size={20} color='#fff'/>
         </button>
         <div
@@ -59,7 +59,7 @@ const SliderCollections = () => {
           ref={scrollRef}
         >
           {brandsMock.map((brand, index) => (
-            <div key={index} className='bg-[#EEEEEE] min-w-[200px] md:min-w-[300px] h-[200px] flex items-center justify-center rounded-[5px]'>
+            <div key={index} className='bg-[#EEEEEE] min-w-[300px] lg:min-w-[300px] h-[200px] flex items-center justify-center rounded-[5px]'>
               {brand.imageURL ? (
                 <Image
                   src={brand.imageURL}
@@ -74,7 +74,7 @@ const SliderCollections = () => {
             </div>
           ))}
         </div>
-        <button onClick={scrollRight} className='cursor-pointer hover:scale-[1.1] transition-all delay-100 p-3 bg-red-600 rounded-[50%]'>
+        <button onTouchEnd={scrollLeft} onClick={scrollRight} className='cursor-pointer hover:scale-[1.1] transition-all delay-100 p-3 bg-red-600 rounded-[50%]'>
           <ArrowRight size={20} color='#fff'/>
         </button>
       </div>
