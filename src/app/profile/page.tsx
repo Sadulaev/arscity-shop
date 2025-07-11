@@ -1,11 +1,12 @@
 'use client';
-import { MoveRight } from 'lucide-react'
+import { LogOut, MoveRight } from 'lucide-react'
 import React, { useEffect, useState } from 'react'
 import Order from './_components/order'
 import axios from 'axios'
 import { useRouter } from 'next/navigation';
 import Link from 'next/link';
 import { useFavorites } from '../../../store/AddToFavorites';
+import { useCartStore } from '../../../store/CartStore';
 
 
 export type OrdersTypeItemProduct = {
@@ -47,6 +48,7 @@ const Profile = () => {
     const router = useRouter()
     const [orders, setOrders] = useState<OrdersType[]>([])
     const {favorites} = useFavorites()
+    const {fetchCart, cartList} = useCartStore()
     useEffect(() => {
         const isAuth = async () => {
             try {
@@ -98,6 +100,14 @@ const Profile = () => {
         
     }, [])
 
+    const logOut = () => {
+        localStorage.removeItem("access_token")
+        localStorage.removeItem("favorite-storage")
+        router.push("/")
+
+        
+    }
+
     if (!auth) return <div>Loadig...</div>
 
     return (
@@ -114,6 +124,11 @@ const Profile = () => {
                 <div className='flex items-center text-[0.8rem] md:text-2xl gap-10 mb-4'>
                     <span className='border border-solid border-red-500 px-4 py-2 bg-red-500 text-white'>МОИ ЗАКАЗЫ</span>
                     <Link href="/favorites">МОИ ИЗБРАННЫЕ ({favorites?.length})</Link>
+                    <div onClick={logOut} className='flex gap-2 items-center cursor-pointer'>   
+                        <span>Выйти из личного кабинета</span>
+                        <LogOut/>
+                    </div>
+                    
                 </div>
                 <div className='w-full h-[1px] bg-red-400 mb-10'></div>
                 <div>

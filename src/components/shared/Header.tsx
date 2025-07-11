@@ -55,9 +55,9 @@ const Header = () => {
     }, [fetchCart])
 
     return (
-        <header className="flex flex-col-reverse md:flex md:flex-row md:relative md:justify-between md:max-w-screen lg:w-[1370px] md:h-[240px] md:mx-auto bg-white md:px-10 md:mt-8 z-30">
-            <div className="md:flex md:flex-col md:max-w-[803px] md:gap-10 md:relative">
-                <ul className="hidden md:flex md:gap-5 md:justify-between">
+        <header className="flex flex-col-reverse lg:flex lg:flex-row lg:relative lg:justify-between lg:max-w-screen lg:w-[1370px] lg:h-[240px] lg:mx-auto bg-white lg:px-10 lg:mt-8 z-30">
+            <div className="lg:flex lg:flex-col lg:max-w-[803px] lg:gap-10 lg:relative">
+                <ul className="hidden lg:flex lg:gap-5 lg:justify-between">
                     <li className="relative inline-block after:content-[''] after:absolute after:w-full after:h-[2px] after:bg-red-500 after:scale-x-0 after:left-0 after:bottom-0 after:transition-transform after:origin-left after:duration-300 hover:after:scale-x-100 pb-1">
                         <Link href="/logistics">Оплата и доставка</Link>
                     </li>
@@ -74,7 +74,7 @@ const Header = () => {
                         <Link href="/#aboutref">О нас</Link>
                     </li>
                 </ul>
-                <div className="flex flex-col text-center pb-5 px-4 items-center  h-[250px] md:px-0 md:flex-row md:gap-5 md:items-center md:justify-between">
+                <div className="flex flex-col text-center pb-5 px-4 items-center  h-[250px] lg:px-0 lg:flex-row lg:gap-5 lg:items-center lg:justify-between">
                     <Link
                         href="/"
                         className="group text-4xl font-bold flex items-center rounded-2xl p-2"
@@ -89,11 +89,11 @@ const Header = () => {
                         />
                         City
                     </Link>
-                    <span className="relative  inline-block md:w-[300px] after:content-[''] after:absolute after:w-full after:h-[2px] after:bg-red-500 after:scale-x-0 after:left-0 after:bottom-0 after:transition-transform after:origin-left after:duration-300 hover:after:scale-x-100 pb-1">
+                    <span className="relative  inline-block lg:w-[300px] after:content-[''] after:absolute after:w-full after:h-[2px] after:bg-red-500 after:scale-x-0 after:left-0 after:bottom-0 after:transition-transform after:origin-left after:duration-300 hover:after:scale-x-100 pb-1">
                         керамическая плитка и керамогранит в Чеченсокй
                         Республике
                     </span>
-                    <div className="flex mt-12 md:mt-0 gap-10 w-[100%] pr-10 md:pr-0 justify-end md:justify-center md:w-0">
+                    <div className="flex mt-12 ml-12 lg:mt-0 gap-10 w-[100%] pr-10 lg:pr-0 justify-end lg:justify-center lg:w-0">
                         <Link href={`${isLogged ? "/profile" : "/auth/login"}`}>
                             <User className="hover:scale-125 duration-150 cursor-pointer" />
                         </Link>
@@ -125,7 +125,7 @@ const Header = () => {
                         onClick={() => setOpen(!open)}
                         backgroundColor="bg-red-600"
                         colorText="text-white"
-                        className={`hover:scale-110 px-5 left-5 hidden md:flex bottom-2 md:left-5 duration-150 absolute md:bottom-2 md:top-[-30px] z-[1000] cursor-pointer`}
+                        className={`hover:scale-110 px-5 left-5 hidden lg:flex bottom-2 lg:left-5 duration-150 absolute lg:bottom-2 lg:top-[-30px] z-[1000] cursor-pointer`}
                         text="КАТАЛОГ ПРОДУКЦИИ"
                         icon={<Menu />}
                     />
@@ -133,7 +133,7 @@ const Header = () => {
                         onClick={() => setOpen(!open)}
                         backgroundColor="bg-red-600"
                         colorText="text-white"
-                        className={`hover:scale-110 px-5 left-5 block md:hidden bottom-2 md:left-5 duration-150 absolute md:bottom-2 md:top-[-30px] z-[1000] cursor-pointer`}
+                        className={`hover:scale-110 px-5 left-5 block lg:hidden bottom-2 lg:left-5 duration-150 absolute lg:bottom-2 lg:top-[-30px] z-[1000] cursor-pointer`}
                         text="КАТАЛОГ"
                         icon={<Menu />}
                     />
@@ -143,11 +143,11 @@ const Header = () => {
                     />
                 </div>
             </div>
-            <div className="flex flex-col bg-[#EEEEEE] pb-5 md:pb-0 md:bg-white gap-5 md:gap-[47px]">
-                <div className="flex justify-between px-4 pt-5 md:flex md:flex-row md:gap-[83px] md:items-center">
+            <div className="flex flex-col bg-[#EEEEEE] pb-5 lg:pb-0 lg:bg-white gap-5 lg:gap-[47px]">
+                <div className="flex justify-between px-4 pt-5 lg:flex lg:flex-row lg:gap-[83px] lg:items-center">
                     <div
                         onClick={() => setShowMenu(true)}
-                        className="md:hidden lg:hidden cursor-pointer"
+                        className="lg:hidden lg:hidden cursor-pointer"
                     >
                         <MenuIcon />
                     </div>
@@ -160,16 +160,16 @@ const Header = () => {
                             <PhoneCall />
                             +7 999 001-94-94
                         </Link>
-                        <span className="hidden md:flex md:flex-row md:gap-3 md:relative after:content-[''] after:absolute after:w-full after:h-[2px] after:bg-red-500 after:scale-x-0 after:left-0 after:bottom-0 after:transition-transform after:origin-left after:duration-300 hover:after:scale-x-100 pb-1 cursor-pointer">
+                        <span className="hidden lg:flex lg:flex-row lg:gap-3 lg:relative after:content-[''] after:absolute after:w-full after:h-[2px] after:bg-red-500 after:scale-x-0 after:left-0 after:bottom-0 after:transition-transform after:origin-left after:duration-300 hover:after:scale-x-100 pb-1 cursor-pointer">
                             г. Урус-Мартан, ул. Нурдина Усамова 34
                         </span>
                     </div>
 
                     <Instagram />
                 </div>
-                <div className="relative px-4 md:px-0">
+                <div className="relative px-4 lg:px-0">
                     <input
-                        className="w-[100%] md:h-[50px]  text-white placeholder-text-black px-3 py-2 border rounded-[2px] border-gray-300 outline-none bg-red-500 focus:bg-white focus:text-black focus:border-2 focus:scale-105 transition-all delay-150"
+                        className="w-[100%] lg:h-[50px]  text-white placeholder-text-black px-3 py-2 border rounded-[2px] border-gray-300 outline-none bg-red-500 focus:bg-white focus:text-black focus:border-2 focus:scale-105 transition-all delay-150"
                         type="text"
                         placeholder="искать в каталоге"
                         onChange={(e) => {
@@ -180,7 +180,7 @@ const Header = () => {
                         }}
                     />
                     <ArrowRight
-                        className="absolute top-[30%] w-[20px] h-[20px] right-6 md:right-[20px] cursor-pointer"
+                        className="absolute top-[30%] w-[20px] h-[20px] right-6 lg:right-[20px] cursor-pointer"
                         color="black"
                     />
                 </div>
@@ -188,7 +188,7 @@ const Header = () => {
 
             <div
                 onClick={() => setShowMenu(false)}
-                className={`md:hidden lg:hidden ${
+                className={`lg:hidden lg:hidden ${
                     showMenu ? "left-0" : "left-[-100vw]"
                 } absolute top-0 w-screen h-screen bg-gray-400/50 flex items-start transition-all duration-200 z-[1000]`}
             >

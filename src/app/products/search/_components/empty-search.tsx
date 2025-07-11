@@ -5,7 +5,7 @@ import Link from 'next/link'
 
 const EmptySerach = () => {
   return (
-    <div className='md:w-[1370px] md:px-12 md:mt-20 flex flex-col mx-auto h-[80vh] '>
+    <div className='md:w-[1370px] px-4 md:p-0 md:px-12 md:mt-20 flex flex-col mx-auto h-[80vh] '>
         <h2 className='text-5xl mb-5'>По вашему запросу ничего не найдено</h2>
         <div className='flex w-[100%] justify-center'>
             <Image src={emptySerach} alt='cart' width={800} height={600}/>

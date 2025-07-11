@@ -21,7 +21,18 @@ const FullDetails = (props: Props) => {
                         Детальная информация о нашей компании
                     </h2>
                     <div className="flex flex-col leading-8 gap-10 text-justify">
-                        
+                        <div className='flex gap-4 '>
+                            <span>ИНН</span>
+                            <span>786987678698</span>
+                        </div>
+                        <div className='flex gap-4 '>
+                            <span>ИНН</span>
+                            <span>786987678698</span>
+                        </div>
+                        <div className='flex gap-4 '>
+                            <span>ИНН</span>
+                            <span>786987678698</span>
+                        </div>
                     </div>
                 </div>
             

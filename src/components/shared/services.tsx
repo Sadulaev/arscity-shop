@@ -7,7 +7,7 @@ import cube from '../../../public/Group.svg'
 
 const Services = () => {
   return (
-    <div className='flex flex-col px-10 gap-10 md:flex md:flex-row md:items-center md:justify-between md:w-[1370px] md:gap-[65px] md:mx-auto mt-14 md:px-12'>
+    <div className='flex flex-col px-10 gap-10 lg:flex lg:flex-row lg:items-center lg:justify-between lg:w-[1370px] lg:gap-[65px] lg:mx-auto mt-14 lg:px-12'>
         <div className='flex gap-[35px] items-center'>
             <Image src={trucksvg} alt='icon' width={52} height={43}/>
             <div>

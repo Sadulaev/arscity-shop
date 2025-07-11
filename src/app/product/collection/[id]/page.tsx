@@ -18,7 +18,7 @@ const CollectionPage = () => {
     const [typeTiles, setTypeTiles] = useState("all")
     const [collection, setCollection] = useState<CatalogType | null>(null)
     const [tilesForCollection, setTilesForCollection] = useState<TileTypes[]>([])
-    const [indexCollection, setIndexCollection] = useState(1)
+    const [indexCollection, setIndexCollection] = useState(0)
 
 
     
@@ -134,7 +134,7 @@ const CollectionPage = () => {
                                                 key={index}
                                                 onClick={() =>
                                                     setIndexCollection(
-                                                        index + 1
+                                                        index
                                                     )
                                                 }
                                                 className={`relative flex items-center justify-between w-[130px] h-[103px] ${
@@ -147,7 +147,7 @@ const CollectionPage = () => {
                                                 <Image
                                                     fill
                                                     src={
-                                                        imagesArr[indexCollection]
+                                                        imagesArr[index]
                                                     }
                                                     alt="imageSlide"
                                                 />
