@@ -25,7 +25,6 @@ const SearchPage = () => {
         const fetchchData = async() => {
             try{
                 const response = await axios.get(`${config.BASE_URL}/api/search/?q=${search}`)
-                console.log(response.data);
                 setSearchData(response.data)
             } catch(error){
                 console.log(error);

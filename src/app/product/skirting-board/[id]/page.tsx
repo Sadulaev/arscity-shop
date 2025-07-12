@@ -1,7 +1,7 @@
 'use client';
-import { CreditCard, Landmark, Wallet } from 'lucide-react'
+import { ArrowLeft, ArrowRight, CreditCard, ImageOff, Landmark, Wallet } from 'lucide-react'
 import Image from 'next/image'
-import React, { useEffect, useMemo, useState } from 'react'
+import React, { useEffect, useMemo, useRef, useState } from 'react'
 import Services from '@/components/shared/services'
 import axios from 'axios'
 import { useCartStore } from '../../../../../store/CartStore';
@@ -15,6 +15,8 @@ const Skirtingboard = () => {
     const [scirtingboard, setScirtingboard] = useState<SkirtingBoardTYpe>()
     const { addToCart, cartList, removeFromCart } = useCartStore()
     const [quantity, setQuantity] = useState(1)
+    const scrollRef = useRef<HTMLDivElement>(null)
+    const [indexScirtingboard, setIndexScirtingboard] = useState(0)
     const { addFavorite, removeFavorite, favorites } = useFavorites()
     const isInFavorites = favorites.some(fav => fav.object_id === scirtingboard?.id && fav.content_type_display === "skirtingboard")
     const isInCart = cartList.some(item => item.content_type_display === 'skirtingboard' && item.object_id === scirtingboard?.id)
@@ -65,6 +67,24 @@ const Skirtingboard = () => {
         }
     }
 
+    const scrollLeft = () => {
+                if (scrollRef.current) {
+                scrollRef.current.scrollBy({ left: -150, behavior: "smooth" })
+            }
+        }
+        const scrollRight = () => {
+            if (scrollRef.current) {
+                scrollRef.current.scrollBy({ left: 150, behavior: "smooth" })
+            }
+        }
+    
+        const imagesArr = useMemo(() => {
+            if(!scirtingboard) {
+                return Array(5).fill('');
+            }
+            return [ scirtingboard.image1, scirtingboard.image2, scirtingboard.image3, scirtingboard.image4, scirtingboard.image5 ];
+    
+        }, [scirtingboard?.id, !!scirtingboard])
 
     if (!scirtingboard) return null
 
@@ -78,23 +98,69 @@ const Skirtingboard = () => {
                 isInFavorites={isInFavorites}
             />
             <div className='flex flex-col justify-between gap-10 w-screen md:w-[1370px] mx-auto px-10 md:px-12'>
-                <div className='flex flex-col md:flex-row md:justify-between md:items-center'>
-                    <div className='relative flex bg-[#F6F6F6] md:w-[666px] md:h-[480px]'>
+                <div className='flex flex-col md:flex-row md:justify-between md:items-start'>
+                    <div className='relative flex flex-col bg-[#F6F6F6] md:w-[666px]'>
                         <Image 
-                        src={scirtingboard.image1 || ""} 
+                        src={imagesArr[indexScirtingboard]} 
                         width={666} 
                         height={480} 
                         alt='Imagescirtingboard'
                         className='object-contain'
                         />
-                        <div className='absolute top-3 -right-5 py-2 px-3.5 bg-red-500 text-white'>
-                            <span className='relative after:content-[""] after:absolute after:top-[30px] after:-right-[14px] after:border-t-[10px] after:border-r-[20px] after:border-t-[#6D6D6D] after:border-r-transparent'>скидка 30%</span>
+                        
+                        <div className="py-5 flex gap-4 items-center">
+                            <button
+                                onClick={scrollLeft}
+                                className="flex items-center justify-center w-[40px] bg-gray-400 h-[103px] text-red-500 hover:scale-110 transition-all duration-200"
+                            >
+                                <ArrowLeft />
+                            </button>
+                            <div
+                                ref={scrollRef}
+                                className="w-full flex overflow-x-auto scroll-hidden"
+                            >
+                                <div className="inline-flex gap-4">
+                                    {Array(5)
+                                        .fill("")
+                                        .map((_, index) => {
+                                            if(!imagesArr[index]) return <div className='pointer-events-none flex items-center justify-center w-[130px] h-[103px] border'><ImageOff/></div>;
+                                            return <div
+                                                key={index}
+                                                onClick={() =>
+                                                    setIndexScirtingboard(
+                                                        index
+                                                    )
+                                                }
+                                                className={`relative flex items-center justify-between w-[130px] h-[103px] cursor-pointer${
+                                                    index + 1 !==
+                                                    indexScirtingboard
+                                                        ? "bg-gray-300"
+                                                        : ""
+                                                }`}
+                                            >
+                                                <Image
+                                                    fill
+                                                    src={
+                                                        imagesArr[index]
+                                                    }
+                                                    alt="imageSlide"
+                                                />
+                                            </div>
+                                        })
+                                    }
+                                </div>
+                            </div>
+                            <button
+                                onClick={scrollRight}
+                                className="flex items-center justify-center w-[40px] bg-gray-400 h-[103px] text-red-500 hover:scale-110 transition-all duration-200"
+                            >
+                                <ArrowRight />
+                            </button>
                         </div>
 
                     </div>
 
                     <div className='flex flex-col justify-between md:w-[45%] h-[500px] pr-2'>
-                        {/* <span>Артикул: 5758753287542</span> */}
                         <div className='flex gap-4 md:gap-10 items-end mt-8'>
                             <div className='relative flex items-center justify-center w-[330px] h-[147px] border border-gray-400 '>
                                 <span className='uppercase text-3xl text-blue-500 bold'>ARS-CITY</span>

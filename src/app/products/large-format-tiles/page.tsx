@@ -28,7 +28,6 @@ const LargeFormatTiles = () => {
         }
         fetchData()
     }, [])
-    console.log(largeFormat);
     
   return (
     <div className='flex flex-col gap-10 md:w-[1370px] mx-auto mt-10 px-12 pt-5 mb-20'>

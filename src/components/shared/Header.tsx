@@ -93,7 +93,7 @@ const Header = () => {
                         керамическая плитка и керамогранит в Чеченсокй
                         Республике
                     </span>
-                    <div className="flex mt-12 ml-12 lg:mt-0 gap-10 w-[100%] pr-10 lg:pr-0 justify-end lg:justify-center lg:w-0">
+                    <div className="flex mt-12 lg:mt-0 gap-10 w-[100%] pr-10 lg:pr-0 justify-end lg:justify-center lg:w-0">
                         <Link href={`${isLogged ? "/profile" : "/auth/login"}`}>
                             <User className="hover:scale-125 duration-150 cursor-pointer" />
                         </Link>
@@ -147,7 +147,7 @@ const Header = () => {
                 <div className="flex justify-between px-4 pt-5 lg:flex lg:flex-row lg:gap-[83px] lg:items-center">
                     <div
                         onClick={() => setShowMenu(true)}
-                        className="lg:hidden lg:hidden cursor-pointer"
+                        className="lg:hidden cursor-pointer"
                     >
                         <MenuIcon />
                     </div>
@@ -165,7 +165,10 @@ const Header = () => {
                         </span>
                     </div>
 
-                    <Instagram />
+                    <Link href="https://www.instagram.com/baza_ars_siti?igsh=cWZ5d2lvOXYzanN1" target="blank">
+                        <Instagram />
+                    </Link>
+                    
                 </div>
                 <div className="relative px-4 lg:px-0">
                     <input
@@ -188,9 +191,9 @@ const Header = () => {
 
             <div
                 onClick={() => setShowMenu(false)}
-                className={`lg:hidden lg:hidden ${
+                className={`lg:hidden ${
                     showMenu ? "left-0" : "left-[-100vw]"
-                } absolute top-0 w-screen h-screen bg-gray-400/50 flex items-start transition-all duration-200 z-[1000]`}
+                } fixed top-0 w-screen h-screen bg-gray-400/50 flex items-start transition-all duration-200 z-[1000]`}
             >
                 <ul
                     onClick={(e) => e.stopPropagation()}

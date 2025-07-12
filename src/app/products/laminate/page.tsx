@@ -38,7 +38,6 @@ const ProductsLaminate = () => {
     const fethProduct = async() => {
       const {data} = await axios.get(`${config.BASE_URL}/api/laminate/laminates/?${queryString}`)
       setLaminates(data.results)
-       console.log(queryString);
     }
     fethProduct()
   }, [filters])

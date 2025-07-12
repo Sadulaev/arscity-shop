@@ -10,6 +10,7 @@ import config from '@/utils/config';
 import { useCartStore } from '../../../store/CartStore';
 
 
+
 export type OrdersTypeItemProduct = {
     id: number,
     name: string,
@@ -49,7 +50,7 @@ const Profile = () => {
     const router = useRouter()
     const [orders, setOrders] = useState<OrdersType[]>([])
     const {favorites} = useFavorites()
-    const {fetchCart, cartList} = useCartStore()
+    const {resetCart} = useCartStore()
     useEffect(() => {
         const isAuth = async () => {
             try {
@@ -67,7 +68,6 @@ const Profile = () => {
 
                 if (response.status === 200) {
                     setAuth(true);
-                console.log(response);
                 
                 } else {
                     router.push('/auth/register');
@@ -91,8 +91,6 @@ const Profile = () => {
                     }
                 })
                 setOrders(response.data)
-                console.log("response.data", response.data);
-                
             } catch(error) {
                 console.log(error);
             }
@@ -104,6 +102,7 @@ const Profile = () => {
     const logOut = () => {
         localStorage.removeItem("access_token")
         localStorage.removeItem("favorite-storage")
+        resetCart()
         router.push("/")
 
         
@@ -115,14 +114,14 @@ const Profile = () => {
        <>
             <div className='w-screen bg-linear-to-b -mt-40 from-[#D2D2D2] to-white h-[200px]  items-center  -z-1'>
             </div>
-            <div className='flex flex-col md:w-[1370px] px-12 mx-auto'>
-                <div className='flex items-center gap-3 text-gray-400'>
+            <div className='flex flex-col md:w-[1370px] md:px-12 mx-auto'>
+                <div className='flex items-center gap-3 pl-4 md:pl-0 md:mt-6 text-gray-400'>
                     <span>Главная</span>
                     <MoveRight color="#ee1b1b" strokeWidth={1} />
                     <span>Профиль</span>   
                 </div>
-                <h2 className='text-2xl md:text-3xl my-10'>Линый кабинет</h2>
-                <div className='flex items-center text-[0.8rem] md:text-2xl gap-10 mb-4'>
+                <h2 className='text-2xl pl-4 md:pl-0 md:text-3xl my-10'>Линый кабинет</h2>
+                <div className='flex items-center text-[0.8rem] px-4 md:pl-0 md:text-2xl gap-10 mb-4'>
                     <span className='border border-solid border-red-500 px-4 py-2 bg-red-500 text-white'>МОИ ЗАКАЗЫ</span>
                     <Link href="/favorites">МОИ ИЗБРАННЫЕ ({favorites?.length})</Link>
                     <div onClick={logOut} className='flex gap-2 items-center cursor-pointer'>   
@@ -141,7 +140,7 @@ const Profile = () => {
                             </>
                         ))
                     ) : (   
-                        <div>У вас нет пока заказов</div>
+                        <div className='w-screen flex flex-col items-center justify-center md:h-[300px] h-[175px] md:w-[100%] text-2xl md:text-3xl '>У вас пока нет заказов &#128521;</div>
                     )}
                     
                 </div>

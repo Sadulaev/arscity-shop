@@ -1,15 +1,20 @@
 'use client';
 import config from '@/utils/config';
 import axios from 'axios';
-import { MoveRight } from 'lucide-react'
+import { Clock, Eye, Key, Lock, LockIcon, LockKeyhole, LockOpen, MoveRight } from 'lucide-react'
 import Link from 'next/link';
 import { useRouter } from 'next/navigation';
 import React, { useState } from 'react'
+import { useCartStore } from '../../../../store/CartStore';
+import { useFavorites } from '../../../../store/AddToFavorites';
 
 const Login = () => {
     const router = useRouter()
     const [email, setEmail] = useState("")
     const [password, setPassword] = useState("")
+    const { fetchCart } = useCartStore()
+    const { fetchFavorites } = useFavorites()
+    const [isLockOpen, setIsLockOpen] = useState(false)
         
     const loginFunction = async(e:React.FormEvent, email: string, password: string) => {
       e.preventDefault()
@@ -19,8 +24,9 @@ const Login = () => {
           password
         })
         localStorage.setItem('access_token', response.data.access)
-        
         router?.push('/profile')
+        fetchCart()
+        fetchFavorites()
         alert('Вы успешно авторизовались!')
       } catch (error){
         alert('Ошибка авторизации!')
@@ -42,9 +48,20 @@ const Login = () => {
                   <label className='w-[80px]' htmlFor="email">E-mail*</label>
                   <input onChange={(e) => setEmail(e.target.value)} id='email' className='bg-gray-300 p-2 focus:outline-none'  type="email" placeholder=''/>
               </div>
-              <div className='flex flex-col gap-2 md:flex-row md:items-center md:gap-6'>
+              <div className=' flex flex-col gap-2 md:flex-row md:items-center md:gap-6'>
                   <label className='w-[80px]' htmlFor="password">Пароль*</label>
-                  <input onChange={(e) => setPassword(e.target.value)} id='password' className='bg-gray-300 focus:outline-none p-2' type="password" placeholder=''/>
+                  <div className='relative'>
+                     <input onChange={(e) => setPassword(e.target.value)} id='password' className='relative w-[100%] bg-gray-300 focus:outline-none p-2' type={isLockOpen ? "text" : "password"} placeholder=''/>
+                      {isLockOpen ? (
+                        <Lock onClick={() => setIsLockOpen(false)} className='absolute top-2 right-2 cursor-pointer'/>
+                      ) : (
+                        <LockOpen onClick={() => setIsLockOpen(true)} className='absolute top-2 right-2 cursor-pointer'/>
+                      )}
+                  </div>
+                 
+                  
+                 
+                  
               </div>
               <button className=' py-3 bg-red-500 text-white font-bold uppercase hover:scale-[1.03] transition-all duration-200'>Авторизоваться</button>
           </form>

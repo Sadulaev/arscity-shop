@@ -5,7 +5,7 @@ import Link from 'next/link'
 
 const EmptyFavorites = () => {
   return (
-    <div className='md:w-[1370px] md:px-12 md:mt-20 flex flex-col mx-auto h-[80vh] '>
+    <div className='md:w-[1370px] p-4 md:px-12 md:mt-20 flex flex-col mx-auto h-[80vh] '>
         <h2 className='text-5xl'>В избарнных пока пусто</h2>
         <div className='flex w-[100%] justify-center'>
             <Image src={emptyFav} alt='cart' width={500} height={600}/>

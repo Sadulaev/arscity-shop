@@ -90,9 +90,9 @@ const CatalogUpdates = () => {
                         className='object-cover'
                         />
                         <Link href={`/product/collection/${collection.id}`}>
-                            <div className='absolute top-[10%] md:bg-gray-300/50 md:text-black md:text-2xl lg:top-[30%] lg:left-4 lg:bg-gray-400/80 text-white p-5'>
+                            <div className='absolute top-[10%] md:bg-gray-300/50 md:text-2xl lg:top-[30%] lg:left-4 bg-gray-400/50 text-white p-5'>
                                 <p>Новая эксклюзивная коллекция</p>
-                                <h2 className='text-2xl text-white md:text-blue-700 md:text-3xl font-bold opacity-[1]'>{collection.name}</h2>
+                                <h2 className='text-2xl text-red-500 md:text-3xl font-bold opacity-[1]'>{collection.name}</h2>
                                 <span>{collection.country}</span>
                             </div>
                         </Link>
@@ -109,9 +109,9 @@ const CatalogUpdates = () => {
                         src={collectionNew[1].image1} 
                         alt='image'
                         className='object-cover'/>
-                        <div className='absolute top-[10%] md:bg-gray-300/50 md:text-2xl lg:top-[30%] lg:left-4 lg:bg-gray-400/80 text-white p-5'>
+                        <div className='absolute top-[10%] md:bg-gray-300/50 md:text-2xl lg:top-[30%] lg:left-4 bg-gray-400/50 text-white p-5'>
                             <p>Новая эксклюзивная коллекция</p>
-                            <h2 className='text-2xl md:text-blue-700 md:text-3xl font-bold opacity-[1]'>{collectionNew[1].name}</h2>
+                            <h2 className='text-2xl text-red-500 md:text-3xl font-bold opacity-[1]'>{collectionNew[1].name}</h2>
                             <span>{collectionNew[1].country}</span>
                         </div>
                     </div>

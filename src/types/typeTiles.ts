@@ -10,6 +10,7 @@ export type TileTypes = {
     collection?: TileFields,
     color?: TileFields,
     country: TileFields,
+    discount?: number,
     description?: string,
     features?: TileFields,
     image1?: string,

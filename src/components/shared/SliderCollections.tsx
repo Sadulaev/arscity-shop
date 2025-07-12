@@ -40,8 +40,6 @@ const SliderCollections = () => {
 
   const scrollRight = () => {
     if (scrollRef.current) {
-      console.log('ontouchend вызван');
-      
       scrollRef.current.scrollBy({ left: 320, behavior: 'smooth' })
     }
   }

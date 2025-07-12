@@ -58,7 +58,7 @@ const Footer = () => {
       <div className='flex flex-col gap-3 md:justify-between h-[100%]'>
         <div className="flex gap-4 relative after:content-[''] after:absolute after:w-full after:h-[2px] after:bg-red-500 after:scale-x-0 after:left-0 after:bottom-0 after:transition-transform after:origin-left after:duration-300 hover:after:scale-x-100 pb-1 cursor-pointer">
           <PhoneCall />
-          <span>+7 928 004-94-94</span>
+          <Link href="https://wa.me/79990019494"><span>+7 999 001-94-94</span></Link>
         </div>
         <div className='flex justify-between md:gap-10'>
           <Image src='/iconCard3.png' width={60} height={19} alt='iconcard' objectFit='cover' />

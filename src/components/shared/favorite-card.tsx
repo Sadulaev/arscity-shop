@@ -12,9 +12,7 @@ const FavoriteCard:React.FC<FavoritesType> = ({id, name, image1, price, country,
 
     const { favorites, removeFavorite } = useFavorites()
     const { addToCart, cartList } = useCartStore()
-    console.log(content_type_display, "content_type");
     const imgURL = `${config.BASE_URL}${image1}`
-    console.log(favorites);
     
     const isInCart = cartList.some(item => item.object_id === object_id && item.content_type_display === content_type_display)
     const isFavorites = favorites.some(fav => fav && fav.name === name)
@@ -26,9 +24,6 @@ const FavoriteCard:React.FC<FavoritesType> = ({id, name, image1, price, country,
     }
 
     const handleAddToCart = async () => {
-        console.log(id);
-        console.log("object_id", object_id);
-        
         if (!isInCart) {
             await addToCart(content_type_display, object_id, 1)
         }

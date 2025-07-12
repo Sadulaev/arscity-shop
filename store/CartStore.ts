@@ -29,6 +29,7 @@ interface CartListStore {
   fetchTotalPrice: () => Promise<void>;
   addToCart: (content_type: string, object_id: number, quantity: number) => Promise<void>;
   removeFromCart: (cartItemId: number) => Promise<void>;
+  resetCart: () => void
 }
 
 
@@ -119,5 +120,8 @@ export const useCartStore = create<CartListStore>((set) => ({
     } catch (error) {
       console.log(error)
     }
+  },
+  resetCart: () => {
+    set({cartList: [], totalPrice: 0})
   }
 }))

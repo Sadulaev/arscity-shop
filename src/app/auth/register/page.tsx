@@ -1,7 +1,7 @@
 'use client';
 import config from '@/utils/config';
 import axios from 'axios'
-import { MoveRight } from 'lucide-react'
+import { Lock, LockOpen, MoveRight } from 'lucide-react'
 import Link from 'next/link'
 import React, { useState } from 'react'
 
@@ -11,6 +11,7 @@ const Register = () => {
     const [email, setEmail] = useState("")
     const [password, setPassword] = useState("")
     const [re_password, setRePassword] = useState("")
+    const [isLockOpen, setIsLockOpen] = useState(false)
 
     const registrationFunction = async(e:React.FormEvent) => {
         e.preventDefault()
@@ -51,11 +52,27 @@ const Register = () => {
                     
                     <div className='flex flex-col md:flex-row items center gap-2 md:gap-6'>
                         <label className='md:w-[80px]' htmlFor="password">Пароль*</label>
-                        <input onChange={(e) => setPassword(e.target.value)} id='password' className='bg-gray-300 focus:outline-none p-2' type="password" placeholder=''/>
+                        <div className='relative'>
+                            <input onChange={(e) => setPassword(e.target.value)} id='password' className='w-[100%] bg-gray-300 focus:outline-none p-2' type={isLockOpen ? "text" : "password"} placeholder=''/>
+                            {isLockOpen ? (
+                                <Lock onClick={() => setIsLockOpen(false)} className='absolute top-2 right-2 cursor-pointer'/>
+                            ) : (
+                                <LockOpen onClick={() => setIsLockOpen(true)} className='absolute top-2 right-2 cursor-pointer'/>
+                            )}
+                        </div>
+                        
+                        
                     </div>
                     <div className='flex flex-col md:flex-row items center gap-2 md:gap-6'>
                         <label className='md:w-[80px]' htmlFor="password">Пароль (еще раз)*</label>
-                        <input onChange={(e) => setRePassword(e.target.value)} id='password' className='bg-gray-300 focus:outline-none p-2' type="password" placeholder=''/>
+                        <div className='relative'>
+                            <input onChange={(e) => setPassword(e.target.value)} id='password' className='w-[100%] bg-gray-300 focus:outline-none p-2' type={isLockOpen ? "text" : "password"} placeholder=''/>
+                            {isLockOpen ? (
+                                <Lock onClick={() => setIsLockOpen(false)} className='absolute top-2 right-2 cursor-pointer'/>
+                            ) : (
+                                <LockOpen onClick={() => setIsLockOpen(true)} className='absolute top-2 right-2 cursor-pointer'/>
+                            )}
+                        </div>
                     </div>
                     <div className='flex gap-5'>
                         <input type="checkbox" />

@@ -11,9 +11,9 @@ const Favorites = () => {
     if (favorites.length === 0) return <EmptyFavorites />
 
     return (
-        <div className='flex flex-col w-[1370px] mx-auto mt-8 px-12 pt-3 mb-20'>
+        <div className='flex flex-col md:w-[1370px] mx-auto mt-8 px-12 pt-3 mb-20'>
 
-            <h2 className='mx-auto text-4xl'>Избранные товары</h2>
+            <h2 className='mx-auto text-2xl md:text-4xl mb-4 md:mb-0'>Избранные товары</h2>
             <div className='flex flex-col md:flex-row flex-wrap gap-3'>
                 {favorites?.length > 0 ? (
                     favorites.map((favorite) => (

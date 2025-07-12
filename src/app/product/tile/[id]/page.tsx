@@ -1,7 +1,7 @@
 'use client';
-import { ArrowRight, CreditCard, Landmark, Wallet } from 'lucide-react'
+import { ArrowLeft, ArrowRight, CreditCard, ImageOff, Landmark, Wallet } from 'lucide-react'
 import Image from 'next/image'
-import React, { useEffect, useMemo, useState } from 'react'
+import React, { useEffect, useMemo, useRef, useState } from 'react'
 import Services from '@/components/shared/services'
 import { TileTypes } from '@/types/typeTiles'
 import axios from 'axios'
@@ -19,6 +19,8 @@ const TilePage = () => {
     const { addToCart, cartList, removeFromCart } = useCartStore()
     const [quantity, setQuantity] = useState(1)
     const { addFavorite, removeFavorite, favorites } = useFavorites()
+    const scrollRef = useRef<HTMLDivElement>(null)
+    const [indexTile, setIndexTile] = useState(0)
     const isInCart = cartList.some(item => item.content_type_display === 'tile' && item.object_id === tile?.id)
 
 
@@ -29,7 +31,6 @@ const TilePage = () => {
             const fetchData = async () => {
                 const response = await axios.get(`${config.BASE_URL}/api/tile/tiles/${id}`)
                 setTile(response.data)
-                console.log(response);
             }
             fetchData()
         } catch (error) {
@@ -46,8 +47,6 @@ const TilePage = () => {
                     `${config.BASE_URL}/api/tile/tiles/?collection=${tile?.collection?.id}`
                 )
                 setTilesForCollection(response.data.results)
-                console.log("Проверка", response.data.results);
-
             }
             fetchTilesForCollection()
         } catch (error) {
@@ -88,6 +87,30 @@ const TilePage = () => {
         }
     }
 
+
+
+
+
+    const scrollLeft = () => {
+            if (scrollRef.current) {
+            scrollRef.current.scrollBy({ left: -150, behavior: "smooth" })
+        }
+    }
+    const scrollRight = () => {
+        if (scrollRef.current) {
+            scrollRef.current.scrollBy({ left: 150, behavior: "smooth" })
+        }
+    }
+
+    const imagesArr = useMemo(() => {
+        if(!tile) {
+            return Array(5).fill('');
+        }
+        return [ tile.image1, tile.image2, tile.image3, tile.image4, tile.image5 ];
+
+    }, [tile?.id, !!tile])
+
+
     if (!tile) return null
 
     return (
@@ -99,17 +122,73 @@ const TilePage = () => {
                 isInFavorites={isInFavorites}
             />
             <div className='flex flex-col justify-between w-screen md:w-[1370px] mx-auto px-10 md:px-12'>
-                <div className='flex flex-col md:flex-row md:justify-between md:items-center'>
-                    <div className='relative flex items-center bg-[#F6F6F6] md:w-[666px] md:h-[480px]'>
-                        <Image src={tile.image1 || ""} width={666} height={480} alt='ImageTile' />
-                        <div className='absolute top-3 -right-5 py-2 px-3.5 bg-red-500 text-white'>
-                            <span className='relative after:content-[""] after:absolute after:top-[30px] after:-right-[14px] after:border-t-[10px] after:border-r-[20px] after:border-t-[#6D6D6D] after:border-r-transparent'>скидка 30%</span>
+                <div className='flex flex-col md:flex-row md:justify-between md:items-start'>
+                    <div className='relative mt-5 md:mt-0 flex flex-col bg-[#F6F6F6] md:w-[666px] '>
+                        <Image src={imagesArr[indexTile]} width={666} height={480} alt='ImageTile' />
+                        {tile.discount ? (
+                            <div className='absolute top-3 -right-5 py-2 px-3.5 bg-red-500 text-white'>
+                                <span className='relative after:content-[""] after:absolute after:top-[30px] after:-right-[14px] after:border-t-[10px] after:border-r-[20px] after:border-t-[#6D6D6D] after:border-r-transparent'>скидка {tile.discount}%</span>
+                            </div>
+                        ) : (
+                            <div className='absolute hidden top-3 -right-5 py-2 px-3.5 bg-red-500 text-white'>
+                                <span className='relative after:content-[""] after:absolute after:top-[30px] after:-right-[14px] after:border-t-[10px] after:border-r-[20px] after:border-t-[#6D6D6D] after:border-r-transparent'>скидка</span>
+                            </div>    
+                        )}
+
+                        <div className="py-5 flex gap-4 items-center">
+                            <button
+                                onClick={scrollLeft}
+                                className="flex items-center justify-center w-[40px] bg-gray-400 h-[103px] text-red-500 hover:scale-110 transition-all duration-200"
+                            >
+                                <ArrowLeft />
+                            </button>
+                            <div
+                                ref={scrollRef}
+                                className="w-full flex overflow-x-auto scroll-hidden"
+                            >
+                                <div className="inline-flex gap-4">
+                                    {Array(5)
+                                        .fill("")
+                                        .map((_, index) => {
+                                            if(!imagesArr[index]) return <div className='pointer-events-none flex items-center justify-center w-[130px] h-[103px] border'><ImageOff/></div>;
+                                            return <div
+                                                key={index}
+                                                onClick={() =>
+                                                    setIndexTile(
+                                                        index
+                                                    )
+                                                }
+                                                className={`relative flex items-center justify-between w-[130px] h-[103px] cursor-pointer${
+                                                    index + 1 !==
+                                                    indexTile
+                                                        ? "bg-gray-300"
+                                                        : ""
+                                                }`}
+                                            >
+                                                <Image
+                                                    fill
+                                                    src={
+                                                        imagesArr[index]
+                                                    }
+                                                    alt="imageSlide"
+                                                />
+                                            </div>
+                                        })
+                                    }
+                                </div>
+                            </div>
+                            <button
+                                onClick={scrollRight}
+                                className="flex items-center justify-center w-[40px] bg-gray-400 h-[103px] text-red-500 hover:scale-110 transition-all duration-200"
+                            >
+                                <ArrowRight />
+                            </button>
                         </div>
+
 
                     </div>
 
                     <div className='flex flex-col justify-between md:w-[45%] h-[500px] pr-2'>
-                        <span>Артикул: 5758753287542</span>
                         <div className='flex gap-4 md:gap-10 items-end mt-8'>
                             <div className='relative flex items-center justify-center w-[330px] h-[147px] border border-gray-400 '>
                                 {tile?.collection?.logo ? (
