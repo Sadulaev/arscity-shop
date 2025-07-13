@@ -99,15 +99,17 @@ if (!grout) return null
                 isInFavorites={isInFavorites}
             />
             <div className='flex flex-col justify-between gap-10 w-screen md:w-[1370px] mx-auto px-10 md:px-12'>
-                <div className='flex flex-col md:flex-row md:justify-between md:items-start'>
-                    <div className='relative flex flex-col bg-[#F6F6F6] md:w-[666px]'>
-                        <Image 
-                        src={imagesArr[indexGrout]} 
-                        width={666} 
-                        height={480} 
-                        alt='Imagegrout'
-                        className='object-contain'
-                        />
+                <div className='flex flex-col md:flex-row gap-6 md:justify-between md:items-start'>
+                    <div className='relative flex flex-col items-center bg-[#F6F6F6]'>
+                        <div className='flex overflow-hidden justify-center md:w-[666px] md:h-[580px]'>
+                            <Image 
+                                src={imagesArr[indexGrout]} 
+                                width={666}
+                                height={400}
+                                alt='Imagelaminate'
+                                className='object-contain'
+                            />
+                        </div>
                         <div className="py-5 flex gap-4 items-center">
                             <button
                                 onClick={scrollLeft}
@@ -144,6 +146,7 @@ if (!grout) return null
                                                         imagesArr[index]
                                                     }
                                                     alt="imageSlide"
+                                                    className='cursor-pointer'
                                                 />
                                             </div>
                                         })

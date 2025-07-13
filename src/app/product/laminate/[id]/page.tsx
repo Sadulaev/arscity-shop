@@ -103,15 +103,18 @@ const LaminatePage = () => {
                 isInFavorites={isInFavorites}
             />
             <div className='flex flex-col justify-between gap-10 w-screen md:w-[1370px] mx-auto px-10 md:px-12'>
-                <div className='flex flex-col md:flex-row md:justify-between md:items-start'>
-                    <div className='relative flex flex-col bg-[#F6F6F6] md:w-[666px] '>
-                        <Image 
-                        src={imagesArr[indexLaminate]} 
-                        width={666} 
-                        height={480} 
-                        alt='Imagelaminate'
-                        className='object-contain'
-                        />
+                <div className='flex flex-col md:flex-row gap-6 md:justify-between md:items-start'>
+                    <div className='relative flex flex-col items-center bg-[#F6F6F6]'>
+                        <div className='flex overflow-hidden justify-center md:w-[666px] md:h-[580px]'>
+                            <Image 
+                                src={imagesArr[indexLaminate]} 
+                                width={666}
+                                height={400}
+                                alt='Imagelaminate'
+                                className='object-contain'
+                            />
+                        </div>
+                        
                         
                         {laminate.discount ? (
                             <div className='absolute top-3 -right-5 py-2 px-3.5 bg-red-500 text-white'>
@@ -123,7 +126,7 @@ const LaminatePage = () => {
                             </div>    
                         )}
 
-                        <div className="py-5 flex gap-4 items-center">
+                        <div className="py-5 w-[85vw] bg-white md:w-[100%] flex gap-4 items-center">
                             <button
                                 onClick={scrollLeft}
                                 className="flex items-center justify-center w-[40px] bg-gray-400 h-[103px] text-red-500 hover:scale-110 transition-all duration-200"
@@ -138,7 +141,7 @@ const LaminatePage = () => {
                                     {Array(5)
                                         .fill("")
                                         .map((_, index) => {
-                                            if(!imagesArr[index]) return <div className='pointer-events-none flex items-center justify-center w-[130px] h-[103px] border'><ImageOff/></div>;
+                                            if(!imagesArr[index]) return <div className='pointer-events-none flex items-center justify-center w-[130px] h-[103px] border border-gray-300'><ImageOff/></div>;
                                             return <div
                                                 key={index}
                                                 onClick={() =>
@@ -159,6 +162,7 @@ const LaminatePage = () => {
                                                         imagesArr[index]
                                                     }
                                                     alt="imageSlide"
+                                                    className='cursor-pointer'
                                                 />
                                             </div>
                                         })
