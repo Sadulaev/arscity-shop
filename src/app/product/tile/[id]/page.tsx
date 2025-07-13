@@ -111,6 +111,9 @@ const TilePage = () => {
     }, [tile?.id, !!tile])
 
 
+    console.log(tile?.content_type);
+    
+
     if (!tile) return null
 
     return (
@@ -318,7 +321,7 @@ const TilePage = () => {
                 <h2 className='text-2xl'>Другие плитки коллекции {tile.collection?.name}</h2>
                 <div className='flex flex-col flex-wrap md:flex-row gap-3 items-center'>
                     {tilesForCollection.map((tile) => (
-                        <Product key={tile.id} city={tile.country} imageURL={tile.image1} title={tile.name} price={tile.price} content_type={tile.content_type} id={tile.id} />
+                        <Product key={tile.id} city={tile.country} imageURL={tile.image1} title={tile.name} price={tile.price} content_type={"tile"} id={tile.id} />
                     ))}
                 </div>
             </div>

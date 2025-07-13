@@ -34,6 +34,7 @@ export type TileTypes = {
     form?: TileFields,
     tile_type?: string,
     content_type: string,
+    content_type_display?: string,
 }
 export type Filters = { 
     material: TileFields[] 

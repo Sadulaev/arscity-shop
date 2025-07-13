@@ -42,7 +42,7 @@ const BigSlider = () => {
         className="flex transition-transform duration-1000"
         style={{
           transform: `translateX(-${currentIndex * 100}vw)`,
-          width: `${slides.length * 100}vw`,
+          width: `${(slides.length + 1) * 100}vw`,
         }}
       >
         {slides.map((slide, index) => (

@@ -24,8 +24,8 @@ const About = () => {
 
 
     return (
-        <div ref={aboutref} id='aboutref' className='w-screen md:w-[1370px] px-10 mx-auto flex flex-col md:flex-row gap-[63px] mt-10'>
-            <div className='flex flex-col gap-[80px] md:w-[480px]'>
+        <div ref={aboutref} id='aboutref' className='w-screen lg:w-[1370px] px-10 mx-auto flex flex-col lg:flex-row gap-[63px] mt-10'>
+            <div className='flex flex-col gap-[80px] lg:w-[480px]'>
                 <h2 className='text-3xl uppercase font-bold'>О нашем магазине</h2>
                 <p className='text-gray-500 text-justify flex flex-col gap-4'>
                     <span>В каталоге нашего интернет-магазина более 570 коллекций керамической плитки и керамогранита от лучших производителей России и Европы.

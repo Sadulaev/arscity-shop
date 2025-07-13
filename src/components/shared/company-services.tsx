@@ -8,9 +8,9 @@ import Image from 'next/image'
 const CompanyServices = () => {
 
   return (
-    <div className='md:w-[1370px] mx-auto md:text-white flex gap-10 flex-col md:px-10 py-12 mt-14 mb-70 md:mb-0'>
+    <div className='w-screen lg:w-[1370px] mx-auto md:text-white flex gap-10 flex-col md:px-10 py-12 mt-14 mb-70 md:mb-0'>
         <h2 className='text-3xl text-black px-10 font-bold'>УСЛУГИ КОМПАНИИ</h2>
-        <div className='flex flex-col  md:flex md:flex-row gap-10'>
+        <div className='flex flex-col  lg:flex lg:flex-row gap-10'>
             <div className='w-[400px] h-[300px] flex flex-col-reverse md:flex-row items-center gap-10 md:block md:w-[760px] md:h-[520px] px-8 md:py-10 relative'>
               
                 <Image 

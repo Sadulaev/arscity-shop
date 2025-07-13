@@ -23,7 +23,7 @@ const Breadcrumbs:React.FC<Props> = ({name, title, handleFavoriteToggle, isInFav
                 <h1 className='text-2xl md:text-3xl'>{title}</h1>
             </div>
 
-            <button onClick={handleFavoriteToggle} className={`${isInFavorites ? "text-white bg-red-500" : ""} flex md:gap-3 items-center border border-gray-400 md:py-4 px-15 uppercase hover:bg-red-500 hover:text-white hover:border-none transition-all duration-200 z-50`}>
+            <button onClick={handleFavoriteToggle} className={`${isInFavorites ? "text-white bg-red-500" : ""} flex md:gap-3 items-center justify-center py-4 gap-4 border border-gray-400 md:py-4 px-15 uppercase hover:bg-red-500 hover:text-white hover:border-none transition-all duration-200 z-50`}>
                 <Heart />
                 <span>{isInFavorites ? "Удалить из избранных" : "ДОБАВИТЬ в избранное"}</span>
             </button>

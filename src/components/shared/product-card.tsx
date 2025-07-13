@@ -21,7 +21,8 @@ const Product: React.FC<TileCardFields> = ({ id, city, imageURL, title, price, c
     const isInFavorites = favorites.some(fav => fav.object_id === id && fav.content_type_display === content_type)
     const isInCart = cartList.some(item => item.object_id === id && item.content_type_display === content_type)
 
-
+    console.log(content_type);
+    
     const handleFavoriteToggle = () => {
       const ct = favorites.filter(item => item.object_id === id && item.content_type_display === content_type)
       if (isInFavorites) {
