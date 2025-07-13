@@ -64,19 +64,27 @@ const FullDetails = () => {
                             <h2 className='text-3xl'>Контактная информация</h2>
                             <div className='flex flex-col md:flex-row gap-4 text-xl'>
                                 <span>Полное наименование компании: </span>
-                                <span>СУПАЕВ АНЗОР ЛЕЧАЕВИЧ (ИП)</span>
+                                <span className='text-red-500'>СУПАЕВ АНЗОР ЛЕЧАЕВИЧ (ИП)</span>
+                            </div>
+                            <div className='flex flex-row gap-4 text-xl'>
+                                <span>ИНН: </span>
+                                <span className='text-red-500'>201008809792</span>
+                            </div>
+                            <div className='flex flex-row gap-4 text-xl'>
+                                <span>e-mail: </span>
+                                <span className='text-red-500'>anzor.beno@bk.ru</span>
                             </div>
                             <div className='flex flex-col md:flex-row gap-4 text-xl'>
                                 <span>Адрес:</span>
-                                <span>переулок А.Шерипова, д. 6, Чеченская Республика, р-н Урус-Мартановский, город Урус-Мартан</span>
+                                <span className='text-red-500'>переулок А.Шерипова, д. 6, Чеченская Республика, р-н Урус-Мартановский, город Урус-Мартан</span>
                             </div>
-                            <div className='flex flex-col md:flex-row gap-4 text-xl'>
+                            <div className='flex flex-row gap-4 text-xl'>
                                 <span>Телефон:</span>
                                 <Link href="https://wa.me/79990019494">+7 999 001-94-94</Link>
                             </div>
                             <div className='flex flex-col md:flex-row gap-4 text-xl'>
                                 <span>Режим работы:</span>
-                                <span>ежедневно с 9:00 до 20:00</span>
+                                <span className='text-red-500'>ежедневно с 9:00 до 20:00</span>
                             </div>
                         </div>
                     </div>

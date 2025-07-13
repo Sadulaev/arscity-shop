@@ -141,7 +141,11 @@ const LaminatePage = () => {
                                     {Array(5)
                                         .fill("")
                                         .map((_, index) => {
-                                            if(!imagesArr[index]) return <div className='pointer-events-none flex items-center justify-center w-[130px] h-[103px] border border-gray-300'><ImageOff/></div>;
+                                            if(!imagesArr[index]) return 
+                                            <div 
+                                                key={index}
+                                                className='pointer-events-none flex items-center justify-center w-[130px] h-[103px] border border-gray-300'><ImageOff/>
+                                            </div>;
                                             return <div
                                                 key={index}
                                                 onClick={() =>

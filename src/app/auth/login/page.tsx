@@ -1,7 +1,7 @@
 'use client';
 import config from '@/utils/config';
 import axios from 'axios';
-import { Clock, Eye, Key, Lock, LockIcon, LockKeyhole, LockOpen, MoveRight } from 'lucide-react'
+import { Lock, LockOpen, MoveRight } from 'lucide-react'
 import Link from 'next/link';
 import { useRouter } from 'next/navigation';
 import React, { useState } from 'react'
@@ -30,6 +30,7 @@ const Login = () => {
         alert('Вы успешно авторизовались!')
       } catch (error){
         alert('Ошибка авторизации!')
+        console.log(error); 
       }
     }
 

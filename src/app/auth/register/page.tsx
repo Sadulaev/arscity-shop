@@ -66,7 +66,7 @@ const Register = () => {
                     <div className='flex flex-col md:flex-row items center gap-2 md:gap-6'>
                         <label className='md:w-[80px]' htmlFor="password">Пароль (еще раз)*</label>
                         <div className='relative'>
-                            <input onChange={(e) => setPassword(e.target.value)} id='password' className='w-[100%] bg-gray-300 focus:outline-none p-2' type={isLockOpen ? "text" : "password"} placeholder=''/>
+                            <input onChange={(e) => setRePassword(e.target.value)} id='password' className='w-[100%] bg-gray-300 focus:outline-none p-2' type={isLockOpen ? "text" : "password"} placeholder=''/>
                             {isLockOpen ? (
                                 <Lock onClick={() => setIsLockOpen(false)} className='absolute top-2 right-2 cursor-pointer'/>
                             ) : (

@@ -53,7 +53,8 @@ const Header = () => {
     useEffect(() => {
         fetchCart()
     }, [fetchCart])
-
+    console.log(searchInput);
+    
     return (
         <header className="flex flex-col-reverse lg:flex lg:flex-row lg:relative lg:justify-between lg:max-w-screen lg:w-[1370px] lg:h-[240px] lg:mx-auto bg-white lg:px-10 lg:mt-8 z-30">
             <div className="lg:flex lg:flex-col lg:max-w-[803px] lg:gap-10 lg:relative">
@@ -182,7 +183,8 @@ const Header = () => {
                             }
                         }}
                     />
-                    <ArrowRight
+                    <ArrowRight 
+                        onClick={() => setSearchInput(searchInput)}
                         className="absolute top-[30%] w-[20px] h-[20px] right-6 lg:right-[20px] cursor-pointer"
                         color="black"
                     />
