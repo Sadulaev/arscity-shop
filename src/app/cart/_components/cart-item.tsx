@@ -1,6 +1,6 @@
 'use client';
 import Image from "next/image";
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useMemo, useState } from "react";
 import { X } from "lucide-react";
 import { ProductType, useCartStore } from "../../../../store/CartStore";
 import config from "@/utils/config";
@@ -18,7 +18,7 @@ const CartItem: React.FC<CartItemType> = ({ id, quantity: initialQuantity, objec
       ? product.image1 
       : `${config.BASE_URL}${product?.image1}`;
     const { addToCart, removeFromCart, removeFromLocalCart, updateLocalCartItem } = useCartStore();
-    const isAuthenticated = !!localStorage.getItem('access_token');
+    const isAuthenticated = useMemo(() => !!localStorage.getItem('access_token'), []);
 
     const [quantity, setQuantity] = useState(initialQuantity);
 

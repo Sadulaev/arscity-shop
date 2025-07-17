@@ -26,10 +26,10 @@ const CollectionCard: React.FC<PropsCardCollection> = ({ id, country, name, imag
     const handleFavoriteToggle = () => {
         const ct = favorites.filter(item => item.object_id === id && item.content_type_display === content_type)
         if (isInFavorites) {
-            removeFavorite(ct[0].id)
+            removeFavorite({id: ct[0].id})
         } else {
             if (content_type && id) {
-                addFavorite(content_type, id)
+                addFavorite({type: content_type, id: id})
             }
         }
     }

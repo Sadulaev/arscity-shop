@@ -1,18 +1,18 @@
 import { Heart } from 'lucide-react'
 import Image from 'next/image'
 import React from 'react'
-import { FavoritesType, useFavorites } from '../../../store/AddToFavorites'
-import notImage from '../../../public/notimage.png'
+import { useFavorites } from '../../../store/AddToFavorites'
+// import notImage from '../../../public/notimage.png'
 import Link from 'next/link'
 import { useCartStore } from '../../../store/CartStore'
-import config from '@/utils/config'
+// import config from '@/utils/config'
 
 
-const FavoriteCard:React.FC<FavoritesType> = ({id, name, image1, price, country, content_type_display, object_id, product}) => {
+const FavoriteCard:React.FC<any> = ({id, name, image1, price, country, content_type_display, object_id, product}) => {
 
     const { favorites, localFavorites, removeFavorite } = useFavorites()
     const { addToCart, cartList } = useCartStore()
-    const imgURL = `${config.BASE_URL}${image1}`
+    // const imgURL = `${config.BASE_URL}${image1}`
     
     const isInCart = cartList.some(item => item.object_id === object_id && item.content_type_display === content_type_display)
     const isFavorites = favorites.some(fav => fav && fav.name === name) || localFavorites.some(item => item.id === id && item.type === content_type_display)

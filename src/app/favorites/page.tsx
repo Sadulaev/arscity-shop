@@ -1,12 +1,13 @@
 'use client';
-import React from 'react'
+import React, { useMemo } from 'react'
 import { useFavorites } from '../../../store/AddToFavorites'
-import { SceletonCard } from '@/components/shared/skeletons/sceleton'
+// import { SceletonCard } from '@/components/shared/skeletons/sceleton'
 import FavoriteCard from '@/components/shared/favorite-card'
 import EmptyFavorites from './_components/empty-favorites';
 
 const Favorites = () => {
     const { favorites, localFavorites } = useFavorites()
+    const isAuthenticated = useMemo(() => !!localStorage.getItem('access_token'), []);
     
     if (favorites.length === 0 && localFavorites.length === 0) return <EmptyFavorites />
      console.log(favorites);
@@ -15,7 +16,7 @@ const Favorites = () => {
 
             <h2 className='mx-auto text-2xl md:text-4xl mb-4 md:mb-0'>Избранные товары</h2>
             <div className='flex flex-col md:flex-row flex-wrap gap-3'>
-                {localStorage.getItem("access_token") ? (
+                {isAuthenticated ? (
                     favorites.map((favorite) => (
                         <div key={favorite.id}>
                             <FavoriteCard object_id={favorite.object_id} content_type_display={favorite.content_type_display} id={favorite.id} name={favorite.name} image1={favorite.image1} price={favorite?.price} country={favorite.country} description={favorite.description} number_of_elements={favorite?.number_of_elements} product={favorite}/>

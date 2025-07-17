@@ -1,3 +1,5 @@
+import { LaminateTypes } from "@/types/typeLaminate"
+import { TileTypes } from "@/types/typeTiles"
 import config from "@/utils/config"
 import axios from "axios"
 import { create } from "zustand"
@@ -15,7 +17,7 @@ export type FavoritesType = {
     description?: string,
     number_of_elements?: number,
     content_type_display: string,
-    type?: string,
+    type: string,
     local_id?: string,
     collection?: {
         name: string
@@ -27,7 +29,7 @@ type StoreFavorites = {
     favorites: FavoritesType[],
     localFavorites: FavoritesType[],
     fetchFavorites: () => void,
-    addFavorite: (item: FavoritesType) => void,
+    addFavorite: (item: any) => void,
     removeFavorite: (params: { id?: number, local_id?: string }) => void,
     mergeFavorites: () => Promise<void>,
 }
@@ -72,7 +74,8 @@ export const useFavorites = create<StoreFavorites>()(
                 else {
                     const localItem = {
                         ...item,
-                        local_id: Date.now().toString()
+                        local_id: Date.now().toString(),
+                        // object_id: item.id
                     };
                     set({ localFavorites: [...get().localFavorites, localItem] });
                 }

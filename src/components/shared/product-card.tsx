@@ -1,9 +1,11 @@
-import { TileFields, TileTypes } from '@/types/typeTiles'
+import { TileFields } from '@/types/typeTiles'
 import { Heart } from 'lucide-react'
 import Image from 'next/image'
 import Link from 'next/link'
 import { useCartStore } from '../../../store/CartStore'
-import { FavoritesType, useFavorites } from '../../../store/AddToFavorites'
+import { useFavorites } from '../../../store/AddToFavorites'
+import { useMemo } from 'react'
+// import { LaminateTypes } from '@/types/typeLaminate'
 
 export type TileCardFields = {
     id: number,
@@ -13,13 +15,15 @@ export type TileCardFields = {
     price: number,
     content_type: string
     index?: number
-    product: FavoritesType
+    
+    product?: any,
 }
 
 const Product: React.FC<TileCardFields> = ({ id, city, imageURL, title, price, content_type, product }) => {
     const { addToCart, cartList, localCart } = useCartStore()
     const { addFavorite, removeFavorite, favorites, localFavorites } = useFavorites()
-    const isAuthenticated = !!localStorage.getItem('access_token');
+    const isAuthenticated = useMemo(() => !!localStorage.getItem('access_token'), []);
+    
     
     const isInCart = isAuthenticated 
       ? cartList.some(item => item.object_id === id && item.content_type_display === content_type)
@@ -54,8 +58,8 @@ const Product: React.FC<TileCardFields> = ({ id, city, imageURL, title, price, c
                 name: title,
                 image1: imageURL,
                 price,
-                country: city.name,
-                collection: product.collection?.name
+                country: product?.country,
+                collection: product.collection
               }
             );
         }

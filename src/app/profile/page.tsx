@@ -1,6 +1,6 @@
 'use client';
 import { LogOut, MoveRight } from 'lucide-react'
-import React, { useEffect, useState } from 'react'
+import React, { useCallback, useEffect, useState } from 'react'
 import Order from './_components/order'
 import axios from 'axios'
 import { useRouter } from 'next/navigation';
@@ -51,6 +51,7 @@ const Profile = () => {
     const [orders, setOrders] = useState<OrdersType[]>([])
     const {favorites} = useFavorites()
     const {resetCart} = useCartStore()
+    
     useEffect(() => {
         const isAuth = async () => {
             try {
@@ -99,14 +100,12 @@ const Profile = () => {
         
     }, [])
 
-    const logOut = () => {
+    const logOut = useCallback(() => {
         localStorage.removeItem("access_token")
         localStorage.removeItem("favorite-storage")
         resetCart()
-        router.push("/")
-
-        
-    }
+        router.push("/")        
+    }, [])
 
     if (!auth) return <div>Loadig...</div>
 

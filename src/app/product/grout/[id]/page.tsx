@@ -20,9 +20,10 @@ const Grout = () => {
     const scrollRef = useRef<HTMLDivElement>(null)
     const [indexGrout, setIndexGrout] = useState(0)
     
-    const { addToCart, removeFromCart, cartList, localCart } = useCartStore()
+    const { addToCart, cartList, localCart } = useCartStore()
     const { addFavorite, removeFavorite, favorites, localFavorites } = useFavorites()
-    const isAuthenticated = !!localStorage.getItem('access_token');
+    const isAuthenticated = useMemo(() => !!localStorage.getItem('access_token'), []);
+    
 
     useEffect(() => {
         const id = window.location.pathname.split("/").pop()
@@ -63,7 +64,7 @@ const Grout = () => {
     };
 
     const handleAddToCart = async () => {
-        if (!isInCart) {
+        if (!isInCart && grout) {
             await addToCart(
                 grout.type, 
                 grout.id, 

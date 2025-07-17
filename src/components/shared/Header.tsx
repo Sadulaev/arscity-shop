@@ -11,7 +11,7 @@ import {
     X,
 } from "lucide-react"
 import Link from "next/link"
-import React, { useEffect, useRef, useState } from "react"
+import React, { useEffect, useMemo, useRef, useState } from "react"
 import Button from "@/components/ui/Button"
 import CatalogModal from "./catalog-modal"
 import useClickOutside from "@/hooks/use-click-outside"
@@ -35,7 +35,8 @@ const Header = () => {
     useClickOutside(ref, () => setOpen(false))
     const debounce = useDebounce(searchInput, 1000)
     const router = useRouter()
-    const isAuth = localStorage.getItem("access_token")
+    const isAuth = useMemo(() => !!localStorage.getItem('access_token'), []);
+    
 
     const [isLogged, setIsLogged] = useState(false)
     useEffect(() => {

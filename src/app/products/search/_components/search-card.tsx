@@ -1,11 +1,11 @@
-import React from 'react'
+import React, { useMemo } from 'react'
 import { useCartStore } from '../../../../../store/CartStore'
-import { FavoritesType, useFavorites } from '../../../../../store/AddToFavorites'
+import { useFavorites } from '../../../../../store/AddToFavorites'
 import Image from 'next/image'
 import { Heart } from 'lucide-react'
 import Link from 'next/link'
 import config from '@/utils/config'
-import { SearchDataType } from '../page'
+// import { SearchDataType } from '../page'
 
 type Props = {
     content_type: string
@@ -15,14 +15,16 @@ type Props = {
     image1: string,
     tile_type?: string,
     country: string,
-    product: FavoritesType
+    
+    product: any
 }
 
 const SearchCard:React.FC<Props> = ({content_type, id, name, price, image1, product}) => {
     const img = `${config.BASE_URL}${image1}` 
     const { addToCart, cartList, localCart } = useCartStore()
     const { addFavorite, removeFavorite, favorites, localFavorites } = useFavorites()
-    const isAuthenticated = !!localStorage.getItem('access_token');
+    const isAuthenticated = useMemo(() => !!localStorage.getItem('access_token'), []);
+    
     
     const isInCart = isAuthenticated 
       ? cartList.some(item => item.object_id === id && item.content_type_display === content_type)

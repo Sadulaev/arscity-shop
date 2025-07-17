@@ -53,17 +53,17 @@ const CollectionPage = () => {
 
 
 
-    const { addFavorite, removeFavorite, favorites } = useFavorites()
+    const { removeFavorite, favorites } = useFavorites()
     const isInFavorites = favorites.some(fav => fav.object_id === collection?.id && fav.content_type_display === "collection")
     
 
     const handleFavoriteToggle = () => {
         const ct = favorites.filter(item => item.object_id === collection?.id && item.content_type_display === "collection")
         if (isInFavorites) {
-            removeFavorite(ct[0].id)
+            removeFavorite({id: ct[0].id})
         } else {
             if (collection?.id) {
-                addFavorite("collection", collection?.id)
+                // addFavorite("collection", collection?.id)
             }
         }
     }

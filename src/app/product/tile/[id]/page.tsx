@@ -20,9 +20,10 @@ const TilePage = () => {
     const scrollRef = useRef<HTMLDivElement>(null)
     const [indexTile, setIndexTile] = useState(0)
     
-    const { addToCart, removeFromCart, cartList, localCart } = useCartStore()
+    const { addToCart, cartList, localCart } = useCartStore()
     const { addFavorite, removeFavorite, favorites, localFavorites } = useFavorites()
-    const isAuthenticated = !!localStorage.getItem('access_token');
+    const isAuthenticated = useMemo(() => !!localStorage.getItem('access_token'), []);
+    
 
 
     useEffect(() => {
@@ -78,7 +79,7 @@ const TilePage = () => {
     };
 
     const handleAddToCart = async () => {
-        if (!isInCart) {
+        if (!isInCart && tile) {
             await addToCart(
                 tile.type, 
                 tile.id, 

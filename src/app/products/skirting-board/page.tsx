@@ -23,7 +23,8 @@ export type SkirtingBoardTYpe = {
   image3?: string,
   image4?: string,
   image5?: string,
-  content_type: string
+  content_type: string,
+  type: string,
 } 
 
 

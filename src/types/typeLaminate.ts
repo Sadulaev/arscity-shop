@@ -36,7 +36,7 @@ export type LaminateTypes = {
     construction: TileFields,
     connection_type: TileFields,
     is_promo: boolean,
-    type?: string
+    type: string
 }
 export type Filters = { 
     thickness: TileFields[],

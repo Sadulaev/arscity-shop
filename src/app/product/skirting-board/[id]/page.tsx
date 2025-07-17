@@ -40,10 +40,10 @@ const Skirtingboard = () => {
     const handleFavoriteToggle = () => {
         const ct = favorites.filter(item => item.object_id === scirtingboard?.id && item.content_type_display === "skirtingboard")
         if (isInFavorites) {
-            removeFavorite(ct[0].id)
+            removeFavorite({id: ct[0].id})
         } else {
             if (scirtingboard?.id) {
-                addFavorite("skirtingBoard", scirtingboard?.id)
+                addFavorite(scirtingboard)
             }
         }
     }

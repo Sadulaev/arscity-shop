@@ -1,11 +1,11 @@
 'use client';
 import { Heart } from 'lucide-react'
 import Image from 'next/image'
-import React from 'react'
+import React, { useMemo } from 'react'
 import Link from 'next/link'
 import { useCartStore } from '../../../store/CartStore'
-import { FavoritesType, useFavorites } from '../../../store/AddToFavorites';
-import { UnderlayType } from '@/app/products/underlay/page';
+import { useFavorites } from '../../../store/AddToFavorites';
+// import { UnderlayType } from '@/app/products/underlay/page';
 
 
 type Props = {
@@ -17,14 +17,16 @@ type Props = {
     price: number,
     image1: string,
     content_type: string,
-    product: FavoritesType
+    
+    product: any
 }
 
 const ProductUnderlay: React.FC<Props> = ({id, name, price, image1, content_type, product}) => {
 
   const { addToCart, cartList, localCart } = useCartStore()
   const { addFavorite, removeFavorite, favorites, localFavorites } = useFavorites()
-  const isAuthenticated = !!localStorage.getItem('access_token');
+  const isAuthenticated = useMemo(() => !!localStorage.getItem('access_token'), []);
+  
   
   const isInCart = isAuthenticated 
     ? cartList.some(item => item.object_id === id && item.content_type_display === content_type)

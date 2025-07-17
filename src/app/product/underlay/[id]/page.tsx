@@ -40,10 +40,10 @@ const Underlay = () => {
     const handleFavoriteToggle = () => {
         const ct = favorites.filter(item => item.object_id === underlay?.id && item.content_type_display === "underlay")
         if (isInFavorites) {
-            removeFavorite(ct[0].id)
+            removeFavorite({id: ct[0].id})
         } else {
             if (underlay?.id) {
-                addFavorite("underlay", underlay?.id)
+                addFavorite(underlay)
             }
         }
     }
