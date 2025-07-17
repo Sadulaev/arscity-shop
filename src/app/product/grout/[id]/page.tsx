@@ -9,18 +9,20 @@ import { useFavorites } from '../../../../../store/AddToFavorites';
 import Breadcrumbs from '@/components/shared/breadcrumbs';
 import { GroutsType } from '@/app/products/grouts/page';
 import config from '@/utils/config';
+import Link from 'next/link';
 
 const Grout = () => {
 
     const [grout, setGrout] = useState<GroutsType>()
-    const { addToCart, cartList, removeFromCart } = useCartStore()
+    
     const [quantity, setQuantity] = useState(1)
-    const { addFavorite, removeFavorite, favorites } = useFavorites()
+    
     const scrollRef = useRef<HTMLDivElement>(null)
     const [indexGrout, setIndexGrout] = useState(0)
-    const isInFavorites = favorites.some(fav => fav.object_id === grout?.id && fav.content_type_display === "grout")
-    const isInCart = cartList.some(item => item.content_type_display === 'grout' && item.object_id === grout?.id)
-
+    
+    const { addToCart, removeFromCart, cartList, localCart } = useCartStore()
+    const { addFavorite, removeFavorite, favorites, localFavorites } = useFavorites()
+    const isAuthenticated = !!localStorage.getItem('access_token');
 
     useEffect(() => {
         const id = window.location.pathname.split("/").pop()
@@ -36,37 +38,45 @@ const Grout = () => {
         }
     }, [])
 
+      
+    const isInCart = isAuthenticated 
+    ? cartList.some(item => item.object_id === grout?.id && item.content_type_display === grout?.type)
+    : localCart.some(item => item.object_id === grout?.id && item.content_type === grout?.type);
+
+    const isInFavorites = favorites.some(fav => fav.object_id === grout?.id && fav.content_type_display === grout?.type) || localFavorites.some(item => item.id === grout?.id && item.type === grout?.type);
+    console.log(grout);
     
     const handleFavoriteToggle = () => {
-        const ct = favorites.filter(item => item.object_id === grout?.id && item.content_type_display === "grout")
-        if (isInFavorites) {
-            removeFavorite(ct[0].id)
-        } else {
-            if (grout?.id) {
-                addFavorite("grout", grout?.id)
-            }
-        }
-    }
-
-    
-    const removeId = useMemo(() => {
-        if (cartList) {
-            return (
-                cartList.find(item => item.content_type_display === "grout")?.id
-            )
-        }
-    }, [cartList.length])
-    
-
-    const toggleToCart = () => {
+        const selectedFavorites = favorites.filter(item => item.object_id === grout?.id && item.content_type_display === grout?.type);
+        const selectedFavoritesLocalStorage = localFavorites.filter(item => item.id === grout?.id && item.type === grout?.type);
+        console.log(selectedFavoritesLocalStorage);
         
-        if (!isInCart && grout?.id) {
-            addToCart('grout', grout?.id, quantity)
+        if (isInFavorites) {
+            if (isAuthenticated) {
+                removeFavorite(selectedFavorites[0]);
+            } else {
+                removeFavorite(selectedFavoritesLocalStorage[0]);
+            }
         } else {
-            removeFromCart(removeId!)
+            addFavorite(grout);
         }
-    }
+    };
 
+    const handleAddToCart = async () => {
+        if (!isInCart) {
+            await addToCart(
+                grout.type, 
+                grout.id, 
+                quantity, 
+                grout
+            );
+        }
+    };
+    
+   
+    
+
+    
 
     const scrollLeft = () => {
             if (scrollRef.current) {
@@ -188,9 +198,15 @@ if (!grout) return null
                             <span>{grout.price * quantity} руб.</span>
                             <span>Цвет: {grout.color}</span>
                         </div>
-                        <div className='flex flex-col md:flex-row mb-4 md:mb-0 gap-3 items-center justify-between w-[100%] text-red-500'>
-                            <button onClick={toggleToCart} className='border-2 hover:bg-blue-500 hover:border-blue-500 hover:text-white transition-all duration-200 py-2 px-10 w-[100%] md:w-[50%]'>{!isInCart ? "+  добавить в корзину" : "Удалить из корзины"}</button>
-                        
+                        <div className='flex flex-col md:flex-row mb-4 md:mb-0 gap-3 items-center justify-between w-[100%]'>
+                            <button onClick={handleAddToCart} className={`border-2 hover:bg-blue-500 hover:border-blue-500  hover:text-white transition-all duration-200 py-2 px-10 w-[100%] md:w-[50%] ${isInCart ? "bg-red-500 border-white text-white" : ""}`}>{!isInCart ? "+  добавить в корзину" : "Добавлено в корзину"}</button>
+                            {isInCart ? (
+                                <button className={`border-2 hover:bg-blue-500 hover:border-blue-500 bg-red-500 border-red-500 text-white hover:text-white transition-all duration-200 py-2 px-10 w-[100%] md:w-[50%]`}>
+                                    <Link href='/cart'><span>Перейти в корзину</span></Link>
+                                </button>
+                            ) : (
+                                ""
+                            )}
                         </div>
                         <div className='md:flex items-center gap-2 justify-between'>
                             <div>Оплата: </div>

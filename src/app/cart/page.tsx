@@ -15,7 +15,7 @@ import config from '@/utils/config';
 
 
 const Cart = () => {
-  const { cartList, totalPrice, fetchCart, fetchTotalPrice } = useCartStore()
+  const { cartList, localCart, totalPrice, fetchCart, fetchTotalPrice } = useCartStore()
   const [delivery, setDelivery] = useState("delivery")
   const [addressDelivery, setAddressDelivery] = useState("")
   const [paymentMethod, setPaymentMethod] = useState("office")
@@ -69,7 +69,7 @@ const Cart = () => {
   }, [])
   //console.log(paymentMethod);
 
-  if (cartList.length === 0) return <EmptyCart/>
+  if (cartList.length === 0 && localCart.length === 0) return <EmptyCart/>
 
   return (
     <div className='flex flex-col gap-5 min-h-screen mb-30'>
@@ -93,7 +93,7 @@ const Cart = () => {
       </div>
 
       <div className='flex flex-col gap-20'>
-        {cartList.map(cart => (
+        {cartList.length > 0 ? (cartList.map(cart => (
           <CartItem 
             key={cart.product.name}
             id={cart.id}
@@ -103,7 +103,18 @@ const Cart = () => {
             content_type_display={cart.content_type_display}
             
           />
-        ))}
+        ))): (
+          localCart.map(cart => (
+            <CartItem 
+              key={cart.product.name}
+              id={cart.id}
+              object_id={cart.object_id}
+              product={cart.product}
+              quantity={cart.quantity}
+              content_type_display={cart.content_type_display}
+            />
+          ))
+        )}
       </div>
 
       <div className='flex flex-col gap-10 md:gap-0 w-screen md:w-[1370px] mx-auto px-12'>

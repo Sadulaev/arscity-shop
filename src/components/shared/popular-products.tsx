@@ -114,7 +114,7 @@ const PopularProducts = () => {
                     <div className='flex flex-col gap-5'>
                         <div className='flex gap-5 flex-wrap'>
                             {tiles.map((tile, index) => (    
-                                <Product key={tile.name} id={tile.id} index={index} city={tile.country} title={tile.name} imageURL={tile.image1} price={tile.price} content_type={tile.content_type} />
+                                <Product key={tile.name} id={tile.id} index={index} city={tile.country} title={tile.name} imageURL={tile.image1} price={tile.price} content_type={tile.type} product={tile}/>
                             ))}
                         </div> 
                         {totalQuantityProduct > 6 ? (

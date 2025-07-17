@@ -28,13 +28,14 @@ const Header = () => {
     const [searchInput, setSearchInput] = useState("")
     const [showMenu, setShowMenu] = useState(false)
     const ref = useRef<HTMLDivElement | null>(null)
-    const { cartList } = useCartStore()
-    const { favorites } = useFavorites()
+    const { cartList, localCart } = useCartStore()
+    const { favorites, localFavorites } = useFavorites()
     const { handleSearch } = useSearchStore()
     const fetchCart = useCartStore((state) => state.fetchCart)
     useClickOutside(ref, () => setOpen(false))
     const debounce = useDebounce(searchInput, 1000)
     const router = useRouter()
+    const isAuth = localStorage.getItem("access_token")
 
     const [isLogged, setIsLogged] = useState(false)
     useEffect(() => {
@@ -104,7 +105,7 @@ const Header = () => {
                         >
                             <Heart className="hover:scale-125 duration-150 cursor-pointer" />
                             <span className="absolute text-red-500 -top-4 -right-2">
-                                {favorites.length}
+                                {isAuth ? favorites.length : localFavorites.length}
                             </span>
                         </Link>
                         <Link
@@ -113,7 +114,7 @@ const Header = () => {
                         >
                             <ShoppingCart className="hover:scale-125 duration-150 cursor-pointer" />
                             <span className="absolute text-red-500 -top-4 -right-2">
-                                {cartList.length}
+                                {isAuth ? cartList.length : localCart.length}
                             </span>
                         </Link>
                     </div>

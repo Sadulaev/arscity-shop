@@ -9,21 +9,18 @@ import { useCartStore } from '../../../../../store/CartStore';
 import { useFavorites } from '../../../../../store/AddToFavorites';
 import Breadcrumbs from '@/components/shared/breadcrumbs';
 import config from '@/utils/config';
+import Link from 'next/link';
 
 const LaminatePage = () => {
-
     const [laminate, setLaminate] = useState<LaminateTypes>()
-    const { addToCart, cartList, removeFromCart } = useCartStore()
     const [quantity, setQuantity] = useState(1)
     const scrollRef = useRef<HTMLDivElement>(null)
     const [indexLaminate, setIndexLaminate] = useState(0)
-    const { addFavorite, removeFavorite, favorites } = useFavorites()
-    const isInFavorites = favorites.some(fav => fav.object_id === laminate?.id && fav.content_type_display === "laminate")
-    const isInCart = cartList.some(item => item.content_type_display === 'laminate' && item.object_id === laminate?.id)
-    
-   
-    
 
+    const { addToCart, removeFromCart, cartList, localCart } = useCartStore()
+    const { addFavorite, removeFavorite, favorites, localFavorites } = useFavorites()
+    const isAuthenticated = !!localStorage.getItem('access_token');
+    
     useEffect(() => {
         const id = window.location.pathname.split("/").pop()
         try {
@@ -37,39 +34,40 @@ const LaminatePage = () => {
 
         }
     }, [])
+        
+    const isInCart = isAuthenticated 
+    ? cartList.some(item => item.object_id === laminate?.id && item.content_type_display === laminate?.type)
+    : localCart.some(item => item.object_id === laminate?.id && item.content_type === laminate?.type);
 
+    const isInFavorites = favorites.some(fav => fav.object_id === laminate?.id && fav.content_type_display === laminate?.type) || localFavorites.some(item => item.id === laminate?.id && item.type === laminate?.type);
+    console.log(laminate);
     
     const handleFavoriteToggle = () => {
-        const ct = favorites.filter(item => item.object_id === laminate?.id && item.content_type_display === "laminate")
-        if (isInFavorites) {
-            removeFavorite(ct[0].id)
-        } else {
-            if (laminate?.id) {
-                addFavorite("laminate", laminate?.id)
-            }
-        }
-    }
-
-    
-    const removeId = useMemo(() => {
-        if (cartList) {
-            return (
-                cartList.find(item => item.content_type_display === "laminate")?.id
-            )
-        } else{
-            console.log('111');
-        }
-    }, [cartList.length])
-    
-
-    const toggleToCart = () => {
+        const selectedFavorites = favorites.filter(item => item.object_id === laminate?.id && item.content_type_display === laminate?.type);
+        const selectedFavoritesLocalStorage = localFavorites.filter(item => item.id === laminate?.id && item.type === laminate?.type);
+        console.log(selectedFavoritesLocalStorage);
         
-        if (!isInCart && laminate?.id) {
-            addToCart('laminate', laminate?.id, quantity)
+        if (isInFavorites) {
+            if (isAuthenticated) {
+                removeFavorite(selectedFavorites[0]);
+            } else {
+                removeFavorite(selectedFavoritesLocalStorage[0]);
+            }
         } else {
-            removeFromCart(removeId!)
+            addFavorite(laminate);
         }
-    }
+    };
+
+    const handleAddToCart = async () => {
+        if (!isInCart) {
+            await addToCart(
+                laminate.type, 
+                laminate.id, 
+                quantity, 
+                laminate
+            );
+        }
+    };
 
     const scrollLeft = () => {
             if (scrollRef.current) {
@@ -204,9 +202,15 @@ const LaminatePage = () => {
                             <span>Итоговая цена: </span>
                             <span>{laminate.price * quantity} руб.</span>
                         </div>
-                        <div className='flex flex-col md:flex-row mb-4 md:mb-0 gap-3 items-center justify-between w-[100%] text-red-500'>
-                            <button onClick={toggleToCart} className='border-2 hover:bg-blue-500 hover:border-blue-500 hover:text-white transition-all duration-200 py-2 px-10 w-[100%] md:w-[50%]'>{!isInCart ? "+  добавить в корзину" : "Удалить из корзины"}</button>
-                        
+                        <div className='flex flex-col md:flex-row mb-4 md:mb-0 gap-3 items-center justify-between w-[100%]'>
+                            <button onClick={handleAddToCart} className={`border-2 hover:bg-blue-500 hover:border-blue-500  hover:text-white transition-all duration-200 py-2 px-10 w-[100%] md:w-[50%] ${isInCart ? "bg-red-500 border-white text-white" : ""}`}>{!isInCart ? "+  добавить в корзину" : "Добавлено в корзину"}</button>
+                            {isInCart ? (
+                                <button className={`border-2 hover:bg-blue-500 hover:border-blue-500 bg-red-500 border-red-500 text-white hover:text-white transition-all duration-200 py-2 px-10 w-[100%] md:w-[50%]`}>
+                                    <Link href='/cart'><span>Перейти в корзину</span></Link>
+                                </button>
+                            ) : (
+                                ""
+                            )}
                         </div>
                         <div className='md:flex items-center gap-2 justify-between'>
                             <div>Оплата: </div>

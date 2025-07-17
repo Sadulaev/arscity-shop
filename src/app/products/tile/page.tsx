@@ -44,6 +44,14 @@ const Products = () => {
     }
     fethProduct()
   }, [filters])
+
+
+  const arr = [100,200,300,400]
+  console.log(arr);
+  for (const num of arr) {
+    console.log(num);
+  }
+  
   
   return (
     <div className='flex gap-5 w-screen md:w-[1370px] mx-auto mt-10 px-12 pt-5'>
@@ -69,10 +77,7 @@ const Products = () => {
           {tiles?.length > 0 ? (
             tiles.map((tile) => (
               <div key={tile.id}>
-                
-                  <Product content_type='tile' id={tile.id} city={tile.country} imageURL={tile.image1 || ''} title={tile.name} price={tile.price} />
-              
-                
+                  <Product content_type='tile' id={tile.id} city={tile.country} imageURL={tile.image1 || ''} title={tile.name} price={tile.price} product={tile} />
               </div>
             ))
           ) : (

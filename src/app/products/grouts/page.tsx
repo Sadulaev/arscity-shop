@@ -12,13 +12,14 @@ export type GroutsType = {
     id: number
     name: string
     color: string
-    type: string
+    typematerial: string
     price: number
     image1: string
     image2: string
     image3: string
     image4: string
     image5: string
+    type: string
 }
 
 const Grouts = () => {
@@ -33,7 +34,7 @@ const Grouts = () => {
                     `${config.BASE_URL}/api/tile/grouts/`,
                     {
                         params: {
-                            type: selectedGrouts.join(","),
+                            typematerial: selectedGrouts.join(","),
                         },
                     }
                 )
@@ -108,16 +109,17 @@ const Grouts = () => {
             </div>
             <div className="flex flex-wrap gap-5">
                 {grouts?.length > 0
-                    ? grouts.map((grouts) => (
-                          <div key={grouts.id}>
+                    ? grouts.map((grout) => (
+                          <div key={grout.id}>
                               <GroutsCard
-                                  id={grouts.id}
-                                  name={grouts.name}
-                                  color={grouts.color}
-                                  type={grouts.type}
-                                  price={grouts.price}
-                                  image1={grouts.image1}
+                                  id={grout.id}
+                                  name={grout.name}
+                                  color={grout.color}
+                                  typematerial={grout.typematerial}
+                                  price={grout.price}
+                                  image1={grout.image1}
                                   content_type="grout"
+                                  product={grout}
                               />
                           </div>
                       ))

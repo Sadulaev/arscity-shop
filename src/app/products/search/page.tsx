@@ -7,14 +7,14 @@ import { useSearchStore } from '../../../../store/SearchStore';
 import EmptySerach from './_components/empty-search';
 import config from '@/utils/config';
 
-type SearchDataType = {
+export type SearchDataType = {
     type: string
     id: number,
     name: string,
     price: number,
     image1: string,
     tile_type: string,
-    country: string
+    country: string,
 }
 
 const SearchPage = () => {
@@ -43,7 +43,7 @@ const SearchPage = () => {
                 {searchData?.length > 0 ? (
                     searchData.map((item) => (
                     <div key={item.id}>
-                        <SearchCard content_type={item.type} id={item.id} name={item.name} price={item.price} image1={item.image1} country={item.country}/>
+                        <SearchCard content_type={item.type} id={item.id} name={item.name} price={item.price} image1={item.image1} country={item.country} product={item}/>
                     </div>
                 ))
                 ) : (

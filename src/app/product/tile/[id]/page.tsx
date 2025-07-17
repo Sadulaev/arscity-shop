@@ -16,13 +16,13 @@ const TilePage = () => {
 
     const [tile, setTile] = useState<TileTypes>()
     const [tilesForCollection, setTilesForCollection] = useState<TileTypes[]>([])
-    const { addToCart, cartList, removeFromCart } = useCartStore()
     const [quantity, setQuantity] = useState(1)
-    const { addFavorite, removeFavorite, favorites } = useFavorites()
     const scrollRef = useRef<HTMLDivElement>(null)
     const [indexTile, setIndexTile] = useState(0)
-    const isInCart = cartList.some(item => item.content_type_display === 'tile' && item.object_id === tile?.id)
-
+    
+    const { addToCart, removeFromCart, cartList, localCart } = useCartStore()
+    const { addFavorite, removeFavorite, favorites, localFavorites } = useFavorites()
+    const isAuthenticated = !!localStorage.getItem('access_token');
 
 
     useEffect(() => {
@@ -53,43 +53,41 @@ const TilePage = () => {
             console.log(error);
         }
     }, [tile])
-    
-    
-
-    
-    const isInFavorites = favorites.some(fav => fav.object_id === tile?.id && fav.content_type_display === "tile")
-    const handleFavoriteToggle = () => {
-        const ct = favorites.filter(item => item.object_id === tile?.id && item.content_type_display === "tile")
-        if (isInFavorites) {
-            removeFavorite(ct[0].id)
-        } else {
-            if (tile?.id) {
-                addFavorite("tile", tile?.id)
-            }
-        }
-    }
-    
-
-    const removeId = useMemo(() => {
-        if (cartList && tile) {
-            return (
-                cartList.find(item => item.content_type_display === 'tile' && tile.id === item.object_id)?.id
-            )
-        }
-    }, [cartList.length, !tile])
-
-    const toggleToCart = () => {
         
-        if (!isInCart && tile?.id) {
-            addToCart('tile', tile?.id, quantity)
+    const isInCart = isAuthenticated 
+    ? cartList.some(item => item.object_id === tile?.id && item.content_type_display === tile?.type)
+    : localCart.some(item => item.object_id === tile?.id && item.content_type === tile?.type);
+
+    const isInFavorites = favorites.some(fav => fav.object_id === tile?.id && fav.content_type_display === tile?.type) || localFavorites.some(item => item.id === tile?.id && item.type === tile?.type);
+    console.log(tile);
+    
+    const handleFavoriteToggle = () => {
+        const selectedFavorites = favorites.filter(item => item.object_id === tile?.id && item.content_type_display === tile?.type);
+        const selectedFavoritesLocalStorage = localFavorites.filter(item => item.id === tile?.id && item.type === tile?.type);
+        console.log(selectedFavoritesLocalStorage);
+        
+        if (isInFavorites) {
+            if (isAuthenticated) {
+                removeFavorite(selectedFavorites[0]);
+            } else {
+                removeFavorite(selectedFavoritesLocalStorage[0]);
+            }
         } else {
-            removeFromCart(removeId!)
+            addFavorite(tile);
         }
-    }
+    };
 
-
-
-
+    const handleAddToCart = async () => {
+        if (!isInCart) {
+            await addToCart(
+                tile.type, 
+                tile.id, 
+                quantity, 
+                tile
+            );
+        }
+    };
+    
 
     const scrollLeft = () => {
             if (scrollRef.current) {
@@ -234,10 +232,15 @@ const TilePage = () => {
                             <span>Итоговая цена: </span>
                             <span>{tile.price * quantity} руб.</span>
                         </div>
-                        <div className='flex flex-col md:flex-row mb-4 md:mb-0 gap-3 items-center justify-between w-[100%] text-red-500'>
-                            <div className='flex flex-col md:flex-row mb-4 md:mb-0 gap-3 items-center justify-between w-[100%] text-red-500'>
-                            <button onClick={toggleToCart} className='border-2 hover:bg-blue-500 hover:border-blue-500 hover:text-white transition-all duration-200 py-2 px-10 w-[100%] md:w-[50%]'>{!isInCart ? "+  добавить в корзину" : "Удалить из корзины"}</button>
-                        </div>
+                        <div className='flex flex-col md:flex-row mb-4 md:mb-0 gap-3 items-center justify-between w-[100%]'>
+                            <button onClick={handleAddToCart} className={`border-2 hover:bg-blue-500 hover:border-blue-500  hover:text-white transition-all duration-200 py-2 px-10 w-[100%] md:w-[50%] ${isInCart ? "bg-red-500 border-white text-white" : ""}`}>{!isInCart ? "+  добавить в корзину" : "Добавлено в корзину"}</button>
+                            {isInCart ? (
+                                <button className={`border-2 hover:bg-blue-500 hover:border-blue-500 bg-red-500 border-red-500 text-white hover:text-white transition-all duration-200 py-2 px-10 w-[100%] md:w-[50%]`}>
+                                    <Link href='/cart'><span>Перейти в корзину</span></Link>
+                                </button>
+                            ) : (
+                                ""
+                            )}
                         </div>
                         <div className='md:flex items-center gap-2 justify-between'>
                             <div>Оплата: </div>

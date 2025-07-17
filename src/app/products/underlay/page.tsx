@@ -52,7 +52,7 @@ const Underlay = () => {
                 {underlays?.length > 0 ? (
                     underlays.map((underlay) => (
                     <div key={underlay.id}>
-                        <ProductUnderlay content_type="underlay" id={underlay.id} name={underlay.name} thickness={underlay.thickness} has_vapor_barrier={underlay.has_vapor_barrier} floor_type={underlay.floor_type} price={underlay.price} image1={underlay.image1}/>
+                        <ProductUnderlay content_type="underlay" id={underlay.id} name={underlay.name} thickness={underlay.thickness} has_vapor_barrier={underlay.has_vapor_barrier} floor_type={underlay.floor_type} price={underlay.price} image1={underlay.image1} product={underlay}/>
                     </div>
                 ))
                 ) : (

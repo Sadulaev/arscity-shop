@@ -9,30 +9,42 @@ export type FavoritesType = {
     name: string,
     image1: string,
     price?: number,
-    country?: string,
+    country?: {
+        name: string
+    },
     description?: string,
     number_of_elements?: number,
     content_type_display: string,
+    type?: string,
+    local_id?: string,
+    collection?: {
+        name: string
+    }
 }
+
 
 type StoreFavorites = {
     favorites: FavoritesType[],
+    localFavorites: FavoritesType[],
     fetchFavorites: () => void,
-    addFavorite: (content_type: string, object_id: number) => void,
-    removeFavorite: (favoriteId: number) => void,
+    addFavorite: (item: FavoritesType) => void,
+    removeFavorite: (params: { id?: number, local_id?: string }) => void,
+    mergeFavorites: () => Promise<void>,
 }
 
 export const useFavorites = create<StoreFavorites>()(
     persist(
         (set, get) => ({
             favorites: [],
+            localFavorites: [],
 
             fetchFavorites: async () => {
+                const token = localStorage.getItem('access_token');
+                if (!token) return;
+                
                 try {
                     const response = await axios.get(`${config.BASE_URL}/api/order/favorites/`, {
-                        headers: {
-                            Authorization: `Bearer ${localStorage.getItem('access_token')}`
-                        }
+                        headers: { Authorization: `Bearer ${token}` }
                     });
                     set({ favorites: response.data });
                 } catch (error) {
@@ -40,33 +52,84 @@ export const useFavorites = create<StoreFavorites>()(
                 }
             },
 
-            addFavorite: async (content_type, object_id) => {
-                try {
-                    const response = await axios.post(`${config.BASE_URL}/api/order/favorites/`, {
-                        content_type,
-                        object_id
-                    }, {
-                        headers: {
-                            Authorization: `Bearer ${localStorage.getItem('access_token')}`
-                        }
-                    });
-                    set({ favorites: [...get().favorites, response.data] });
-                } catch (error) {
-                    console.log(error);
+            addFavorite: async (item) => {
+                const token = localStorage.getItem('access_token');
+
+                if (token) {
+                    try {
+                        const response = await axios.post(`${config.BASE_URL}/api/order/favorites/`, {
+                            content_type: item.type,
+                            object_id: item.id
+                        }, {
+                            headers: { Authorization: `Bearer ${token}` }
+                        });
+                        set({ favorites: [...get().favorites, response.data] });
+                    } catch (error) {
+                        console.log(error);
+                    }
+                } 
+
+                else {
+                    const localItem = {
+                        ...item,
+                        local_id: Date.now().toString()
+                    };
+                    set({ localFavorites: [...get().localFavorites, localItem] });
                 }
             },
 
-            removeFavorite: async (favoriteId) => {
-                try {
-                    await axios.delete(`${config.BASE_URL}/api/order/favorites/${favoriteId}/`, {
-                        headers: {
-                            Authorization: `Bearer ${localStorage.getItem('access_token')}`
-                        }
+            removeFavorite: async (product) => {
+                const token = localStorage.getItem('access_token');
+                
+                if (token && product.id) {
+                    try {
+                        await axios.delete(`${config.BASE_URL}/api/order/favorites/${product.id}/`, {
+                            headers: { Authorization: `Bearer ${token}` }
+                        });
+                        set({ 
+                            favorites: get().favorites.filter(fav => fav.id !== product.id) 
+                        });
+                    } catch (error) {
+                        console.log(error);
+                    }
+                } 
+                else if (product.local_id) {
+                    set({
+                        localFavorites: get().localFavorites.filter(
+                            fav => fav.local_id !== product.local_id
+                        )
                     });
-                    set({ favorites: get().favorites.filter(fav => fav.id !== favoriteId) });
-                } catch (error) {
-                    console.log(error);
                 }
+            },
+
+            mergeFavorites: async () => {
+                const { localFavorites } = get();
+                const token = localStorage.getItem('access_token');
+                if (!token || localFavorites.length === 0) return;
+
+                const successfulItems: FavoritesType[] = [];
+
+                for (const item of localFavorites) {
+                    try {
+                        await axios.post(`${config.BASE_URL}/api/order/favorites/`, {
+                            content_type: item.type,
+                            object_id: item.id
+                        }, {
+                            headers: { Authorization: `Bearer ${token}` }
+                        });
+                        successfulItems.push(item);
+                    } catch (error) {
+                        console.error('Ошибка синхронизации:', item, error);
+                    }
+                }
+
+                set(state => ({
+                    localFavorites: state.localFavorites.filter(
+                        item => !successfulItems.includes(item)
+                    )
+                }));
+
+                get().fetchFavorites();
             }
         }),
         {

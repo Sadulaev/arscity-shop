@@ -6,25 +6,28 @@ import FavoriteCard from '@/components/shared/favorite-card'
 import EmptyFavorites from './_components/empty-favorites';
 
 const Favorites = () => {
-    const { favorites } = useFavorites()
-
-    if (favorites.length === 0) return <EmptyFavorites />
-
+    const { favorites, localFavorites } = useFavorites()
+    
+    if (favorites.length === 0 && localFavorites.length === 0) return <EmptyFavorites />
+     console.log(favorites);
     return (
         <div className='flex flex-col md:w-[1370px] mx-auto mt-8 px-12 pt-3 mb-20'>
 
             <h2 className='mx-auto text-2xl md:text-4xl mb-4 md:mb-0'>Избранные товары</h2>
             <div className='flex flex-col md:flex-row flex-wrap gap-3'>
-                {favorites?.length > 0 ? (
+                {localStorage.getItem("access_token") ? (
                     favorites.map((favorite) => (
                         <div key={favorite.id}>
-                            <FavoriteCard object_id={favorite.object_id} content_type_display={favorite.content_type_display} id={favorite.id} name={favorite.name} image1={favorite.image1} price={favorite?.price} country={favorite.country} description={favorite.description} number_of_elements={favorite?.number_of_elements} />
+                            <FavoriteCard object_id={favorite.object_id} content_type_display={favorite.content_type_display} id={favorite.id} name={favorite.name} image1={favorite.image1} price={favorite?.price} country={favorite.country} description={favorite.description} number_of_elements={favorite?.number_of_elements} product={favorite}/>
                         </div>
                     ))
                 ) : (
-                    new Array(6).fill(0).map((_, index) => (
-                        <SceletonCard key={index} />
+                    localFavorites.map((favorite) => (
+                        <div key={favorite.id}>
+                            <FavoriteCard object_id={favorite.object_id} content_type_display={favorite.type} id={favorite.id} name={favorite.name} image1={favorite.image1} price={favorite?.price} country={favorite.country} description={favorite.description} number_of_elements={favorite?.number_of_elements} product={favorite}/>
+                        </div>
                     ))
+                    
                 )}
             </div>
 

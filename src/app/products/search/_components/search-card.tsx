@@ -1,10 +1,11 @@
 import React from 'react'
 import { useCartStore } from '../../../../../store/CartStore'
-import { useFavorites } from '../../../../../store/AddToFavorites'
+import { FavoritesType, useFavorites } from '../../../../../store/AddToFavorites'
 import Image from 'next/image'
 import { Heart } from 'lucide-react'
 import Link from 'next/link'
 import config from '@/utils/config'
+import { SearchDataType } from '../page'
 
 type Props = {
     content_type: string
@@ -13,31 +14,54 @@ type Props = {
     price: number,
     image1: string,
     tile_type?: string,
-    country: string
+    country: string,
+    product: FavoritesType
 }
 
-const SearchCard:React.FC<Props> = ({content_type, id, name, price, image1}) => {
-    const { addToCart, cartList } = useCartStore()
-    const img = `${config.BASE_URL}${image1}`  
-    const { addFavorite, removeFavorite, favorites } = useFavorites()
-    const isInFavorites = favorites.some(fav => fav.object_id === id && fav.content_type_display === content_type)
-    const isInCart = cartList.some(item => item.object_id === id && content_type === item.content_type_display)
+const SearchCard:React.FC<Props> = ({content_type, id, name, price, image1, product}) => {
+    const img = `${config.BASE_URL}${image1}` 
+    const { addToCart, cartList, localCart } = useCartStore()
+    const { addFavorite, removeFavorite, favorites, localFavorites } = useFavorites()
+    const isAuthenticated = !!localStorage.getItem('access_token');
     
+    const isInCart = isAuthenticated 
+      ? cartList.some(item => item.object_id === id && item.content_type_display === content_type)
+      : localCart.some(item => item.object_id === id && item.content_type === content_type);
+
+    const isInFavorites = favorites.some(fav => fav.object_id === id && fav.content_type_display === content_type) || 
+                         localFavorites.some(item => item.id === id && item.type === content_type);
     
     const handleFavoriteToggle = () => {
-    const ct = favorites.filter(item => item.object_id === id && item.content_type_display === content_type)
+    const selectedFavorites = favorites.filter(item => item.object_id === id && item.content_type_display === content_type);
+    const selectedFavoritesLocalStorage = localFavorites.filter(item => item.id === id && item.type === content_type);
+    
     if (isInFavorites) {
-        removeFavorite(ct[0].id)
-    } else{
-        addFavorite(content_type, id)
-    }
-    }
-
-    const handleAddToCart = async () => {
-    if (!isInCart) {
-        await addToCart('underlay', id, 1)
-    }
-    }
+      if (isAuthenticated) {
+          removeFavorite(selectedFavorites[0]);
+      } else {
+          removeFavorite(selectedFavoritesLocalStorage[0]);
+      }
+      } else {
+        addFavorite(product);
+      }
+    };
+  console.log(image1);
+  
+  const handleAddToCart = async () => {
+      if (!isInCart) {
+          await addToCart(
+            content_type, 
+            id, 
+            1, 
+            {
+              id,
+              name: name,
+              image1: image1,
+              price,
+            }
+          );
+      }
+  };
   return (
     <div className='max-w-[300px] min-w-[300px] max-h-[550px] min-h-[550px] flex flex-col justify-between pb-4 gap-[20px] px-3 cursor-pointer custom-shadow'>
         <div className='flex items-center justify-end pt-2'>

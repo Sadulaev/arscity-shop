@@ -37,7 +37,7 @@ const LargeFormatTiles = () => {
             {largeFormat?.length > 0 ? (
                 largeFormat.map((tile) => (
                 <div key={tile.id}>
-                    <Product content_type='tile' id={tile.id} city={tile.country} imageURL={tile.image1 || ''} title={tile.name} price={tile.price}/>
+                    <Product content_type='tile' id={tile.id} city={tile.country} imageURL={tile.image1 || ''} title={tile.name} price={tile.price} product={tile}/>
                 </div>
             ))
             ) : (

@@ -4,12 +4,13 @@ import React from 'react'
 import Link from 'next/link'
 import { useCartStore } from '../../../store/CartStore'
 import { useFavorites } from '../../../store/AddToFavorites'
+import { GroutsType } from '@/app/products/grouts/page'
 
 
 type Props = {
   id: number,
   name: string,
-  type: string,
+  typematerial: string,
   price: number,
   color: string,
   image1: string,
@@ -17,33 +18,53 @@ type Props = {
   image3?: string,
   image4?: string,
   image5?: string,
-  content_type: string
+  content_type: string,
+  product: GroutsType
 }
 
-const GroutsCard: React.FC<Props> = ({id, name, price, image1, content_type}) => {
-
-  const { addToCart, cartList } = useCartStore()
-    
-  const { addFavorite, removeFavorite, favorites } = useFavorites()
-  const isInFavorites = favorites.some(fav => fav.object_id === id && fav.content_type_display === content_type)
-  const isInCart = cartList.some(item => item.object_id === id && content_type === item.content_type_display)
+const GroutsCard: React.FC<Props> = ({id, name, price, image1, content_type, product}) => {
   
+  
+  const { addToCart, cartList, localCart } = useCartStore()
+  const { addFavorite, removeFavorite, favorites, localFavorites } = useFavorites()
+  const isAuthenticated = !!localStorage.getItem('access_token');
+  
+  const isInCart = isAuthenticated 
+    ? cartList.some(item => item.object_id === id && item.content_type_display === content_type)
+    : localCart.some(item => item.object_id === id && item.content_type === content_type);
+
+  const isInFavorites = favorites.some(fav => fav.object_id === id && fav.content_type_display === content_type) || localFavorites.some(item => item.id === id && item.type === content_type);
   
   const handleFavoriteToggle = () => {
-    const ct = favorites.filter(item => item.object_id === id && item.content_type_display === content_type)
+    const selectedFavorites = favorites.filter(item => item.object_id === id && item.content_type_display === content_type);
+    const selectedFavoritesLocalStorage = localFavorites.filter(item => item.id === id && item.type === content_type);
+    
     if (isInFavorites) {
-      removeFavorite(ct[0].id)
-    } else{
-      addFavorite(content_type, id)
+      if (isAuthenticated) {
+          removeFavorite(selectedFavorites[0]);
+      } else {
+          removeFavorite(selectedFavoritesLocalStorage[0]);
+      }
+    } else {
+      addFavorite(product);
     }
-  }
+  };
 
   const handleAddToCart = async () => {
-    if (!isInCart) {
-      await addToCart(content_type, id, 1)
-    }
-  }
-
+      if (!isInCart) {
+          await addToCart(
+            content_type, 
+            id, 
+            1, 
+            {
+              id,
+              name: name,
+              image1: image1,
+              price  
+            }
+          );
+      }
+  };
 
   return (
     <div className='max-w-[300px] min-w-[300px] max-h-[514px] min-h-[514px] flex flex-col justify-between pb-4 pt-2 gap-[10px] px-3 shadow-md hover:-translate-y-1 transition-all duration-200'>

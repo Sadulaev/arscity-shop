@@ -12,7 +12,7 @@ import config from '@/utils/config'
 export type SkirtingBoardTYpe = {
   id: number,
   name: string,
-  type: string,
+  typematerial: string,
   price: number,
   thickness: number,
   height: number,
@@ -36,7 +36,7 @@ const SkirtingBoard = () => {
     const fethProduct = async() => {
       const {data} = await axios.get(`${config.BASE_URL}/api/laminate/skirting-boards/`, {
         params: {
-          type: selectedSkirtingBoards.join(',')
+          typematerial: selectedSkirtingBoards.join(',')
         }
       })
       setSkirtingBoards(data)
@@ -54,6 +54,8 @@ const SkirtingBoard = () => {
   const resetFilters = () => {
     setSelectedSkirtingBoards([])
   }
+  console.log(skirtingBoards);
+  
   return (
     <div className='flex gap-5 md:w-[1370px] mx-auto mt-10 px-12 pt-5'>
     
@@ -77,7 +79,7 @@ const SkirtingBoard = () => {
               <ProductSkirtingBoard
                 id={skirtingBoard.id} 
                 name={skirtingBoard.name} 
-                type={skirtingBoard.type}
+                typematerial={skirtingBoard.typematerial}
                 price={skirtingBoard.price}
                 thickness={skirtingBoard.thickness} 
                 height={skirtingBoard.height} 
@@ -85,6 +87,7 @@ const SkirtingBoard = () => {
                 tone={skirtingBoard.tone}
                 image1={skirtingBoard.image1}
                 content_type="skirtingboard"
+                product={skirtingBoard}
                 />
             </div>
           ))

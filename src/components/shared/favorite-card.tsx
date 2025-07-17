@@ -8,18 +8,22 @@ import { useCartStore } from '../../../store/CartStore'
 import config from '@/utils/config'
 
 
-const FavoriteCard:React.FC<FavoritesType> = ({id, name, image1, price, country, content_type_display, object_id}) => {
+const FavoriteCard:React.FC<FavoritesType> = ({id, name, image1, price, country, content_type_display, object_id, product}) => {
 
-    const { favorites, removeFavorite } = useFavorites()
+    const { favorites, localFavorites, removeFavorite } = useFavorites()
     const { addToCart, cartList } = useCartStore()
     const imgURL = `${config.BASE_URL}${image1}`
     
     const isInCart = cartList.some(item => item.object_id === object_id && item.content_type_display === content_type_display)
-    const isFavorites = favorites.some(fav => fav && fav.name === name)
+    const isFavorites = favorites.some(fav => fav && fav.name === name) || localFavorites.some(item => item.id === id && item.type === content_type_display)
+    console.log(isFavorites);
+    console.log(id, content_type_display);
+    
+   
     
     const handleFAvorites = () => {
         if (isFavorites) {
-            removeFavorite(id)
+            removeFavorite(product)
         }
     }
 
@@ -32,7 +36,7 @@ const FavoriteCard:React.FC<FavoritesType> = ({id, name, image1, price, country,
     return (
         <div className='max-w-[300px] min-w-[300px] max-h-[514px] min-h-[514px] flex flex-col justify-between pb-4 pt-2 gap-[10px] px-3 shadow-md'>
             <div className='flex items-center justify-between'>
-                <span className='flex-auto uppercase'>{country}</span>
+                <span className='flex-auto uppercase'>{country?.name ? country?.name : ""}</span>
                 <Heart onClick={() => handleFAvorites()} size={35} className='hover:scale-110 transition-all duration-200' fill={isFavorites ? "red" : "white"} strokeWidth={1} />
             </div>
             
@@ -40,7 +44,7 @@ const FavoriteCard:React.FC<FavoritesType> = ({id, name, image1, price, country,
             <div className='overflow-hidden min-h-[180px] flex items-center'>
                 <Image style={{minWidth: "100%", height: "270px"}}
                     objectFit='contain'
-                    src={image1 ? imgURL : notImage} alt='image' width={300} height={270}/>
+                    src={image1} alt='image' width={300} height={270}/>
             </div>
             <Link target='blank' href={`/product/tile/${id}`}>
                 <span className='text-[1.3rem] cursor-pointer'>{name}</span>

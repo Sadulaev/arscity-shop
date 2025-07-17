@@ -69,7 +69,7 @@ const ProductsLaminate = () => {
           {laminates?.length > 0 ? (
             laminates.map((laminate) => (
               <div key={laminate.id}>
-                <Product content_type='laminate' id={laminate.id} city={laminate.country} imageURL={laminate.image1 || ''} title={laminate.name} price={laminate.price}/>
+                <Product content_type='laminate' id={laminate.id} city={laminate.country} imageURL={laminate.image1 || ''} title={laminate.name} price={laminate.price} product={laminate}/>
               </div>
             ))
           ) : (
