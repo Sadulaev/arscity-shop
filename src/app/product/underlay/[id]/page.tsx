@@ -9,18 +9,22 @@ import { useFavorites } from '../../../../../store/AddToFavorites';
 import { UnderlayType } from '@/app/products/underlay/page';
 import Breadcrumbs from '@/components/shared/breadcrumbs';
 import config from '@/utils/config';
+import Link from 'next/link';
 
 const Underlay = () => {
-
     const [underlay, setUnderlay] = useState<UnderlayType>()
-    const { addToCart, cartList, removeFromCart } = useCartStore()
     const [quantity, setQuantity] = useState(1)
     const scrollRef = useRef<HTMLDivElement>(null)
     const [indexUnderlay, setIndexUnderlay] = useState(0)
-    const { addFavorite, removeFavorite, favorites } = useFavorites()
-    const isInFavorites = favorites.some(fav => fav.object_id === underlay?.id && fav.content_type_display === "underlay")
-    const isInCart = cartList.some(item => item.content_type_display === 'underlay' && item.object_id === underlay?.id)
 
+    const { addToCart, cartList, localCart } = useCartStore()
+    const { addFavorite, removeFavorite, favorites, localFavorites } = useFavorites()
+    const ISSERVER = typeof window === "undefined"
+    const isAuthenticated = useMemo(() => {
+        if (ISSERVER) return
+        return !!localStorage.getItem('access_token')
+    }, []);
+    
 
     useEffect(() => {
         const id = window.location.pathname.split("/").pop()
@@ -37,35 +41,38 @@ const Underlay = () => {
     }, [])
 
     
+    const isInCart = isAuthenticated 
+    ? cartList.some(item => item.object_id === underlay?.id && item.content_type_display === underlay?.type)
+    : localCart.some(item => item.object_id === underlay?.id && item.content_type === underlay?.type);
+
+    const isInFavorites = favorites.some(fav => fav.object_id === underlay?.id && fav.content_type_display === underlay?.type) || localFavorites.some(item => item.id === underlay?.id && item.type === underlay?.type);
+    console.log(underlay);
+    
     const handleFavoriteToggle = () => {
-        const ct = favorites.filter(item => item.object_id === underlay?.id && item.content_type_display === "underlay")
-        if (isInFavorites) {
-            removeFavorite({id: ct[0].id})
-        } else {
-            if (underlay?.id) {
-                addFavorite(underlay)
-            }
-        }
-    }
-
-    
-    const removeId = useMemo(() => {
-        if (cartList) {
-            return (
-                cartList.find(item => item.content_type_display === "underlay")?.id
-            )
-        }
-    }, [cartList.length])
-    
-
-    const toggleToCart = () => {
+        const selectedFavorites = favorites.filter(item => item.object_id === underlay?.id && item.content_type_display === underlay?.type);
+        const selectedFavoritesLocalStorage = localFavorites.filter(item => item.id === underlay?.id && item.type === underlay?.type);
         
-        if (!isInCart && underlay?.id) {
-            addToCart('underlay', underlay?.id, quantity)
+        if (isInFavorites) {
+            if (isAuthenticated) {
+                removeFavorite(selectedFavorites[0]);
+            } else {
+                removeFavorite(selectedFavoritesLocalStorage[0]);
+            }
         } else {
-            removeFromCart(removeId!)
+            addFavorite(underlay);
         }
-    }
+    };
+
+    const handleAddToCart = async () => {
+        if (!isInCart && underlay) {
+            await addToCart(
+                underlay.type, 
+                underlay.id, 
+                quantity, 
+                underlay
+            );
+        }
+    };
 
     const scrollLeft = () => {
             if (scrollRef.current) {
@@ -186,9 +193,15 @@ const Underlay = () => {
                             <span>Итоговая цена: </span>
                             <span>{underlay.price * quantity} руб.</span>
                         </div>
-                        <div className='flex flex-col md:flex-row mb-4 md:mb-0 gap-3 items-center justify-between w-[100%] text-red-500'>
-                            <button onClick={toggleToCart} className='border-2 hover:bg-blue-500 hover:border-blue-500 hover:text-white transition-all duration-200 py-2 px-10 w-[100%] md:w-[50%]'>{!isInCart ? "+  добавить в корзину" : "Удалить из корзины"}</button>
-                        
+                        <div className='flex flex-col md:flex-row mb-4 md:mb-0 gap-3 items-center justify-between w-[100%]'>
+                            <button onClick={handleAddToCart} className={`border-2 hover:bg-blue-500 hover:border-blue-500  hover:text-white transition-all duration-200 py-2 px-10 w-[100%] md:w-[50%] ${isInCart ? "bg-red-500 border-white text-white" : ""}`}>{!isInCart ? "+  добавить в корзину" : "Добавлено в корзину"}</button>
+                            {isInCart ? (
+                                <button className={`border-2 hover:bg-blue-500 hover:border-blue-500 bg-red-500 border-red-500 text-white hover:text-white transition-all duration-200 py-2 px-10 w-[100%] md:w-[50%]`}>
+                                    <Link href='/cart'><span>Перейти в корзину</span></Link>
+                                </button>
+                            ) : (
+                                ""
+                            )}
                         </div>
                         <div className='md:flex items-center gap-2 justify-between'>
                             <div>Оплата: </div>

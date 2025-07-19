@@ -1,25 +1,30 @@
+'use client';
 import { Heart } from 'lucide-react'
 import Image from 'next/image'
-import React from 'react'
+import React, { useMemo } from 'react'
 import { useFavorites } from '../../../store/AddToFavorites'
 // import notImage from '../../../public/notimage.png'
 import Link from 'next/link'
 import { useCartStore } from '../../../store/CartStore'
-// import config from '@/utils/config'
+import config from '@/utils/config';
+
 
 
 const FavoriteCard:React.FC<any> = ({id, name, image1, price, country, content_type_display, object_id, product}) => {
 
     const { favorites, localFavorites, removeFavorite } = useFavorites()
     const { addToCart, cartList } = useCartStore()
-    // const imgURL = `${config.BASE_URL}${image1}`
+    const imgURL = `${config.BASE_URL}${image1}`
     
     const isInCart = cartList.some(item => item.object_id === object_id && item.content_type_display === content_type_display)
     const isFavorites = favorites.some(fav => fav && fav.name === name) || localFavorites.some(item => item.id === id && item.type === content_type_display)
     console.log(isFavorites);
     console.log(id, content_type_display);
-    
-   
+    const ISSERVER = typeof window === "undefined"
+    const isAuthenticated = useMemo(() => {
+        if (ISSERVER) return
+        return !!localStorage.getItem('access_token')
+    }, []);
     
     const handleFAvorites = () => {
         if (isFavorites) {
@@ -44,7 +49,7 @@ const FavoriteCard:React.FC<any> = ({id, name, image1, price, country, content_t
             <div className='overflow-hidden min-h-[180px] flex items-center'>
                 <Image style={{minWidth: "100%", height: "270px"}}
                     objectFit='contain'
-                    src={image1} alt='image' width={300} height={270}/>
+                    src={isAuthenticated ? imgURL : image1} alt='image' width={300} height={270}/>
             </div>
             <Link target='blank' href={`/product/tile/${id}`}>
                 <span className='text-[1.3rem] cursor-pointer'>{name}</span>

@@ -9,6 +9,10 @@ const LegalInformation = () => {
     const handleOpen = () => {  
         window.open(`${config.BASE_URL}/api/pdf/1/preview/`, '_blank')
     }
+
+    const handleDownload = () => {
+        window.open(`${config.BASE_URL}/api/pdf/${1}/download`)
+    }
     return (
         <div className='md:w-[1370px] mx-auto mt-20 px-12'>
             <div className='flex flex-col gap-4 '>
@@ -31,7 +35,7 @@ const LegalInformation = () => {
                 </div>
                 <div className='flex flex-row gap-4 text-xl'>
                     <span>Телефон:</span>
-                    <Link href="https://wa.me/79990019494">+7 000 000-00-00</Link>
+                    <Link href="https://wa.me/79990019494">+7 999 001-94-94</Link>
                 </div>
                 <div className='flex flex-col md:flex-row gap-4 text-xl'>
                     <span>Режим работы:</span>
@@ -55,7 +59,7 @@ const LegalInformation = () => {
                 </div>
                 <div className='flex flex-col md:flex-row gap-4 text-xl'>
                     <span>Публичная оферта:</span>
-                    <Link href={`${config.BASE_URL}/api/pdf/${1}/download`} className='text-red-500'>скачать</Link>
+                    <button onClick={() => handleDownload()} className='text-red-500 cursor-pointer'>скачать</button>
                     <button onClick={() => handleOpen()} className='text-red-500 cursor-pointer'>посмотреть</button>
                 </div>
             </div>

@@ -19,6 +19,7 @@ export type UnderlayType = {
     image3: string, 
     image4: string,
     image5: string,
+    type: string
 }
     
 

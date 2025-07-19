@@ -54,7 +54,6 @@ const Grout = () => {
     const handleFavoriteToggle = () => {
         const selectedFavorites = favorites.filter(item => item.object_id === grout?.id && item.content_type_display === grout?.type);
         const selectedFavoritesLocalStorage = localFavorites.filter(item => item.id === grout?.id && item.type === grout?.type);
-        //console.log(selectedFavoritesLocalStorage);
         
         if (isInFavorites) {
             if (isAuthenticated) {
@@ -77,10 +76,6 @@ const Grout = () => {
             );
         }
     };
-    
-   
-    
-
     
 
     const scrollLeft = () => {
