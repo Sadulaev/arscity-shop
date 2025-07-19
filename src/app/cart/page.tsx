@@ -27,9 +27,10 @@ const Cart = () => {
   const [comment, setComment] = useState("")
   const [privacyPolicy, setPrivacyPolicy] = useState(false)
 
- 
+  const ISSERVER = typeof window === "undefined"
 
   const submitOrder = useCallback( async () => {
+    if (ISSERVER) return
     try {
       const token = localStorage.getItem('access_token');
 
@@ -124,7 +125,7 @@ const Cart = () => {
         <ContactDetails setSurname={setSurname} setFirstName={setFirstName} setPatronymic={setPatronymic} setPhone={setPhone} setEmail={setEmail} setComment={setComment}/>
         <div className='flex gap-3 items-center mt-2'>
             <input onChange={() => setPrivacyPolicy(!privacyPolicy)} id='privacyPolicy' name='privacyPolicy' type="checkbox" />
-            <label htmlFor='privacyPolicy'>согласен с <Link href="" className='text-blue-600'>политикой конфиденциальности</Link></label>
+            <label htmlFor='privacyPolicy'>согласен с <Link href="/personal-data" className='text-blue-600'>политикой обработки персональных данных</Link></label>
         </div>
         <div className='flex flex-col gap-4 md:gap-0 md:flex-row md:items-end justify-between'>
           <TotalCost totalPrice={totalPrice} />

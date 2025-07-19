@@ -42,6 +42,8 @@ interface CartListStore {
   updateLocalCartItem: (object_id: number, content_type: string, quantity: number) => void;
 }
 
+const isClient = typeof window === "undefined"
+
 export const useCartStore = create<CartListStore>()(
   persist(
     (set, get) => ({
@@ -50,6 +52,8 @@ export const useCartStore = create<CartListStore>()(
       totalPrice: 0,
 
       fetchCart: async () => {
+        if (isClient) return 
+
         if (!localStorage.getItem('access_token')) return;
         
         try {
@@ -65,6 +69,7 @@ export const useCartStore = create<CartListStore>()(
       },
 
       fetchTotalPrice: async () => {
+        if (isClient) return
         if (!localStorage.getItem('access_token')) {
           const total = get().localCart.reduce((sum, item) => 
             sum + (item.product.price * item.quantity), 0);
@@ -85,6 +90,7 @@ export const useCartStore = create<CartListStore>()(
       },
 
       addToCart: async (content_type, object_id, quantity = 1, product) => {
+        if (isClient) return
         const token = localStorage.getItem('access_token');
         
         if (!token) {
@@ -143,6 +149,7 @@ export const useCartStore = create<CartListStore>()(
       },
 
       removeFromCart: async (cartItemId) => {
+        if (isClient) return
         const token = localStorage.getItem('access_token');
         
         if (!token) {
@@ -204,6 +211,7 @@ export const useCartStore = create<CartListStore>()(
       },
       
       mergeCarts: async () => {
+        if (isClient) return
         const { localCart } = get();
         if (localCart.length === 0) return;
         
@@ -239,3 +247,4 @@ export const useCartStore = create<CartListStore>()(
     }
   )
 );
+

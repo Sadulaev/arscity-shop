@@ -22,7 +22,11 @@ export type TileCardFields = {
 const Product: React.FC<TileCardFields> = ({ id, city, imageURL, title, price, content_type, product }) => {
     const { addToCart, cartList, localCart } = useCartStore()
     const { addFavorite, removeFavorite, favorites, localFavorites } = useFavorites()
-    const isAuthenticated = useMemo(() => !!localStorage.getItem('access_token'), []);
+    const ISINSERVER = typeof window === 'undefined'
+    const isAuthenticated = useMemo(() => {
+    if (ISINSERVER) return
+    return !!localStorage.getItem('access_token')
+    }, []);
     
     
     const isInCart = isAuthenticated 

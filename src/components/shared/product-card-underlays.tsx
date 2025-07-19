@@ -25,8 +25,11 @@ const ProductUnderlay: React.FC<Props> = ({id, name, price, image1, content_type
 
   const { addToCart, cartList, localCart } = useCartStore()
   const { addFavorite, removeFavorite, favorites, localFavorites } = useFavorites()
-  const isAuthenticated = useMemo(() => !!localStorage.getItem('access_token'), []);
-  
+  const ISINSERVER = typeof window === 'undefined'
+  const isAuthenticated = useMemo(() => {
+    if (ISINSERVER) return
+    return !!localStorage.getItem('access_token')
+  }, []);
   
   const isInCart = isAuthenticated 
     ? cartList.some(item => item.object_id === id && item.content_type_display === content_type)

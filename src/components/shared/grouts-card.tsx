@@ -24,10 +24,13 @@ type Props = {
 
 const GroutsCard: React.FC<Props> = ({id, name, price, image1, content_type, product}) => {
   
-  
+  const ISSERVER = typeof window === "undefined"
   const { addToCart, cartList, localCart } = useCartStore()
   const { addFavorite, removeFavorite, favorites, localFavorites } = useFavorites()
-  const isAuthenticated = useMemo(() => !!localStorage.getItem('access_token'), []);
+  const isAuthenticated = useMemo(() => {
+    if (ISSERVER) return
+    return !!localStorage.getItem('access_token')
+  }, []);
   
   
   const isInCart = isAuthenticated 

@@ -14,11 +14,15 @@ type CartItemType = {
 };
 
 const CartItem: React.FC<CartItemType> = ({ id, quantity: initialQuantity, object_id, product, content_type_display }) => {
+    const ISSERVER = typeof window === "undefined"
     const img = product?.image1?.startsWith('http') 
       ? product.image1 
       : `${config.BASE_URL}${product?.image1}`;
     const { addToCart, removeFromCart, removeFromLocalCart, updateLocalCartItem } = useCartStore();
-    const isAuthenticated = useMemo(() => !!localStorage.getItem('access_token'), []);
+    const isAuthenticated = useMemo(() => {
+        if (ISSERVER) return
+        return !!localStorage.getItem('access_token')
+    }, []);
 
     const [quantity, setQuantity] = useState(initialQuantity);
 
@@ -53,7 +57,7 @@ const CartItem: React.FC<CartItemType> = ({ id, quantity: initialQuantity, objec
     return (
         <div className="relative w-full max-w-[1370px] mx-auto px-4 sm:px-12 py-4 border-b border-red-300">
             <div className="flex flex-col md:flex-row gap-4 md:gap-13">
-                <div className="w-full md:w-[212px] md:h-[160px] md:bg-[#F6F6F6] flex items-center justify-center">
+                <div className="w-full md:w-[212px] md:h-[160px] overflow-hidden md:bg-[#F6F6F6] flex items-center justify-center">
                     <Image
                         src={img || '/placeholder-product.png'}
                         alt="cart-image"

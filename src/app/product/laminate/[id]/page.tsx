@@ -19,7 +19,11 @@ const LaminatePage = () => {
 
     const { addToCart, cartList, localCart } = useCartStore()
     const { addFavorite, removeFavorite, favorites, localFavorites } = useFavorites()
-    const isAuthenticated = useMemo(() => !!localStorage.getItem('access_token'), []);
+    const ISSERVER = typeof window === "undefined"
+    const isAuthenticated = useMemo(() => {
+        if (ISSERVER) return
+        return !!localStorage.getItem('access_token')
+    }, []);
     
     
     useEffect(() => {

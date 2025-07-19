@@ -35,11 +35,17 @@ const Header = () => {
     useClickOutside(ref, () => setOpen(false))
     const debounce = useDebounce(searchInput, 1000)
     const router = useRouter()
-    const isAuth = useMemo(() => !!localStorage.getItem('access_token'), []);
+    const ISINSERVER = typeof window === 'undefined'
+    const isAuth = useMemo(() => {
+        if (ISINSERVER) return
+        return !!localStorage.getItem('access_token')
+    }, []);
     
 
     const [isLogged, setIsLogged] = useState(false)
+    
     useEffect(() => {
+        if (ISINSERVER) return
         const token = localStorage.getItem("access_token")
         if (token) {
             setIsLogged(true)
@@ -164,7 +170,7 @@ const Header = () => {
                             +7 999 001-94-94
                         </Link>
                         <span className="hidden lg:flex lg:flex-row lg:gap-3 lg:relative after:content-[''] after:absolute after:w-full after:h-[2px] after:bg-red-500 after:scale-x-0 after:left-0 after:bottom-0 after:transition-transform after:origin-left after:duration-300 hover:after:scale-x-100 pb-1 cursor-pointer">
-                            г. Урус-Мартан, ул. Нурдина Усамова 34
+                            <Link target="blank" href="https://yandex.ru/maps/20699/urus-martan/?ll=45.557530%2C43.142918&mode=routes&rtext=~43.142918%2C45.557530&rtt=auto&ruri=~&z=17">г. Урус-Мартан, ул. Нурдина Усамова 34</Link>
                         </span>
                     </div>
 

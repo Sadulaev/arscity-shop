@@ -7,7 +7,11 @@ import EmptyFavorites from './_components/empty-favorites';
 
 const Favorites = () => {
     const { favorites, localFavorites } = useFavorites()
-    const isAuthenticated = useMemo(() => !!localStorage.getItem('access_token'), []);
+    const ISSERVER = typeof window === "undefined"
+    const isAuthenticated = useMemo(() => {
+        if (ISSERVER) return
+        return !!localStorage.getItem('access_token')
+    }, []);
     
     if (favorites.length === 0 && localFavorites.length === 0) return <EmptyFavorites />
      console.log(favorites);

@@ -17,8 +17,9 @@ const Login = () => {
     const [isLockOpen, setIsLockOpen] = useState(false)
     const [isLoading, setIsLoading] = useState(false)
     const [error, setError] = useState("")
-        
+    const ISSERVER = typeof window === "undefined"
     const loginFunction = useCallback(async(e:React.FormEvent, email: string, password: string) => {
+      
       e.preventDefault()
       setIsLoading(true)
       setError("")
@@ -27,7 +28,7 @@ const Login = () => {
           email,
           password
         })
-        localStorage.setItem('access_token', response.data.access)
+        if (!ISSERVER) localStorage.setItem('access_token', response.data.access)
         await mergeCarts();
         await Promise.all([
           fetchCart(),

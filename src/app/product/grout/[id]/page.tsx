@@ -22,7 +22,11 @@ const Grout = () => {
     
     const { addToCart, cartList, localCart } = useCartStore()
     const { addFavorite, removeFavorite, favorites, localFavorites } = useFavorites()
-    const isAuthenticated = useMemo(() => !!localStorage.getItem('access_token'), []);
+    const ISSERVER = typeof window === "undefined"
+    const isAuthenticated = useMemo(() => {
+        if (ISSERVER) return
+        return !!localStorage.getItem('access_token')
+    }, []);
     
 
     useEffect(() => {
@@ -50,7 +54,7 @@ const Grout = () => {
     const handleFavoriteToggle = () => {
         const selectedFavorites = favorites.filter(item => item.object_id === grout?.id && item.content_type_display === grout?.type);
         const selectedFavoritesLocalStorage = localFavorites.filter(item => item.id === grout?.id && item.type === grout?.type);
-        console.log(selectedFavoritesLocalStorage);
+        //console.log(selectedFavoritesLocalStorage);
         
         if (isInFavorites) {
             if (isAuthenticated) {

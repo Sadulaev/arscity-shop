@@ -51,8 +51,10 @@ const Profile = () => {
     const [orders, setOrders] = useState<OrdersType[]>([])
     const {favorites} = useFavorites()
     const {resetCart} = useCartStore()
+    const ISSERVER = typeof window === "undefined"
     
     useEffect(() => {
+        if (ISSERVER) return
         const isAuth = async () => {
             try {
                 const token = localStorage.getItem('access_token');
@@ -83,6 +85,7 @@ const Profile = () => {
     }, [router]);
 
     useEffect(() => {
+        if (ISSERVER) return
         const fetchOrder = async() => {
             try{
                 const response = await axios.get(`${config.BASE_URL}/api/order/orders/`, {
@@ -101,6 +104,7 @@ const Profile = () => {
     }, [])
 
     const logOut = useCallback(() => {
+        if (ISSERVER) return
         localStorage.removeItem("access_token")
         localStorage.removeItem("favorite-storage")
         resetCart()
