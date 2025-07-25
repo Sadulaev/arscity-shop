@@ -20,8 +20,13 @@ const CollectionPage = () => {
     const [collection, setCollection] = useState<CatalogType | null>(null)
     const [tilesForCollection, setTilesForCollection] = useState<TileTypes[]>([])
     const [indexCollection, setIndexCollection] = useState(0)
-
-
+    const { addFavorite, removeFavorite, favorites, localFavorites } = useFavorites()
+    const ISSERVER = typeof window === "undefined"
+    const isAuthenticated = useMemo(() => {
+        if (ISSERVER) return
+        return !!localStorage.getItem('access_token')
+    }, []);
+        
     
 
     useEffect(() => {
@@ -53,23 +58,28 @@ const CollectionPage = () => {
 
 
 
-    const { removeFavorite, favorites } = useFavorites()
-    const isInFavorites = favorites.some(fav => fav.object_id === collection?.id && fav.content_type_display === "collection")
     
-
+    const isInFavorites = favorites.some(fav => fav.object_id === collection?.id && fav.content_type_display === collection?.type) || localFavorites.some(item => item.id === collection?.id && item.type === collection?.type);
+    console.log(collection);
+    
     const handleFavoriteToggle = () => {
-        const ct = favorites.filter(item => item.object_id === collection?.id && item.content_type_display === "collection")
+        const selectedFavorites = favorites.filter(item => item.object_id === collection?.id && item.content_type_display === collection?.type);
+        const selectedFavoritesLocalStorage = localFavorites.filter(item => item.id === collection?.id && item.type === collection?.type);
+        
         if (isInFavorites) {
-            removeFavorite({id: ct[0].id})
-        } else {
-            if (collection?.id) {
-                // addFavorite("collection", collection?.id)
+            if (isAuthenticated) {
+                removeFavorite(selectedFavorites[0]);
+            } else {
+                removeFavorite(selectedFavoritesLocalStorage[0]);
             }
+        } else {
+            addFavorite(collection);
         }
-    }
+    };
 
 
-
+    console.log(collection);
+    
     const scrollLeft = () => {
         if (scrollRef.current) {
             scrollRef.current.scrollBy({ left: -150, behavior: "smooth" })
@@ -99,6 +109,8 @@ const CollectionPage = () => {
                 title={`Коллекция ${collection.name}`}
                 handleFavoriteToggle={handleFavoriteToggle}
                 isInFavorites={isInFavorites}
+                category="Все коллекции"
+                url="/products/collections"
             />
 
             <div className="flex flex-col justify-between w-screen md:w-[1370px] gap-10 mx-auto px-10 md:px-12">

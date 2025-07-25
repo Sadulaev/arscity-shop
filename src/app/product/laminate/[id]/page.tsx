@@ -104,6 +104,8 @@ const LaminatePage = () => {
                 title={laminate.name}
                 handleFavoriteToggle={handleFavoriteToggle}
                 isInFavorites={isInFavorites}
+                category="Весь ламинат"
+                url="/products/laminate"
             />
             <div className='flex flex-col justify-between gap-10 w-screen md:w-[1370px] mx-auto px-10 md:px-12'>
                 <div className='flex flex-col md:flex-row gap-6 md:justify-between md:items-start'>

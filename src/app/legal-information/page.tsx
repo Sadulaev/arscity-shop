@@ -19,11 +19,11 @@ const LegalInformation = () => {
                 <h2 className='text-3xl'>Контактная информация</h2>
                 <div className='flex flex-col md:flex-row gap-4 text-xl'>
                     <span>Полное наименование компании: </span>
-                    <span className='text-red-500'>Компания ......</span>
+                    <span className='text-red-500'>СУПАЕВ АНЗОР ЛЕЧАЕВИЧ (ИП)</span>
                 </div>
                 <div className='flex flex-row gap-4 text-xl'>
                     <span>ИНН: </span>
-                    <span className='text-red-500'>000000000000</span>
+                    <span className='text-red-500'>201008809792</span>
                 </div>
                 <div className='flex flex-row gap-4 text-xl'>
                     <span>e-mail: </span>
@@ -43,19 +43,23 @@ const LegalInformation = () => {
                 </div>
                 <div className='flex flex-col md:flex-row gap-4 text-xl'>
                     <span>Номер счёта:</span>
-                    <span className='text-red-500'>00000000000000000000</span>
+                    <span className='text-red-500'>40802810856070000616</span>
+                </div>
+                <div className='flex flex-col md:flex-row gap-4 text-xl'>
+                    <span>Корреспондентский счет:</span>
+                    <span className='text-red-500'>30101810000000000752</span>
                 </div>
                 <div className='flex flex-col md:flex-row gap-4 text-xl'>
                     <span>ОГРН/ОГРНИП:</span>
-                    <span className='text-red-500'>000000000000000</span>
+                    <span className='text-red-500'>321200000005931</span>
                 </div>
                 <div className='flex flex-col md:flex-row gap-4 text-xl'>
                     <span>Банк:</span>
-                    <span className='text-red-500'>банка соленых огурцов</span>
+                    <span className='text-red-500'>ФИЛИАЛ "СТАВРОПОЛЬСКИЙ" АО "АЛЬФА-БАНК"</span>
                 </div>
                 <div className='flex flex-col md:flex-row gap-4 text-xl'>
                     <span>БИК:</span>
-                    <span className='text-red-500'>000000000</span>
+                    <span className='text-red-500'>040702752</span>
                 </div>
                 <div className='flex flex-col md:flex-row gap-4 text-xl'>
                     <span>Публичная оферта:</span>

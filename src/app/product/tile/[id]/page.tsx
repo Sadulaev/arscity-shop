@@ -113,8 +113,6 @@ const TilePage = () => {
 
     }, [tile?.id, !!tile])
 
-
-    console.log(tile?.content_type);
     
 
     if (!tile) return null
@@ -126,10 +124,12 @@ const TilePage = () => {
                 title={tile.name}
                 handleFavoriteToggle={handleFavoriteToggle}
                 isInFavorites={isInFavorites}
+                category="Все плитки"
+                url="/products/tile"
             />
             <div className='flex flex-col justify-between w-screen md:w-[1370px] mx-auto px-10 md:px-12'>
                 <div className='flex flex-col md:flex-row gap-6 md:justify-between md:items-start'>
-                    <div className='relative mt-5 md:mt-0 flex flex-col items-center bg-[#F6F6F6] '>
+                    <div className='relative mt-5 md:mt-0 flex flex-col items-center bg-[#F6F6F6]'>
                         <div className='flex overflow-hidden justify-center md:w-[666px] md:h-[580px]'>
                             <Image 
                                 src={imagesArr[indexTile]} 
@@ -149,7 +149,7 @@ const TilePage = () => {
                             </div>    
                         )}
 
-                        <div className="py-5 flex gap-4 items-center">
+                        <div className="py-5 flex gap-4 items-center w-full">
                             <button
                                 onClick={scrollLeft}
                                 className="flex items-center justify-center w-[40px] bg-gray-400 h-[103px] text-red-500 hover:scale-110 transition-all duration-200"

@@ -103,8 +103,10 @@ if (!grout) return null
     return (
         <div className='flex flex-col gap-4'>
             <Breadcrumbs
-                name={"Подложка"}
+                name={"Замазка"}
                 title={grout.name}
+                category="Все замазки"
+                url="/products/grouts"
                 handleFavoriteToggle={handleFavoriteToggle}
                 isInFavorites={isInFavorites}
             />

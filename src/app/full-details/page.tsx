@@ -80,11 +80,11 @@ const FullDetails = () => {
                                 </div>
                                 <div className='flex flex-row gap-4 text-xl'>
                                     <span>ИНН: </span>
-                                    <span className='text-red-500'>000000000000</span>
+                                    <span className='text-red-500'>201008809792</span>
                                 </div>
                                 <div className='flex flex-row gap-4 text-xl'>
                                     <span>e-mail: </span>
-                                    <span className='text-red-500'>aaa.oooo@mail.ru</span>
+                                    <span className='text-red-500'>anzor.beno@bk.ru</span>
                                 </div>
                                 <div className='flex flex-col md:flex-row gap-4 text-xl'>
                                     <span>Адрес:</span>

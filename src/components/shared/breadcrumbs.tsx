@@ -1,22 +1,27 @@
 import { Heart, MoveRight } from 'lucide-react'
+import Link from 'next/link'
 import React from 'react'
 
 type Props = {
     name: string,
     title: string,
     handleFavoriteToggle: () => void,
-    isInFavorites: boolean
+    isInFavorites: boolean,
+    category: string,
+    url: string
 }
 
-const Breadcrumbs:React.FC<Props> = ({name, title, handleFavoriteToggle, isInFavorites}) => {
+const Breadcrumbs:React.FC<Props> = ({name, title, handleFavoriteToggle, isInFavorites, category, url}) => {
+    console.log(category, url);
+    
   return (
     <div className='w-screen bg-linear-to-b from-[#D2D2D2] to-white md:h-[317px] -mt-20 flex items-center pt-20 z-1'>
         <div className='flex flex-col gap-2 md:flex-row md:justify-between md:w-[1370px] mx-auto px-10 md:px-12'>
             <div className='flex flex-col gap-3'>
                 <div className='flex items-center gap-3 text-gray-400'>
-                    <span>Главная</span>
+                    <Link href="/">Главная</Link>
                     <MoveRight color="#ee1b1b" strokeWidth={1} />
-                    <span>Каталог</span>
+                    <Link href={url}>{category}</Link>
                     <MoveRight color="#ee1b1b" strokeWidth={1} />
                     <span>{name}</span>
                 </div>

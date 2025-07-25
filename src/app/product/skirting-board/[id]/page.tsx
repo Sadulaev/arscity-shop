@@ -104,6 +104,8 @@ const Skirtingboard = () => {
                 title={scirtingboard.name}
                 handleFavoriteToggle={handleFavoriteToggle}
                 isInFavorites={isInFavorites}
+                category="Все плинтуса"
+                url="/products/skirting-board"
             />
             <div className='flex flex-col justify-between gap-10 w-screen md:w-[1370px] mx-auto px-10 md:px-12'>
                 <div className='flex flex-col md:flex-row gap-6 md:justify-between md:items-start'>

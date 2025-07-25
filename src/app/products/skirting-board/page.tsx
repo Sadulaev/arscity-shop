@@ -66,7 +66,7 @@ const SkirtingBoard = () => {
         <FiltersSkirtingBoard handleChange={handleChange} resetFilters={resetFilters} selectedSkirtingBoards={selectedSkirtingBoards}/>
       </div>
       
-      <div onClick={() => setFilterShow(false)} className={`w-screen min-h-screen absolute top-0 ${!filterShow ? "left-[-100vw]" : "left-0"} transition-all duration-200 bg-gray-300/50`}>
+      <div onClick={() => setFilterShow(false)} className={`w-screen min-h-screen fixed top-0 ${!filterShow ? "left-[-100vw]" : "left-0"} transition-all duration-200 bg-gray-300/50 z-[100] `}>
         <div onClick={(e) => e.stopPropagation()} className='relative overflow-y-auto max-h-[80vh] px-3 top-0 left-0 bg-white w-[50%] min-h-screen z-[1000]'>
           <FiltersSkirtingBoard handleChange={handleChange} resetFilters={resetFilters} selectedSkirtingBoards={selectedSkirtingBoards}/>
           <X onClick={() => setFilterShow(false)} className='absolute right-2 top-2'/>

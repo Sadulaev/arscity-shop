@@ -88,9 +88,9 @@ const Grouts = () => {
 
             <div
                 onClick={() => setFilterShow(false)}
-                className={`w-screen min-h-screen absolute top-0 ${
+                className={`w-screen min-h-screen fixed top-0 ${
                     !filterShow ? "left-[-100vw]" : "left-0"
-                } transition-all duration-200 bg-gray-300/50`}
+                } transition-all duration-200 bg-gray-300/50 z-[100]`}
             >
                 <div
                     onClick={(e) => e.stopPropagation()}
