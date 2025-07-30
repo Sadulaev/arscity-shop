@@ -55,7 +55,7 @@ const LegalInformation = () => {
                 </div>
                 <div className='flex flex-col md:flex-row gap-4 text-xl'>
                     <span>Банк:</span>
-                    <span className='text-red-500'>ФИЛИАЛ СТАВРОПОЛЬСКИЙ АО АЛЬФА-БАНК</span>
+                    <span className='text-red-500'>ФИЛИАЛ &quot;СТАВРОПОЛЬСКИЙ&quot; АО &quot;АЛЬФА-БАНК&quot;</span>
                 </div>
                 <div className='flex flex-col md:flex-row gap-4 text-xl'>
                     <span>БИК:</span>

@@ -3,10 +3,11 @@ import config from '@/utils/config';
 import axios from 'axios'
 import { Lock, LockOpen, MoveRight } from 'lucide-react'
 import Link from 'next/link'
+import { useRouter } from 'next/navigation';
 import React, { useState } from 'react'
 
 const Register = () => {
-
+    const router = useRouter()
     const [username, setUserName] = useState("")
     const [email, setEmail] = useState("")
     const [password, setPassword] = useState("")
@@ -23,7 +24,7 @@ const Register = () => {
                 re_password: re_password  
             })
             alert("Регистрация прошла успешно")
-            
+            router.push("/auth/login")           
         } catch(error) {
             console.log(error);
             alert("Ошибка регистрации")
